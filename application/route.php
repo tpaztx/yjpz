@@ -37,5 +37,4 @@ Route::post([
 	'api/mobilelogin' =>  'api/user/mobilelogin',
 	//微信授权登录
 	'api/wxLogin' => 'api/user/wxLogin',
-	'api/wxLogin1' => 'api/user/wxLogin',
 ]);
