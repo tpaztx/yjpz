@@ -45,4 +45,6 @@ class ClassroomContent extends Model
         if (!empty($value)) return cdnurl($value, true);
         return $value;
     }
+
+    
 }
