@@ -39,7 +39,6 @@ class Wph extends Api
             $pageIndex = 1;
             do {
                 try {
-                    var_dump($pageIndex);die;
                     $list = $this->brandList($areaId, $pageIndex, 20);
                     $pageIndex = $list['pageIndex']?:1;
                     if ($list)
