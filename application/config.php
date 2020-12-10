@@ -294,4 +294,10 @@ return [
         //API接口地址
         'api_url'               => 'https://api.fastadmin.net',
     ],
+    //唯品会配置
+    'wph' =>[
+        'AppKey' => '3778606e',
+        'AppSecret' => 'DA9DC8FAAA3DB3387C5FBC4242F3AC52',
+        'userNumber' => '81065822',
+    ],
 ];

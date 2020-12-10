@@ -37,4 +37,13 @@ Route::post([
 	'api/mobilelogin' =>  'api/user/mobilelogin',
 	//微信授权登录
 	'api/wxLogin' => 'api/user/wxLogin',
+
+	//品牌分类获取
+	'api/getCateGroyList' => 'api/wph/getCateGroyList',
+	//获取用户地址
+	'api/getSelectAddress' => 'api/wph/getSelectAddress',
+	//首页-banner轮播
+	'api/getBannnerList' => 'api/index/getBannnerList',
+	//首页-品牌列表
+	'api/getBrandLists' => 'api/wph/getBrandList',
 ]);
