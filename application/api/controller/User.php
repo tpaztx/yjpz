@@ -2,10 +2,12 @@
 
 namespace app\api\controller;
 
+use app\admin\model\Store;
 use app\common\controller\Api;
 use app\common\library\Ems;
 use app\common\library\Sms;
 use fast\Random;
+use think\Db;
 use think\Validate;
 use app\common\model\User as UserM;
 
@@ -129,9 +131,22 @@ class User extends Api
         // if (!$ret) {
         //     $this->error(__('Captcha is incorrect'));
         // }
-        $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid'=>$trade_code]);
-        if ($ret) {
+
+        // 启动事务
+        Db::startTrans();
+        try{
+            $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid'=>$trade_code]);
             $data = ['userinfo' => $this->auth->getUserinfo()];
+            Store::create(['user_id'=>$data['id']]);
+            // 提交事务
+            Db::commit();
+            $ret = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $ret = false;
+        }
+        if ($ret) {
             $this->success(__('Sign up successful'), $data);
         } else {
             $this->error($this->auth->getError());
