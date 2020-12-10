@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a3ecd5cc-f1d4-4ea2-97c9-ef312e712263" name="默认更改列表" comment="">
+      <change beforePath="$PROJECT_DIR$/application/admin/model/ClassroomContent.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/model/ClassroomContent.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-installer" />
+      <path value="$PROJECT_DIR$/vendor/topthink/think-captcha" />
+      <path value="$PROJECT_DIR$/vendor/nelexa/zip" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/karsonzhang/fastadmin-addons" />
+      <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/overtrue/socialite" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/overtrue/wechat" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/overtrue/pinyin" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/easywechat-composer/easywechat-composer" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/activity" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/account" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/brand" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/address" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/common" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/category" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/delivery" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/cup" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/ezr" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/dvd" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/finance" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/fcs" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/inventory" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/informal" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/jitx" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/isv" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/log" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/lbs" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/marketplace" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/logistical" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/NewRetail" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/message" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/oauth" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/normal" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/order" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/overseas" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/otd" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/price" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/pg" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/productsale" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/product" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/report" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/puma" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/shanshan" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/sales" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/stock" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/size" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/track" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/store" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vipcard" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/user" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vis" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vipmax" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vsizetable" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vreturn" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/xstore" />
+      <path value="$PROJECT_DIR$/vendor/vipapis/vsl" />
+      <path value="$PROJECT_DIR$/vendor/com/vip" />
+      <path value="$PROJECT_DIR$/vendor/com/vipshop" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1lM5Q9izOXu1OFV5D3sNjOLgWmw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../zydh" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a3ecd5cc-f1d4-4ea2-97c9-ef312e712263" name="默认更改列表" comment="" />
+      <created>1607394100369</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607394100369</updated>
+      <workItem from="1607394101693" duration="738000" />
+      <workItem from="1607478653997" duration="31035000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1607504344374">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607504344374" />
+    <state x="690" y="240" key="NewPhpClassDialog" timestamp="1607500371678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="240" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607500371678" />
+    <state x="776" y="442" key="NewPhpFileDialog" timestamp="1607514742672">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="776" y="442" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607514742672" />
+    <state x="518" y="312" key="SettingsEditor" timestamp="1607480393271">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="518" y="312" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607480393271" />
+    <state x="754" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607479024708">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="754" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1607479024708" />
+  </component>
+</project>
