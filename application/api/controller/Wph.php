@@ -128,6 +128,19 @@ class Wph extends Api
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $result = $this->brandList('101101', $pageIndex, $pageSize);
+        if ($result) {
+            $data['pageIndex'] = $result['pageIndex'];
+            $data['pageSize'] = $result['pageSize'];
+            $data['pageTotal'] = $result['pageTotal'];
+            $data['totalNum'] = $result['totalNum'];
+            $brandList = object_to_array($result['brandList']);
+            foreach ($brandList as $k => $v) {
+                $obj[]['adId'] = $v['adId'];
+                $obj[]['brandName'] = $v['brandName'];
+                $obj[]['brandImage'] = $v['brandImage'];
+                $obj[]['endTime'] = $
+            }
+        }
         $this->success('请求成功！', $result);
     }
 
@@ -150,7 +163,20 @@ class Wph extends Api
         return $arr;
     }
 
-
+    /**
+     * 时间倒计时
+     */
+    function time2string($second){
+        $day = floor($second/(3600*24));
+        $second = $second%(3600*24);//除去整天之后剩余的时间
+        $hour = floor($second/3600);
+        $second = $second%3600;//除去整小时之后剩余的时间 
+        $minute = floor($second/60);
+        $second = $second%60;//除去整分钟之后剩余的时间 
+        //返回字符串
+        // return $day.'天'.$hour.'小时'.$minute.'分'.$second.'秒';
+        return $day.'天';
+    }
 
 
 
