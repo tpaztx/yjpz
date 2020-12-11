@@ -156,11 +156,13 @@ class Wph extends Api
         $tmp_arr = array();
         foreach($arr as $k => $v)
         {
-            if(in_array($v[$key], $tmp_arr))  //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+            if(in_array($v[$key], $tmp_arr))//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
             {
-                unset($arr[$k]); //销毁一个变量 如果$tmp_arr中已存在相同的值就删除该值
+                unset($arr[$k]);
+                $keys = array_search($v[$key], $tmp_arr);
+                $tmp_arr[$keys]['total'] += $v['total'];
             }else {
-                $tmp_arr[$k] = $v[$key]; //将不同的值放在该数组中保存
+                $tmp_arr[$k] = $v[$key];
             }
         }
         ksort($arr); //ksort函数对数组进行排序(保留原键值key) sort为不保留key值
