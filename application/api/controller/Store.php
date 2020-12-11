@@ -50,6 +50,4 @@ class Store extends Api
         }
         $this->success('请求成功！',$store);
     }
-
-    
 }
