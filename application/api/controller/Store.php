@@ -58,19 +58,48 @@ class Store extends Api
     public function upBrand()
     {
         $user = $this->auth->getUser();
-        dump($user);exit;
-        $store = StoreM::getStore($user['id']);
+        $storeM = new StoreM;
+        $store= $storeM->getStore($user['id']);
         //获取小店已下架品牌id
-        $downIdList = StoreDown::getDownId($store['id']);
+        $storeDown = new StoreDown;
+        $storeDown->getDownId($store['id']);
         $vph = new Wph();
         $list = $vph->getBrandList();
         if(!empty($list)){
+            $array = [];
             foreach ($list->brandList as $k=>$item){
                 if(in_array($item['adId'],$list->brandList)){
-                    unset($list->brandList[$k]);
+                    $array[] = $list[$k];
                 }
             }
+            $list->brandList = $array;
             $this->success('请求成功！',$list);
         }
+        $this->error('无数据！');
+    }
+    /**
+     * 已下架品牌
+     */
+    public function downBrand()
+    {
+        $user = $this->auth->getUser();
+        $storeM = new StoreM;
+        $store= $storeM->getStore($user['id']);
+        //获取小店已下架品牌id
+        $storeDown = new StoreDown;
+        $storeDown->getDownId($store['id']);
+        $vph = new Wph();
+        $list = $vph->getBrandList();
+        if(!empty($list)){
+            $array = [];
+            foreach ($list->brandList as $k=>$item){
+                if(!in_array($item['adId'],$list->brandList)){
+                    $array[] = $list[$k];
+                }
+            }
+            $list->brandList = $array;
+            $this->success('请求成功！',$list);
+        }
+        $this->error('无数据！');
     }
 }
