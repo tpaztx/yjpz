@@ -62,13 +62,13 @@ class Store extends Api
         $store= $storeM->getStore($user['id']);
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
-        $storeDown->getDownId($store['id']);
+        $downIdArray=$storeDown->getDownId($store['id']);
         $vph = new Wph();
         $list = $vph->getBrandList();
         if(!empty($list)){
             $array = [];
             foreach ($list->brandList as $k=>$item){
-                if(in_array($item['adId'],$list->brandList)){
+                if(in_array($item['adId'],$downIdArray)){
                     $array[] = $list[$k];
                 }
             }
@@ -87,13 +87,13 @@ class Store extends Api
         $store= $storeM->getStore($user['id']);
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
-        $storeDown->getDownId($store['id']);
+        $downIdArray = $storeDown->getDownId($store['id']);
         $vph = new Wph();
         $list = $vph->getBrandList();
         if(!empty($list)){
             $array = [];
             foreach ($list->brandList as $k=>$item){
-                if(!in_array($item['adId'],$list->brandList)){
+                if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $list[$k];
                 }
             }
