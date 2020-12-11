@@ -51,5 +51,7 @@ Route::post([
     'api/upload'=>'api/upload/upload',
     //小店信息
     'api/store'=>'api/store/store',
+    //已上架品牌
+    'api/upBrand'=>'api/store/upBrand',
 
 ]);
