@@ -141,11 +141,10 @@ class Wph extends Api
                     'brandImage' => $v['brandImage'],
                     'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
                 ];
-                // $obj[]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
             $data['brandList'] = $obj;
         }
-        $this->success('请求成功！', $data);
+        $this->success('请求成功！', $result);
     }
 
     /**
