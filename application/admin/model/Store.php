@@ -27,8 +27,18 @@ class Store extends Model
     protected $append = [
 
     ];
-    
 
+    public function getStoreQrCodeAttr($value)
+    {
+        if (!empty($value)) return cdnurl($value, true);
+        return $value;
+    }
+
+    public function getStoreLogoAttr($value)
+    {
+        if (!empty($value)) return cdnurl($value, true);
+        return $value;
+    }
     
 
 

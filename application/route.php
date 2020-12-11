@@ -37,7 +37,6 @@ Route::post([
 	'api/mobilelogin' =>  'api/user/mobilelogin',
 	//微信授权登录
 	'api/wxLogin' => 'api/user/wxLogin',
-
 	//品牌分类获取
 	'api/getCateGroyList' => 'api/wph/getCateGroyList',
 	//获取用户地址
@@ -45,5 +44,12 @@ Route::post([
 	//首页-banner轮播
 	'api/getBannnerList' => 'api/index/getBannnerList',
 	//首页-品牌列表
-	'api/getBrandList' => 'api/wph/getBrandList',
+    'api/getBrandList' => 'api/wph/getBrandList',
+    //小店-店铺设置
+    'api/storeSet'=>'api/store/storeSet',
+    //图片上传
+    'api/upload'=>'api/upload/upload',
+    //小店信息
+    'api/store'=>'api/store/store',
+
 ]);

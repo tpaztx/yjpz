@@ -9,6 +9,7 @@ use FilesystemIterator;
 use think\Config;
 use think\File;
 use think\Hook;
+use think\Request;
 
 /**
  * 文件上传类
@@ -44,10 +45,12 @@ class Upload
 
     public function __construct($file = null)
     {
+        // 接收上传的文件
+        $this->file = Request::instance()->file('file') ?? $file;
         $this->config = Config::get('upload');
         $this->chunkDir = RUNTIME_PATH . 'chunks';
-        if ($file) {
-            $this->setFile($file);
+        if ($this->file) {
+            $this->setFile($this->file);
         }
     }
 
