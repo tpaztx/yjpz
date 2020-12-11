@@ -153,7 +153,7 @@ class Wph extends Api
      */
     private function second_array_unique_bykey($arr, $key)
     {
-        $tmp_arr = array();
+        $tmp_arr = array(); 
         dump($arr);die;
         foreach($arr as $k => $v)
         {
