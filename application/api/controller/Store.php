@@ -4,6 +4,7 @@
 namespace app\api\controller;
 
 
+use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use app\admin\model\Store as StoreM;
 
@@ -49,5 +50,26 @@ class Store extends Api
             $this->error('服务器繁忙！');
         }
         $this->success('请求成功！',$store);
+    }
+    
+    /**
+     * 已上架品牌
+     */
+    public function upBrand()
+    {
+        $user = $this->auth->getUser();
+        $store = StoreM::getStore($user['id']);
+        //获取小店已下架品牌id
+        $downIdList = StoreDown::getDownId($store['id']);
+        $vph = new Wph();
+        $list = $vph->getBrandList();
+        if(!empty($list)){
+            foreach ($list->brandList as $k=>$item){
+                if(in_array($item['adId'],$list->brandList)){
+                    unset($list->brandList[$k]);
+                }
+            }
+            $this->success('请求成功！',$list);
+        }
     }
 }

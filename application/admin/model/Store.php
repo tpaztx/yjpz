@@ -39,12 +39,9 @@ class Store extends Model
         if (!empty($value)) return cdnurl($value, true);
         return $value;
     }
-    
 
-
-
-
-
-
-
+    public function getStore($user_id)
+    {
+        return $this->where('user_id',$user_id)->find();
+    }
 }
