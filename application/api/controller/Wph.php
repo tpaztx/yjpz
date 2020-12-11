@@ -149,7 +149,7 @@ class Wph extends Api
     }
 
     /** 
-     * 二维数组实现去除重复项 
+     * 二维数组实现去除重复项
      */
     private function second_array_unique_bykey($arr, $key)
     {
