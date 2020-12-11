@@ -61,7 +61,6 @@ class Wph extends Api
                 }
                 $pageIndex++;
             } while ($pageIndex <= $pageTotal);
-            dump($data);die;
             $data = $this->second_array_unique_bykey($data, 'name');
         }
         $this->success('请求成功！', $data);
@@ -154,14 +153,14 @@ class Wph extends Api
      */
     private function second_array_unique_bykey($arr, $key)
     {
-        dump($arr);die; 
         $tmp_arr = array();
         foreach($arr as $k => $v)
         {
             if(in_array($v[$key], $tmp_arr))//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
             {
                 unset($arr[$k]);
-                $keys = array_search($v[$key], $arr);
+                $name = array_column($arr , $key);
+                $keys = array_search($v[$key], $name);
                 // dump($arr[$keys]);die;
                 $arr[$keys]['total'] += $v['total'];
             }else {
