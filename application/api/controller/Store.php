@@ -57,6 +57,8 @@ class Store extends Api
      */
     public function upBrand()
     {
+        $pageIndex = $this->request->request('pageIndex')?:1;
+        $pageSize = $this->request->request('pageSize')?:10;
         $user = $this->auth->getUser();
         $storeM = new StoreM;
         $store= $storeM->getStore($user['id']);
@@ -64,7 +66,7 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
         $vph = new Wph();
-        $list = $vph->getBrandList();
+        $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
             $array = [];
             foreach ($list->brandList as $k=>$item){
@@ -82,6 +84,8 @@ class Store extends Api
      */
     public function downBrand()
     {
+        $pageIndex = $this->request->request('pageIndex')?:1;
+        $pageSize = $this->request->request('pageSize')?:10;
         $user = $this->auth->getUser();
         $storeM = new StoreM;
         $store= $storeM->getStore($user['id']);
@@ -89,9 +93,7 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
         $vph = new Wph();
-        $list = $vph->getBrandList();
-        dump($list->brandList);
-        exit;
+        $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
             $array = [];
             foreach ($list->brandList as $k=>$item){
