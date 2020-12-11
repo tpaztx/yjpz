@@ -8,7 +8,7 @@ use Osp\Context\InvocationContextFactory;
 use think\Config;
 
 /**
- * 唯品会类目
+ * 唯品会类目222
  */
 class Wph extends Api
 {
