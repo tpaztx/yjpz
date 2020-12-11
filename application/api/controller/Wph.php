@@ -135,10 +135,12 @@ class Wph extends Api
             $data['totalNum'] = $result['totalNum'];
             $brandList = object_to_array($result['brandList']);
             foreach ($brandList as $k => $v) {
-                $obj[]['adId'] = $v['adId'];
-                $obj[]['brandName'] = $v['brandName'];
-                $obj[]['brandImage'] = $v['brandImage'];
-                $obj[]['endTime'] = strtotime($v['sellTimeTo']);
+                $obj[] = [
+                    'adId' => $v['adId'],
+                    'brandName' => $v['brandName'],
+                    'brandImage' => $v['brandImage'],
+                    'endTime' => strtotime($v['sellTimeTo']),
+                ];
                 // $obj[]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
             $data['brandList'] = $obj;
