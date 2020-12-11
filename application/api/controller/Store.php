@@ -66,13 +66,16 @@ class Store extends Api
         $vph = new Wph();
         $list = $vph->getBrandList();
         if(!empty($list)){
+            $array = [];
             foreach ($list->brandList as $k=>$item){
                 if(in_array($item['adId'],$list->brandList)){
-                    unset($list->brandList[$k]);
+                    $array[] = $list[$k];
                 }
             }
+            $list->brandList = $array;
             $this->success('请求成功！',$list);
         }
+        $this->error('无数据！');
     }
     /**
      * 已下架品牌
@@ -88,12 +91,15 @@ class Store extends Api
         $vph = new Wph();
         $list = $vph->getBrandList();
         if(!empty($list)){
+            $array = [];
             foreach ($list->brandList as $k=>$item){
                 if(!in_array($item['adId'],$list->brandList)){
-                    unset($list->brandList[$k]);
+                    $array[] = $list[$k];
                 }
             }
+            $list->brandList = $array;
             $this->success('请求成功！',$list);
         }
+        $this->error('无数据！');
     }
 }
