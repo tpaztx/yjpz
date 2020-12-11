@@ -83,7 +83,7 @@ class Wph extends Api
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
-            $request1->page = 2;
+            $request1->page = $page;
             $request1->pageSize = $pageSize;
             $list = collection($service->getBrandList($request1))->toArray();
             if ($list) {
