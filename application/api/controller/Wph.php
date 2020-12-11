@@ -67,7 +67,7 @@ class Wph extends Api
     }
 
     /**
-     *
+     * 返回品牌数据
      */
     public function brandList($areaId = '101101', $page = 1, $pageSize = 20)
     {
