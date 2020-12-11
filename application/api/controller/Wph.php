@@ -61,6 +61,7 @@ class Wph extends Api
                 }
                 $pageIndex++;
             } while ($pageIndex <= $pageTotal);
+            dump($data);die;
             $data = $this->second_array_unique_bykey($data, 'name');
         }
         $this->success('请求成功！', $data);
