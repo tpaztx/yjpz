@@ -154,7 +154,7 @@ class Wph extends Api
     private function second_array_unique_bykey($arr, $key)
     {
         $tmp_arr = array(); 
-        dump($arr);die;
+        dump($arr);die; 
         foreach($arr as $k => $v)
         {
             if(in_array($v[$key], $tmp_arr))//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
