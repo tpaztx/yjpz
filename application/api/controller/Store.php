@@ -11,5 +11,8 @@ class Store extends Api
     protected $noNeedLogin = '';
     protected $noNeedRight = '*';
     //小店接口
-
+    public function store()
+    {
+        
+    }
 }
