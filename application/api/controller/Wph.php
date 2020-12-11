@@ -140,6 +140,7 @@ class Wph extends Api
                     'brandName' => $v['brandName'],
                     'brandImage' => $v['brandImage'],
                     'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
+                    'goods' => $v['goods'],
                 ];
             }
             $data['brandList'] = $obj;
