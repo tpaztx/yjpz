@@ -69,12 +69,12 @@ class Store extends Api
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
             $array = [];
-            foreach ($list['brandList'] as $k=>$item){
+            foreach ($list as $k=>$item){
                 if(in_array($item['adId'],$downIdArray)){
                     $array[] = $list[$k];
                 }
             }
-            $list['brandList'] = $array;
+            $list = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -94,15 +94,14 @@ class Store extends Api
         $downIdArray = $storeDown->getDownId($store['id']);
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
-        dump($list);exit;
         if(!empty($list)){
             $array = [];
-            foreach ($list['brandList'] as $k=>$item){
+            foreach ($list as $k=>$item){
                 if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $list[$k];
                 }
             }
-            $list['brandList'] = $array;
+            $list = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
