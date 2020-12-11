@@ -45,5 +45,5 @@ Route::post([
 	//首页-banner轮播
 	'api/getBannnerList' => 'api/index/getBannnerList',
 	//首页-品牌列表
-	'api/getBrandLists' => 'api/wph/getBrandList',
+	'api/getBrandList' => 'api/wph/getBrandList',
 ]);
