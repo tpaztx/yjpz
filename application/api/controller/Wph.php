@@ -61,10 +61,6 @@ class Wph extends Api
                 }
                 $pageIndex++;
             } while ($pageIndex <= $pageTotal);
-<<<<<<< HEAD
-=======
-            dump($data);die;
->>>>>>> 448769a... 提交
             $data = $this->second_array_unique_bykey($data, 'name');
         }
         $this->success('请求成功！', $data);
@@ -153,45 +149,28 @@ class Wph extends Api
     }
 
     /** 
-<<<<<<< HEAD
      * 二维数组实现去除重复项
      */
     private function second_array_unique_bykey($arr, $key)
     {
-=======
-     * 二维数组实现去除重复项 
-     */
-    private function second_array_unique_bykey($arr, $key)
-    {
-        dump($arr);die; 
->>>>>>> 448769a... 提交
         $tmp_arr = array();
         foreach($arr as $k => $v)
         {
             if(in_array($v[$key], $tmp_arr))//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
             {
                 unset($arr[$k]);
-<<<<<<< HEAD
                 $name = array_column($arr , $key);
                 $keys = array_search($v[$key], $name);
                 dump($v[$key]);
                 dump($keys);
                 dump($name);die;
-=======
-                $keys = array_search($v[$key], $arr);
-                // dump($arr[$keys]);die;
->>>>>>> 448769a... 提交
                 $arr[$keys]['total'] += $v['total'];
             }else {
                 $tmp_arr[$k] = $v[$key];
             }
         }
         ksort($arr); //ksort函数对数组进行排序(保留原键值key) sort为不保留key值
-<<<<<<< HEAD
         return $arr; 
-=======
-        return $arr;
->>>>>>> 448769a... 提交
     }
 
     
