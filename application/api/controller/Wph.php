@@ -115,18 +115,19 @@ class Wph extends Api
             // $request1->areaCode="areaCode";
             $this->success('请求成功', $service->selectAddress($request1));
         } catch(\Osp\Exception\OspException $e){
-            var_dump($e);
+            // var_dump($e);
+            $this->error('请求失败，请联系管理员！');
         }
     }
 
     /**
-     * 品牌列表000
+     * 品牌列表
      */
     public function getBrandList()
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $result = $this->brandList('101101', 1, 10);
+        $result = $this->brandList('101101', $pageIndex, $pageSize);
         $this->success('请求成功！', $result);
     }
 
