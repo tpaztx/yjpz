@@ -8,7 +8,7 @@ use Osp\Context\InvocationContextFactory;
 use think\Config;
 
 /**
- * 唯品会类目222
+ * 唯品会类目
  */
 class Wph extends Api
 {
@@ -67,7 +67,7 @@ class Wph extends Api
     }
 
     /**
-     *
+     * 返回品牌数据
      */
     public function brandList($areaId = '101101', $page = 1, $pageSize = 20)
     {
@@ -115,19 +115,37 @@ class Wph extends Api
             // $request1->areaCode="areaCode";
             $this->success('请求成功', $service->selectAddress($request1));
         } catch(\Osp\Exception\OspException $e){
-            var_dump($e);
+            // var_dump($e);
+            $this->error('请求失败，请联系管理员！');
         }
     }
 
     /**
-     * 品牌列表000
+     * 品牌列表
      */
     public function getBrandList()
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $result = $this->brandList('101101', 1, 10);
-        $this->success('请求成功！', $result);
+        $result = $this->brandList('101101', $pageIndex, $pageSize);
+        if ($result) {
+            $data['pageIndex'] = $result['pageIndex'];
+            $data['pageSize'] = $result['pageSize'];
+            $data['pageTotal'] = $result['pageTotal'];
+            $data['totalNum'] = $result['totalNum'];
+            $brandList = object_to_array($result['brandList']);
+            foreach ($brandList as $k => $v) {
+                $obj[] = [
+                    'adId' => $v['adId'],
+                    'brandName' => $v['brandName'],
+                    'brandImage' => $v['brandImage'],
+                    'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
+                    'goods' => $v['goods'],
+                ];
+            }
+            $data['brandList'] = $obj;
+        }
+        $this->success('请求成功！', $data);
     }
 
     /**
@@ -149,7 +167,7 @@ class Wph extends Api
         return $arr;
     }
 
-
+    
 
 
 
