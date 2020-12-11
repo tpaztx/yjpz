@@ -160,6 +160,7 @@ class Wph extends Api
             {
                 $name = array_column($arr , $key);
                 $keys = array_search($v[$key], $name);
+                dump($arr[$keys]['total']);die;
                 $arr[$keys]['total'] += $v['total'];
                 unset($arr[$k]);
             }else {
