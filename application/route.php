@@ -46,4 +46,10 @@ Route::post([
 	'api/getBannnerList' => 'api/index/getBannnerList',
 	//首页-品牌列表
 	'api/getBrandLists' => 'api/wph/getBrandList',
+    //小店-店铺设置
+    'api/storeSet'=>'api/store/storeSet',
+    //图片上传
+    'api/upload'=>'api/upload/upload',
+    //小店信息
+    'api/store'=>'api/store/store',
 ]);
