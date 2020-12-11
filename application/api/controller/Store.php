@@ -94,10 +94,9 @@ class Store extends Api
         $downIdArray = $storeDown->getDownId($store['id']);
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
-        dump($list['brandList']);exit;
         if(!empty($list)){
             $array = [];
-            foreach ($list as $k=>$item){
+            foreach ($list['brandList'] as $k=>$item){
                 if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $list[$k];
                 }
