@@ -145,7 +145,7 @@ class Wph extends Api
             }
             $data['brandList'] = $obj;
         }
-        $this->success('请求成功！', $result);
+        $this->success('请求成功！', $data);
     }
 
     /**
