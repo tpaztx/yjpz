@@ -58,6 +58,7 @@ class Store extends Api
     public function upBrand()
     {
         $user = $this->auth->getUser();
+        dump($user);exit;
         $store = StoreM::getStore($user['id']);
         //获取小店已下架品牌id
         $downIdList = StoreDown::getDownId($store['id']);
