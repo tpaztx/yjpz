@@ -138,7 +138,8 @@ class Wph extends Api
                 $obj[]['adId'] = $v['adId'];
                 $obj[]['brandName'] = $v['brandName'];
                 $obj[]['brandImage'] = $v['brandImage'];
-                $obj[]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
+                $obj[]['endTime'] = strtotime($v['sellTimeTo']);
+                // $obj[]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
             $data['brandList'] = $obj;
         }
