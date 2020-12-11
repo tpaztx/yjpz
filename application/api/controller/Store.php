@@ -101,7 +101,7 @@ class Store extends Api
                     $array[] = $list[$k];
                 }
             }
-            $list = $array;
+            $list['brandList'] = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
