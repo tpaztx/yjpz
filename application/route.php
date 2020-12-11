@@ -53,5 +53,7 @@ Route::post([
     'api/store'=>'api/store/store',
     //已上架品牌
     'api/upBrand'=>'api/store/upBrand',
+    //已下架品牌
+    'api/downBrand'=>'api/store/downBrand',
 
 ]);

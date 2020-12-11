@@ -74,5 +74,26 @@ class Store extends Api
             $this->success('请求成功！',$list);
         }
     }
-
+    /**
+     * 已下架品牌
+     */
+    public function downBrand()
+    {
+        $user = $this->auth->getUser();
+        $storeM = new StoreM;
+        $store= $storeM->getStore($user['id']);
+        //获取小店已下架品牌id
+        $storeDown = new StoreDown;
+        $storeDown->getDownId($store['id']);
+        $vph = new Wph();
+        $list = $vph->getBrandList();
+        if(!empty($list)){
+            foreach ($list->brandList as $k=>$item){
+                if(!in_array($item['adId'],$list->brandList)){
+                    unset($list->brandList[$k]);
+                }
+            }
+            $this->success('请求成功！',$list);
+        }
+    }
 }
