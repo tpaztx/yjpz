@@ -138,10 +138,11 @@ class Wph extends Api
                 $obj[]['adId'] = $v['adId'];
                 $obj[]['brandName'] = $v['brandName'];
                 $obj[]['brandImage'] = $v['brandImage'];
-                $obj[]['endTime'] = $
+                $obj[]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
+            $data['brandList'] = $obj;
         }
-        $this->success('请求成功！', $result);
+        $this->success('请求成功！', $data);
     }
 
     /**
@@ -163,20 +164,7 @@ class Wph extends Api
         return $arr;
     }
 
-    /**
-     * 时间倒计时
-     */
-    function time2string($second){
-        $day = floor($second/(3600*24));
-        $second = $second%(3600*24);//除去整天之后剩余的时间
-        $hour = floor($second/3600);
-        $second = $second%3600;//除去整小时之后剩余的时间 
-        $minute = floor($second/60);
-        $second = $second%60;//除去整分钟之后剩余的时间 
-        //返回字符串
-        // return $day.'天'.$hour.'小时'.$minute.'分'.$second.'秒';
-        return $day.'天';
-    }
+    
 
 
 
