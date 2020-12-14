@@ -156,7 +156,7 @@ class Common extends Api
             $pageIndex = 1;
             do {
                 try {
-                    $list = $this->brandList($areaId, $pageIndex, 20);
+                    $list = $this->brandList('101101', $pageIndex, 20);
                     $pageIndex = $list['pageIndex']?:1;
                     if ($list)
                     {
