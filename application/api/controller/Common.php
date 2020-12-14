@@ -195,7 +195,7 @@ class Common extends Api
                             //存储商品信息
                             $goodsList = object_to_array($v['goods']);
                             foreach ($goodsList as $keys => $vals) {
-                                $goods_info['cateId'] = $cateId;
+                                $goods_info['adId'] = $adId;
                                 $goods_info['goodId'] = $vals['goodId'];
                                 $goods_info['goodImage'] = $vals['goodImage'];
                                 $goods_info['logo'] = $vals['logo'];
