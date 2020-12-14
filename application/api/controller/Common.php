@@ -160,7 +160,7 @@ class Common extends Api
                     $pageIndex = $list['pageIndex']?:1;
                     if ($list)
                     {
-                        $brandList = object_to_array($list['brandList']);
+                        $brandList = object_to_array($list['brandList']); 
                         foreach ($brandList as $k => $v)
                         {
                             //存储品牌信息
