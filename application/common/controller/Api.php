@@ -328,7 +328,7 @@ class Api
         }
         if(is_array($array)) {
             foreach($array as $key=>$value) {
-                $array[$key] = object_array($value);
+                $array[$key] = $this->object_array($value);
             }
         }
         return $array;
