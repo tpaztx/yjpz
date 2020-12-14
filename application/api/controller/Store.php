@@ -68,13 +68,14 @@ class Store extends Api
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
-            $array = [];
-            foreach ($list as $k=>$item){
-                if(in_array($item['adId'],$downIdArray)){
-                    $array[] = $list[$k];
+            $array = $this->object_array($list['brandList']);
+            $array2 = array();
+            foreach ($array as $k=>$item){
+                if(!in_array($item['adId'],$downIdArray)){
+                    $array2[] = $item;
                 }
             }
-            $list = $array;
+            $list['brandList'] = $array2;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -92,20 +93,18 @@ class Store extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
-        dump($downIdArray);exit;
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
             $array = $this->object_array($list['brandList']);
             $array2 = array();
             foreach ($array as $k=>$item){
-                if(!in_array($item['adId'],$downIdArray)){
+                if(in_array($item['adId'],$downIdArray)){
                     $array2[] = $item;
                 }
             }
-            dump($array2);exit;
             $list['brandList'] = $array2;
-            $this->success('请求成功！',$array2);
+            $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
     }
