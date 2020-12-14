@@ -29,4 +29,14 @@ class Search extends Api
         $result = $searchModel->searchLog($this->auth->id);
         $this->success('请求成功！', $result);
     }
+
+    /**
+     * 清空搜索历史记录
+     */
+    public function searchLogDel()
+    {
+        $searchModel = new SearchKeyword;
+        $result = $searchModel->where('user_id', $this->auth->id)->delete();
+        $this->success('请求成功！', $result);
+    }
 }

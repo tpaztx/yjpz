@@ -23,26 +23,26 @@ class Search Extends Model
     /**
      * 新增用户的搜索关键词
      */
-    public function insertKeyWord($uid, $keyWord = '')
-    {
-        $keyWord = $keyWord?:'';
-        if ($keyWord == '') {
-            return false;
-        }
-        $data = self::where(['keyword' => $keyWord, 'user_id' => $uid])->value('id');
-        $result = false;
-        if ($data) {
-            $result = self::where(['keyword' => $keyWord, 'user_id' => $uid])->update(['updatetime' => time()]);
-            $result = true;
-        }else{
-            $result = self::insert(['user_id' => $uid, 'keyword' => $keyWord, 'createtime' => time()]);
-        }
-        if ($result) {
-            return true;
-        }else{
-            return false;
-        }
-    }
+    // public function insertKeyWord($uid, $keyWord = '')
+    // {
+    //     $keyWord = $keyWord?:'';
+    //     if ($keyWord == '') {
+    //         return false;
+    //     }
+    //     $data = self::where(['keyword' => $keyWord, 'user_id' => $uid])->value('id');
+    //     $result = false;
+    //     if ($data) {
+    //         $result = self::where(['keyword' => $keyWord, 'user_id' => $uid])->update(['updatetime' => time()]);
+    //         $result = true;
+    //     }else{
+    //         $result = self::insert(['user_id' => $uid, 'keyword' => $keyWord, 'createtime' => time()]);
+    //     }
+    //     if ($result) {
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
     /**
      * 搜索历史记录
