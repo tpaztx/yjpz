@@ -92,6 +92,7 @@ class Store extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
+        dump($downIdArray);exit;
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
