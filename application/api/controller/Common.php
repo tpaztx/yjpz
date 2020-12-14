@@ -190,7 +190,7 @@ class Common extends Api
                             }else{
                                 db('brand_list')->insert($band_info);
                             }
-                            unset($band_info);
+                            
                             $isHave = 0;
                             //存储商品信息
                             $goodsList = object_to_array($v['goods']);
@@ -208,6 +208,7 @@ class Common extends Api
                                     db('goods_list')->insert($goods_info);
                                 }
                             }
+                            unset($band_info);
                             unset($goods_info);
                         }
 
