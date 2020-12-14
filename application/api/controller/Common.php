@@ -193,7 +193,7 @@ class Common extends Api
                             unset($band_info);
                             $isHave = 0;
                             //存储商品信息
-                            $goodsList = object_to_array($list['goods']);
+                            $goodsList = object_to_array($v['goods']);
                             foreach ($goodsList as $keys => $vals) {
                                 $goods_info['cateId'] = $cateId;
                                 $goods_info['goodId'] = $vals['goodId'];
