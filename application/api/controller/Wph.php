@@ -68,8 +68,8 @@ class Wph extends Api
         $brandListMode = new BrandList;
         $result = $brandListMode::field('id,cateId,cateName')->select();
         foreach ($$result as $key => $val) {
-            $result[$key]['cateId'] = explode($val['cateId'], ',');
-            $result[$key]['cateId'] = explode($val['cateName'], ',');
+            $result[$key]['cateId'] = explode(',', $val['cateId']);
+            $result[$key]['cateId'] = explode(',', $val['cateName']);
         }
         dump($result);die;
         // $this->success('请求成功！', $data);
