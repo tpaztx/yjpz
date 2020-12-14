@@ -115,7 +115,7 @@ class Store extends Api
     public function storeDown()
     {
         $adIds = $this->request->param('adIds');
-        $adIds=implode(',',$adIds);
+        $adIds=explode(',',$adIds);
         $status = $this->request->param('adIds');
         $user = $this->auth->getUser();
         $storeM = new StoreM;
