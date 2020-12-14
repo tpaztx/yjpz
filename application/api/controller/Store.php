@@ -99,7 +99,7 @@ class Store extends Api
             $array2 = array();
             foreach ($array as $k=>$item){
                 if(!in_array($item['adId'],$downIdArray)){
-                    $array2[] = $list[$k];
+                    $array2[] = $item;
                 }
             }
             dump($array2);exit;
