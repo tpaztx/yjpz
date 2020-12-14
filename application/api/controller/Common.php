@@ -183,8 +183,12 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            db('brand_list')->insert($band_info);
-                            dump($band_info);die;
+                            $isHave = db('brand_list')->where('adId', $adId)->count('id');
+                            if ($isHave>0) {
+                                db('brand_list')->where('adId', $adId)->update($band_info);
+                            }else{
+                                db('brand_list')->insert($band_info);
+                            }
                         }
 
                     }
