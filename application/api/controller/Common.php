@@ -11,6 +11,8 @@ use fast\Random;
 use think\Config;
 use think\Hook;
 use app\common\model\Config as Configs;
+use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
+use Osp\Context\InvocationContextFactory;
 
 /**
  * 公共接口
