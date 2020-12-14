@@ -13,6 +13,7 @@ use think\Hook;
 use app\common\model\Config as Configs;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
+use think\db;
 
 /**
  * 公共接口
@@ -182,7 +183,8 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            dump($band_info);die;  
+                            db('brand_list')->insert($band_info);
+                            dump($band_info);die;
                         }
 
                     }
