@@ -66,7 +66,7 @@ class Wph extends Api
         // }
  
         $brandListMode = new BrandList;
-        $result = $brandListMode::field('id,cateId,cateName')->all();
+        $result = $brandListMode::field('id,cateId,cateName')->select();
 
         dump($result);die;
         // $this->success('请求成功！', $data);
