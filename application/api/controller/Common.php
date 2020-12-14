@@ -184,12 +184,12 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            // $isHave = db('brand_list')->where('adId', $adId)->count('id');
-                            // if ($isHave>0) {
-                            //     db('brand_list')->where('adId', $adId)->update($band_info);
-                            // }else{
-                            //     db('brand_list')->insert($band_info);
-                            // }
+                            $isHave = db('brand_list')->where('adId', $adId)->count('id');
+                            if ($isHave>0) {
+                                db('brand_list')->where('adId', $adId)->update($band_info);
+                            }else{
+                                db('brand_list')->insert($band_info);
+                            }
                             unset($band_info);
                             $isHave = 0;
                             //存储商品信息
