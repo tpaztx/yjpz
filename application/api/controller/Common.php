@@ -176,7 +176,9 @@ class Common extends Api
                                     $band_info['cateName'][] = $val['cateName'];
                                 }
                             }
+                            dump($band_info);die;
                         }
+
                     }
                 } catch(\Osp\Exception\OspException $e){
                     $this->error('请求失败，请联系管理员！');
