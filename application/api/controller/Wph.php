@@ -6,7 +6,7 @@ use app\common\controller\Api;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
-use app\common\controller\BrandList;
+use app\common\model\BrandList;
 
 /**
  * 唯品会类目
