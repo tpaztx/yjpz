@@ -102,7 +102,7 @@ class Store extends Api
                     $array2[] = $list[$k];
                 }
             }
-//            exit;
+            dump($array2);exit;
             $list['brandList'] = $array2;
             $this->success('请求成功！',$array2);
         }
