@@ -182,7 +182,7 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            dump($band_info);die; 
+                            dump($band_info);die;  
                         }
 
                     }
