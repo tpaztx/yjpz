@@ -322,7 +322,7 @@ class Api
         $this->request->token();
     }
 
-    function object_array($array) {
+    protected function object_array($array) {
         if(is_object($array)) {
             $array = (array)$array;
         }
