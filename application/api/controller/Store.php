@@ -95,14 +95,15 @@ class Store extends Api
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
-            $array = [];
-            foreach ($list['brandList'] as $k=>$item){
+            $array = $list['brandList'];
+            $array2 = array();
+            foreach ($array as $k=>$item){
                 if(!in_array($item['adId'],$downIdArray)){
-                    $array[] = $list[$k];
+                    $array2[] = $list[$k];
                 }
             }
-            $list['brandList'] = $array;
-            $this->success('请求成功！',$list);
+//            $list['brandList'] = $array2;
+            $this->success('请求成功！',$array2);
         }
         $this->error('无数据！');
     }
