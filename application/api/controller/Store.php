@@ -95,7 +95,7 @@ class Store extends Api
         $vph = new Wph();
         $list = $vph->brandList('101101', $pageIndex, $pageSize);
         if(!empty($list)){
-            $array = $list['brandList'];
+            $array = $this->object_array($list['brandList']);
             $array2 = array();
             foreach ($array as $k=>$item){
                 dump($item['adId']);
