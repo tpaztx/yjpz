@@ -65,7 +65,7 @@ class Wph extends Api
         //     $data = $this->second_array_unique_bykey($data, 'name');
         // }
  
-        $brandListMode = new BrandList;
+        $brandListMode = new BrandList; 
         $result = collection($brandListMode::field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
