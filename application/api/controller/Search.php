@@ -23,7 +23,7 @@ class Search extends Api
     /**
      * 获取用户的搜索历史
      */
-    public function getSerchLog()
+    public function searchLog()
     {
         $searchModel = new SearchKeyword;
         $result = $searchModel->searchLog($this->auth->id);
