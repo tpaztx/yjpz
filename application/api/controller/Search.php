@@ -21,6 +21,47 @@ class Search extends Api
     protected $noNeedRight = ['*'];
 
     /**
+     * 客户端搜索
+     * $star    从第几条数据开始处理分页数据 ++ 之后作为下次分页获取数据的起始点
+     * $pageSize    每次返回的数据数量
+     */
+    public function search()
+    {
+        $keyWord = trim($this->request->request('keyWord'));
+        if (!$keyWord) $this->error(__('Invalid parameters'));
+        $searchModel = new SearchKeyword;
+        //插入用户搜索的历史记录
+        $save_keyWord = $searchModel->insertKeyWord($this->auth->id, $keyWord);
+        if (!$save_keyWord) {
+            $this->error('处理搜索历史记录数据出错，请联系客服！');
+        }
+        $this->success('请求成功'); 
+        // $result = db('merch')->where('shop_name', 'like', '%'.$keyWord.'%')->where('status', 'normal')->select();
+        // if ($result) {
+        //     foreach ($result as $k => $v) {
+        //         $result[$k]['distance'] = GetDistance($v['lat'], $v['lng'], $lat, $lng);
+        //     }
+        //     $result = multi_array_sort($result, 'distance');
+        //     //分页处理
+        //     $pageSize = 5;
+        //     $data = array_slice($result, $star, $pageSize);
+        //     foreach ($data as $k => $v) {
+        //         if ($v['distance'] > 10000) {
+        //             unset($data[$k]);
+        //         }
+        //     }
+        // }
+        // if ($result) {
+        //     if (empty($data)) {
+        //         $this->success('未查询到数据结果！');
+        //     }
+        //     $this->success('请求成功！', ['list' => $data, 'star' => $star+5]);
+        // }else{
+        //     $this->error('请求失败！');
+        // }
+    }
+
+    /**
      * 获取用户的搜索历史
      */
     public function searchLog()
