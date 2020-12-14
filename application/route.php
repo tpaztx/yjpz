@@ -61,5 +61,6 @@ Route::post([
     //已下架品牌
     'api/downBrand'=>'api/store/downBrand',
     //商品上下架
-    'api/storeDown'=>'api/store/storeDown',
+    'api/storeDowns'=>'api/store/storeDown',
+
 ]);
