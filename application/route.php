@@ -49,6 +49,8 @@ Route::post([
     'api/getBrandList' => 'api/wph/getBrandList',
     //搜索历史记录
 	'api/searchLog' => 'api/search/searchLog',
+	// 清空搜索历史记录
+	'api/searchLogDel' => 'api/search/searchLogDel',
 
     //小店-店铺设置
     'api/storeSet'=>'api/store/storeSet',
