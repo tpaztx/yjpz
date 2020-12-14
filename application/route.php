@@ -52,7 +52,7 @@ Route::post([
 	// 清空搜索历史记录
 	'api/searchLogDel' => 'api/search/searchLogDel',
 
-
+  
     //小店-店铺设置
     'api/storeSet'=>'api/store/storeSet',
     //图片上传
