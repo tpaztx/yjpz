@@ -184,14 +184,29 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            dump($band_info);die;
-                            $isHave = db('brand_list')->where('adId', $adId)->count('id');
-                            if ($isHave>0) {
-                                db('brand_list')->where('adId', $adId)->update($band_info);
-                            }else{
-                                db('brand_list')->insert($band_info);
-                            }
+                            // $isHave = db('brand_list')->where('adId', $adId)->count('id');
+                            // if ($isHave>0) {
+                            //     db('brand_list')->where('adId', $adId)->update($band_info);
+                            // }else{
+                            //     db('brand_list')->insert($band_info);
+                            // }
                             unset($band_info);
+                            $isHave = 0;
+                            //存储商品信息
+                            $goodsList = object_to_array($list['goods']);
+                            foreach ($goodsList as $keys => $vals) {
+                                $goods_info['cateId'] = $cateId;
+                                $goods_info['goodId'] = $vals['goodId'];
+                                $goods_info['goodImage'] = $vals['goodImage'];
+                                $goods_info['logo'] = $vals['logo'];
+                                $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
+                                if ($isHave>0) {
+                                    db('goods_list')->where('id', $isHave)->update($goods_info);
+                                }else{
+                                    db('goods_list')->insert($goods_info);
+                                }
+                            }
+                            unset($goods_info);
                         }
 
                     }
