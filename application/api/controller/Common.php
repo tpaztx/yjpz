@@ -17,7 +17,7 @@ use app\common\model\Config as Configs;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList'];
     protected $noNeedRight = '*';
 
     /**
@@ -135,5 +135,80 @@ class Common extends Api
     {
         $data = Configs::where('name', 'start_animation')->value('value');
         return $this->success('请求成功！', $data);
+    }
+
+    /**
+     * 定时拉取品牌信息
+     */
+    public function inputBrandList()
+    {
+        $pageIndex = $page_total = true;
+        $page_total = $this->brandList();
+        $data = [];
+        if ($page_total) {
+            $pageTotal = $page_total['pageTotal'];
+        }
+
+        //页数大于1的情况下循环请求获取数据
+        if ($pageTotal && $pageTotal > 1) {
+            $pageIndex = 1;
+            do {
+                try {
+                    $list = $this->brandList($areaId, $pageIndex, 20);
+                    $pageIndex = $list['pageIndex']?:1;
+                    if ($list)
+                    {
+                        $brandList = object_to_array($list['brandList']);
+                        foreach ($brandList as $k => $v)
+                        {
+                            //存储品牌信息
+                            $adId = $v['adId'];
+                            $band_info['adId'] = $adId;
+                            $band_info['brandName'] = $v['brandName'];
+                            $band_info['brandImage'] = $v['brandImage'];
+                            $band_info['sellTimeFrom'] = $v['sellTimeFrom'];
+                            $band_info['sellTimeTo'] = $v['sellTimeTo'];
+                            if (!empty($v['adCategoryList'])) {
+                                foreach ($v['adCategoryList'] as $key => $val) {
+                                    $band_info['cateId'][] = $val['cateId'];
+                                    $band_info['cateName'][] = $val['cateName'];
+                                }
+                            }
+                        }
+                    }
+                } catch(\Osp\Exception\OspException $e){
+                    $this->error('请求失败，请联系管理员！');
+                }
+                $pageIndex++;
+            } while ($pageIndex <= $pageTotal);
+            // $data = $this->second_array_unique_bykey($data, 'name');
+        }
+        $this->success('定时拉取品牌信息成功');
+    }
+
+    public function brandList($areaId = '101101', $page = 1, $pageSize = 20)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1= new \com\vip\wpc\ospservice\vop\request\WpcBrandListRequest();
+            $request1->areaId = $areaId;
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->page = $page;
+            $request1->pageSize = $pageSize;
+            $list = collection($service->getBrandList($request1))->toArray();
+            if ($list) {
+                // $this->success('请求成功！', $list);
+                return $list;
+            }
+        } catch(\Osp\Exception\OspException $e){
+            $this->error('请求失败，请联系管理员！');
+        }
     }
 }
