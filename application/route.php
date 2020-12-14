@@ -57,4 +57,6 @@ Route::post([
     'api/downBrand'=>'api/store/downBrand',
     //商品上下架
     'api/storeDown'=>'api/store/storeDown',
+
+
 ]);
