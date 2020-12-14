@@ -35,7 +35,7 @@ class Search extends Api
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
-        $this->success('请求成功');
+        $this->success('请求成功'); 
         // $result = db('merch')->where('shop_name', 'like', '%'.$keyWord.'%')->where('status', 'normal')->select();
         // if ($result) {
         //     foreach ($result as $k => $v) {
