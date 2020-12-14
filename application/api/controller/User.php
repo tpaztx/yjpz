@@ -132,25 +132,25 @@ class User extends Api
         //     $this->error(__('Captcha is incorrect'));
         // }
 
-        // 启动事务
-        Db::startTrans();
-        try{
+//        // 启动事务
+//        Db::startTrans();
+//        try{
             $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid'=>$trade_code]);
             $data = ['userinfo' => $this->auth->getUserinfo()];
             Store::create(['user_id'=>$data['id']]);
             // 提交事务
             Db::commit();
-            $ret = true;
-        } catch (\Exception $e) {
-            // 回滚事务
-            Db::rollback();
-            $ret = false;
-        }
-        if ($ret) {
-            $this->success(__('Sign up successful'), $data);
-        } else {
-            $this->error($this->auth->getError());
-        }
+//            $ret = true;
+//        } catch (\Exception $e) {
+//            // 回滚事务
+//            Db::rollback();
+//            $ret = false;
+//        }
+//        if ($ret) {
+//            $this->success(__('Sign up successful'), $data);
+//        } else {
+//            $this->error($this->auth->getError());
+//        }
     }
 
     /**
