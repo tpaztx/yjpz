@@ -7,6 +7,7 @@ namespace app\api\controller;
 use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use app\admin\model\Store as StoreM;
+use think\Db;
 
 class Store extends Api
 {
@@ -107,5 +108,40 @@ class Store extends Api
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
+    }
+    /**
+     * 上下架商品
+     */
+    public function storeDown()
+    {
+        $adIds = $this->request->param('adIds');
+        $adIds=implode(',',$adIds);
+        $status = $this->request->param('adIds');
+        $user = $this->auth->getUser();
+        $storeM = new StoreM;
+        $store= $storeM->getStore($user['id']);
+
+            // 启动事务
+            Db::startTrans();
+            try{
+                foreach ($adIds as $adId){
+                    if($status == 1){
+                        StoreDown::where(['store_id'=>$store['id'],'ad_id'=>$adId])->delete();
+                    }else if($store == 2){
+                        StoreDown::create(['store_id'=>$store['id'],'ad_id'=>$adId]);
+                    }
+                }
+                // 提交事务
+                Db::commit();
+                $res = true;
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                $res = false;
+            }
+            if(!$res){
+                $this->error('操作失败！');
+            }
+            $this->success('操作成功！');
     }
 }
