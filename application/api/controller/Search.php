@@ -25,7 +25,7 @@ class Search extends Api
      * $star    从第几条数据开始处理分页数据 ++ 之后作为下次分页获取数据的起始点
      * $pageSize    每次返回的数据数量
      */
-    public function searchMerch()
+    public function search()
     {
         $keyWord = trim($this->request->request('keyWord'));
         if (!$keyWord) $this->error(__('Invalid parameters'));
@@ -35,7 +35,7 @@ class Search extends Api
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
-        
+        $this->success('请求成功');
         // $result = db('merch')->where('shop_name', 'like', '%'.$keyWord.'%')->where('status', 'normal')->select();
         // if ($result) {
         //     foreach ($result as $k => $v) {

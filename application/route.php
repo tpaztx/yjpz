@@ -51,6 +51,8 @@ Route::post([
 	'api/searchLog' => 'api/search/searchLog',
 	// 清空搜索历史记录
 	'api/searchLogDel' => 'api/search/searchLogDel',
+	//搜索
+	'api/search' => 'api/search/search',
 
   
     //小店-店铺设置
