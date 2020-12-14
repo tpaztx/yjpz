@@ -110,7 +110,7 @@ class Store extends Api
         $this->error('无数据！');
     }
     /**
-     * 上下架商品
+     * 上下架商品00
      */
     public function storeDowns()
     {
