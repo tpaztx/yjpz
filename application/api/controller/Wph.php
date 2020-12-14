@@ -64,7 +64,7 @@ class Wph extends Api
         //     } while ($pageIndex <= $pageTotal);
         //     $data = $this->second_array_unique_bykey($data, 'name');
         // }
-
+ 
         $brandListMode = new BrandList;
         $result = $brandListMode::field('id,cateId,cateName')->all();
 
