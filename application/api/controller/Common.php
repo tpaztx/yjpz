@@ -174,11 +174,12 @@ class Common extends Api
                             $band_info['cateId'][] = $band_info['cateName'][] = '';
                             if (!empty($v['adCategoryList'])) {
                                 foreach ($v['adCategoryList'] as $key => $val) {
-                                    $band_info['cateId'] = $val['cateId']?array($val['cateId']):'';
-                                    $band_info['cateName'] = $val['cateName']?array($val['cateName']):'';
+                                    $band_info['cateId'][$key] = $val['cateId']?:'';
+                                    $band_info['cateName'][$key] = $val['cateName']?:'';
                                 }
                             }
                             if ($band_info['cateId'] && !empty($band_info['cateId'])) {
+                                dump($band_info['cateId']);die;
                                 $band_info['cateId'] = implode(',', $band_info['cateId']);
                             }
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
