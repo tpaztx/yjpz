@@ -24,7 +24,7 @@ use think\Route;
 // 	],
 // ];
 Route::post([
-	/*基础配置*/
+	/* 基础配置 */
 	//启动页
 	'api/getStartImage' => 'api/common/getStartImage',
 	//注册
@@ -41,10 +41,15 @@ Route::post([
 	'api/getCateGroyList' => 'api/wph/getCateGroyList',
 	//获取用户地址
 	'api/getSelectAddress' => 'api/wph/getSelectAddress',
+
+	/* 客户端 */
 	//首页-banner轮播
 	'api/getBannnerList' => 'api/index/getBannnerList',
 	//首页-品牌列表
     'api/getBrandList' => 'api/wph/getBrandList',
+    //搜索历史记录
+	'api/searchLog' => 'api/search/searchLog',
+
     //小店-店铺设置
     'api/storeSet'=>'api/store/storeSet',
     //图片上传
