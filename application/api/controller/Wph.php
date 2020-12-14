@@ -6,6 +6,7 @@ use app\common\controller\Api;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
+use app\common\controller\BrandList;
 
 /**
  * 唯品会类目
@@ -35,34 +36,39 @@ class Wph extends Api
             $pageTotal = $page_total['pageTotal'];
         }
         //页数大于1的情况下循环请求获取数据
-        if ($pageTotal && $pageTotal > 1) {
-            $pageIndex = 1;
-            do {
-                try {
-                    $list = $this->brandList($areaId, $pageIndex, 20);
-                    $pageIndex = $list['pageIndex']?:1;
-                    if ($list)
-                    {
-                        $brandList = object_to_array($list['brandList']);
-                        foreach ($brandList as $k => $v) {
-                            if (!empty($v['adCategoryList'])) {
-                                foreach ($v['adCategoryList'] as $key => $val) {
-                                    $data[] = [
-                                        'name' => $val['cateName'],
-                                        'cateid' => $val['cateId'],
-                                        'total' => count($v['goods']),
-                                    ];
-                                }
-                            }
-                        }
-                    }
-                } catch(\Osp\Exception\OspException $e){
-                    $this->error('请求失败，请联系管理员！');
-                }
-                $pageIndex++;
-            } while ($pageIndex <= $pageTotal);
-            $data = $this->second_array_unique_bykey($data, 'name');
-        }
+        // if ($pageTotal && $pageTotal > 1) {
+        //     $pageIndex = 1;
+        //     do {
+        //         try {
+        //             $list = $this->brandList($areaId, $pageIndex, 20);
+        //             $pageIndex = $list['pageIndex']?:1;
+        //             if ($list)
+        //             {
+        //                 $brandList = object_to_array($list['brandList']);
+        //                 foreach ($brandList as $k => $v) {
+        //                     if (!empty($v['adCategoryList'])) {
+        //                         foreach ($v['adCategoryList'] as $key => $val) {
+        //                             $data[] = [
+        //                                 'name' => $val['cateName'],
+        //                                 'cateid' => $val['cateId'],
+        //                                 'total' => count($v['goods']),
+        //                             ];
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         } catch(\Osp\Exception\OspException $e){
+        //             $this->error('请求失败，请联系管理员！');
+        //         }
+        //         $pageIndex++;
+        //     } while ($pageIndex <= $pageTotal);
+        //     $data = $this->second_array_unique_bykey($data, 'name');
+        // }
+
+        $brandListMode = new BrandList;
+        $result = $brandListMode::field('id,cateId,cateName')->all();
+
+        dump($result);die;
         $this->success('请求成功！', $data);
     }
 
