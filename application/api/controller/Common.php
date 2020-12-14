@@ -176,7 +176,7 @@ class Common extends Api
                                     $band_info['cateName'][] = $val['cateName'];
                                 }
                             }
-                            dump($band_info);die;
+                            dump($band_info);die; 
                         }
 
                     }
