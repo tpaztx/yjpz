@@ -179,7 +179,9 @@ class Common extends Api
                                 }
                             }
                             if ($band_info['cateId'] && !empty($band_info['cateId'])) {
+
                                 $band_info['cateId'] = implode(',', $band_info['cateId']);
+                                dump($band_info['cateId']);die; 
                             }
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
@@ -192,7 +194,7 @@ class Common extends Api
                             }
                             unset($band_info);
                             $isHave = 0;
-                            //存储商品信息 
+                            //存储商品信息
                             $goodsList = object_to_array($v['goods']);
                             foreach ($goodsList as $keys => $vals) {
                                 $goods_info['adId'] = $adId;
