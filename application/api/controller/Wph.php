@@ -7,6 +7,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
 use app\common\model\BrandList;
+use app\common\model\GoodsList;
 
 /**
  * 唯品会类目
@@ -70,8 +71,12 @@ class Wph extends Api
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
             $result[$key]['cateName'] = explode(',', $val['cateName']);
+            $result[$key]['cateName'] = 0;
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
+        foreach ($result as $k => $v) {
+            $result[$k]['count'] = GoodsList::where("cateId='".$v['cateId']."'")->count('id');
+        }
         dump($result);die;
         // $this->success('请求成功！', $data);
     }
