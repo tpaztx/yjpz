@@ -110,13 +110,13 @@ class Store extends Api
         $this->error('无数据！');
     }
     /**
-     * 上下架商品00
+     * 上下架商品
      */
     public function storeDown()
     {
         $adIds = $this->request->param('adIds');
         $adIds=explode(',',$adIds);
-        $status = $this->request->param('adIds');
+        $status = $this->request->param('status');
         $user = $this->auth->getUser();
         $storeM = new StoreM;
         $store= $storeM->getStore($user['id']);
