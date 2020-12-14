@@ -127,7 +127,7 @@ class Store extends Api
                 foreach ($adIds as $adId){
                     if($status == 1){
                         StoreDown::where(['store_id'=>$store['id'],'ad_id'=>$adId])->delete();
-                    }else if($store == 2){
+                    }else if($status == 2){
                         StoreDown::create(['store_id'=>$store['id'],'ad_id'=>$adId]);
                     }
                 }
