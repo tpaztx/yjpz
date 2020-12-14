@@ -98,13 +98,12 @@ class Store extends Api
             $array = $this->object_array($list['brandList']);
             $array2 = array();
             foreach ($array as $k=>$item){
-                dump($item['adId']);
-//                if(!in_array($item['adId'],$downIdArray)){
-//                    $array2[] = $list[$k];
-//                }
+                if(!in_array($item['adId'],$downIdArray)){
+                    $array2[] = $list[$k];
+                }
             }
-            exit;
-//            $list['brandList'] = $array2;
+//            exit;
+            $list['brandList'] = $array2;
             $this->success('请求成功！',$array2);
         }
         $this->error('无数据！');
