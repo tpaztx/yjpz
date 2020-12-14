@@ -176,6 +176,12 @@ class Common extends Api
                                     $band_info['cateName'][] = $val['cateName'];
                                 }
                             }
+                            if ($band_info['cateId'] && !empty($band_info['cateId'])) {
+                                $band_info['cateId'] = implode(',', $band_info['cateId']);
+                            }
+                            if ($band_info['cateName'] && !empty($band_info['cateName'])) {
+                                $band_info['cateName'] = implode(',', $band_info['cateName']);
+                            }
                             dump($band_info);die; 
                         }
 
