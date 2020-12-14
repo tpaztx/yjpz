@@ -199,6 +199,7 @@ class Common extends Api
                                 $goods_info['goodId'] = $vals['goodId'];
                                 $goods_info['goodImage'] = $vals['goodImage'];
                                 $goods_info['logo'] = $vals['logo'];
+                                $goods_info['timelog'] = time();
                                 $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
                                 if ($isHave>0) {
                                     db('goods_list')->where('id', $isHave)->update($goods_info);
