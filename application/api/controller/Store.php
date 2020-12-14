@@ -112,7 +112,7 @@ class Store extends Api
     /**
      * 上下架商品00
      */
-    public function storeDowns()
+    public function storeDown()
     {
         $adIds = $this->request->param('adIds');
         $adIds=implode(',',$adIds);
