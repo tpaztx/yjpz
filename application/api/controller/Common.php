@@ -179,7 +179,6 @@ class Common extends Api
                                 }
                             }
                             if ($band_info['cateId'] && !empty($band_info['cateId'])) {
-                                // dump($band_info['cateId']);die;
                                 $band_info['cateId'] = implode(',', $band_info['cateId']);
                             }
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
@@ -201,6 +200,7 @@ class Common extends Api
                                 $goods_info['goodImage'] = $vals['goodImage'];
                                 $goods_info['logo'] = $vals['logo'];
                                 $goods_info['timelog'] = time();
+                                $goods_info['cateId'] = $band_info['cateId'];
                                 $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
                                 if ($isHave>0) {
                                     db('goods_list')->where('id', $isHave)->update($goods_info);
