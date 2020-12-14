@@ -171,6 +171,7 @@ class Common extends Api
                             $band_info['brandImage'] = $v['brandImage'];
                             $band_info['sellTimeFrom'] = $v['sellTimeFrom'];
                             $band_info['sellTimeTo'] = $v['sellTimeTo'];
+                            $band_info['cateId'][] = $band_info['cateName'][] = '';
                             if (!empty($v['adCategoryList'])) {
                                 foreach ($v['adCategoryList'] as $key => $val) {
                                     $band_info['cateId'][] = $val['cateId']?:'';
@@ -183,13 +184,13 @@ class Common extends Api
                             if ($band_info['cateName'] && !empty($band_info['cateName'])) {
                                 $band_info['cateName'] = implode(',', $band_info['cateName']);
                             }
-                            dump($band_info);die;
                             $isHave = db('brand_list')->where('adId', $adId)->count('id');
                             if ($isHave>0) {
                                 db('brand_list')->where('adId', $adId)->update($band_info);
                             }else{
                                 db('brand_list')->insert($band_info);
                             }
+                            unset($band_info);
                         }
 
                     }
