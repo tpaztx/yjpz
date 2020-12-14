@@ -168,10 +168,6 @@ class Wph extends Api
         {
             if(in_array($v[$key], $tmp_arr))//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
             {
-                $name = array_column($arr , $key);
-                $keys = array_search($v[$key], $name);
-                // dump($arr);die; 
-                $arr[0]['total'] += $arr[$k]['total'];
                 unset($arr[$k]);
             }else {
                 $tmp_arr[$k] = $v[$key];
