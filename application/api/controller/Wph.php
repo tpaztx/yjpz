@@ -66,7 +66,7 @@ class Wph extends Api
             $request1->pageSize = $pageSize;
             $list = collection($service->getBrandList($request1))->toArray();
             if ($list) {
-                // $this->success('请求成功！', $list);
+                $this->success('请求成功！', $list);
                 return $list;
             }
         } catch(\Osp\Exception\OspException $e){
@@ -145,7 +145,8 @@ class Wph extends Api
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $result = $this->goodsList($pageIndex, $pageSize);
+        $id = $this->request->request('id')?:0;
+        $result = $this->goodsList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
@@ -157,7 +158,7 @@ class Wph extends Api
     /**
      * 返回商品数据信息 
      */
-    public function goodsList($page, $pageSize)
+    public function goodsList($page, $pageSize, $cid)
     {
         $result = $this->brandList($page, $pageSize);
         try {
