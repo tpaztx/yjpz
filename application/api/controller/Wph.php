@@ -166,6 +166,7 @@ class Wph extends Api
                                 ->field('g.goodImage,count(g.id) as countTotal')
                                 ->limit($page*$pageSize, $pageSize)
                                 ->select();
+                                dump($result);die;
         } catch (Exception $e) {
             $this->error('请求失败！', $e->getMesssges);
         }
