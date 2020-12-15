@@ -7,6 +7,7 @@ namespace app\api\controller;
 use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use app\admin\model\Store as StoreM;
+use app\common\model\BrandList;
 use think\Db;
 
 class Store extends Api
@@ -58,25 +59,23 @@ class Store extends Api
      */
     public function upBrand()
     {
-        $pageIndex = $this->request->request('pageIndex')?:1;
-        $pageSize = $this->request->request('pageSize')?:10;
+        $limit = $this->request->request('limit')?:10;
         $user = $this->auth->getUser();
         $storeM = new StoreM;
         $store= $storeM->getStore($user['id']);
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
-        $vph = new Wph();
-        $list = $vph->brandList('101101', $pageIndex, $pageSize);
+        $time = time();
+        $list = BrandList::where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
-            $array = $this->object_array($list['brandList']);
-            $array2 = array();
-            foreach ($array as $k=>$item){
+            $array = array();
+            foreach ($list as $k=>$item){
                 if(!in_array($item['adId'],$downIdArray)){
-                    $array2[] = $item;
+                    $array[] = $item;
                 }
             }
-            $list['brandList'] = $array2;
+            $list['brandList'] = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -86,16 +85,15 @@ class Store extends Api
      */
     public function downBrand()
     {
-        $pageIndex = $this->request->request('pageIndex')?:1;
-        $pageSize = $this->request->request('pageSize')?:10;
+        $limit = $this->request->request('limit')?:10;
         $user = $this->auth->getUser();
         $storeM = new StoreM;
         $store= $storeM->getStore($user['id']);
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
-        $vph = new Wph();
-        $list = $vph->brandList('101101', $pageIndex, $pageSize);
+        $time = time();
+        $list = BrandList::where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
             $array = $this->object_array($list['brandList']);
             $array2 = array();
