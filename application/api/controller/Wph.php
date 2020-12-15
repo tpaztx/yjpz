@@ -87,7 +87,7 @@ class Wph extends Api
                 $result = BrandList::where('cateId', 'in', $cid)->limit($page*$pageSize, $pageSize)->select();
             }
             return $result;
-        } catch(\Osp\Exception\OspException $e){
+        } catch(Exception $e){
             $this->error('请求失败，请联系管理员！');
         }
     }
@@ -136,6 +136,40 @@ class Wph extends Api
             }
         }
         $this->success('请求成功！', $result);
+    }
+
+    /**
+     * 商品列表
+     */
+    public function getGoodsList()
+    {
+        $pageIndex = $this->request->request('pageIndex')?:1;
+        $pageSize = $this->request->request('pageSize')?:10;
+        $result = $this->goodsList($pageIndex, $pageSize);
+        if ($result) {
+            foreach ($result as $k => $v) {
+                $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
+            }
+        }
+        $this->success('请求成功！', $result);
+    }
+
+    /**
+     * 返回商品数据信息
+     */
+    public function goodsList($page, $pageSize)
+    {
+        $result = '';
+        try {
+            $result = GoodsList::alias('g')->join('brand_list b', 'g.adId=b.adId', 'left')
+                                ->field('b.id,b.brandName,b.brandImage,b.sellTimeTo')
+                                ->field('g.goodImage,count(g.id) as countTotal')
+                                ->limit($page*$pageSize, $pageSize)
+                                ->select();
+        } catch (Exception $e) {
+            $this->error('请求失败！', $e->getMesssges);
+        }
+        return $result;
     }
 
     /** 

@@ -47,6 +47,8 @@ Route::post([
 	'api/getBannnerList' => 'api/index/getBannnerList',
 	//首页-品牌列表
     'api/getBrandList' => 'api/wph/getBrandList',
+    //首页-商品列表
+    'api/getGoodsList' => 'api/wph/getGoodsList',
     //搜索历史记录
 	'api/searchLog' => 'api/search/searchLog',
 	// 清空搜索历史记录
