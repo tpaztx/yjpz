@@ -74,7 +74,7 @@ class Wph extends Api
             $result[$key]['cateName'] = explode(',', $val['cateName']);
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
-        dump($result);die;
+        // dump($result);die;
         foreach ($result as $k => $v) {
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
