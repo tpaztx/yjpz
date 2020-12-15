@@ -72,13 +72,15 @@ class Wph extends Api
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
             $result[$key]['cateName'] = explode(',', $val['cateName']);
-            $result[$key]['cateName'] = 0;
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
+        dump($result);die;
         foreach ($result as $k => $v) {
+            $result[$key]['cateId'] = $v['cateId'];
+            $result[$key]['cateName'] = $v['cateName'];
             $result[$k]['count'] = $GoodsListModel::where('cateId', 'in', $v['cateId'])->count('id');
         }
-        // dump($result);die;
+        
         $this->success('请求成功！', $result);
     }
 
