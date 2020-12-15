@@ -120,7 +120,7 @@ class Wph extends Api
     }
 
     /**
-     * 品牌列表
+     * 品牌列表 
      */
     public function getBrandList()
     {
