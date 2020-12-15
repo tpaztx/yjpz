@@ -76,7 +76,9 @@ class Wph extends Api
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
         foreach ($result as $k => $v) {
-            $result[$k]['count'] = $GoodsListModel::where("cateId='".$v['cateId']."'")->count('id');
+            $count = $GoodsListModel::where("cateId='".$v['cateId']."'")->count('id');
+            dump($count);die;
+            $result[$k]['count'] = $count;
         }
         dump($result);die;
         // $this->success('请求成功！', $data);
