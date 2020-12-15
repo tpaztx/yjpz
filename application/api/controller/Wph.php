@@ -160,7 +160,7 @@ class Wph extends Api
      */
     public function goodsList($page, $pageSize, $cid)
     {
-        $result = $this->brandList($page, $pageSize);
+        $result = $this->brandList($page, $pageSize, $cid);
         try {
             foreach ($result as $k => $v) {
                 $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->limit(5)->select();
