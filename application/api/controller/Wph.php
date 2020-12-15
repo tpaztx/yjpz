@@ -129,21 +129,9 @@ class Wph extends Api
         $id = $this->request->request('id')?:0;
         $result = $this->brandList('101101', $pageIndex, $pageSize, $id);
         if ($result) {
-            // $data['pageIndex'] = $result['pageIndex'];
-            // $data['pageSize'] = $result['pageSize'];
-            // $data['pageTotal'] = $result['pageTotal'];
-            // $data['totalNum'] = $result['totalNum'];
-            // $brandList = object_to_array($result['brandList']);
-            // foreach ($brandList as $k => $v) {
-            //     $obj[] = [
-            //         'adId' => $v['adId'],
-            //         'brandName' => $v['brandName'],
-            //         'brandImage' => $v['brandImage'],
-            //         'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
-            //         'goods' => $v['goods'],
-            //     ];
-            // }
-            // $data['brandList'] = $obj;
+            foreach ($result as $k => $v) {
+                $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
+            }
         }
         $this->success('请求成功！', $result);
     }
