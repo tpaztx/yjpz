@@ -132,6 +132,7 @@ class Wph extends Api
             foreach ($result as $k => $v) {
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
+            dump($result);die;
         }
         $this->success('请求成功！', $result);
     }
