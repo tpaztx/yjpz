@@ -78,8 +78,8 @@ class Wph extends Api
         foreach ($result as $k => $v) {
             $result[$k]['count'] = $GoodsListModel::where('cateId', 'in', $v['cateId'])->count('id');
         }
-        dump($result);die;
-        // $this->success('请求成功！', $data);
+        // dump($result);die;
+        $this->success('请求成功！', $result);
     }
 
     /**
