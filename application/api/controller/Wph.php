@@ -155,7 +155,7 @@ class Wph extends Api
     }
 
     /**
-     * 返回商品数据信息
+     * 返回商品数据信息 
      */
     public function goodsList($page, $pageSize)
     {
