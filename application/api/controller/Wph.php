@@ -86,7 +86,7 @@ class Wph extends Api
             }else{
                 $result = BrandList::where('cateId', 'in', $cid)->limit($page*$pageSize, $pageSize)->select();
             }
-            $this->success('请求成功！',$result);
+            return $result;
         } catch(\Osp\Exception\OspException $e){
             $this->error('请求失败，请联系管理员！');
         }
@@ -135,7 +135,6 @@ class Wph extends Api
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
         }
-        dump('this here'); 
         dump($result);die; 
         $this->success('请求成功！', $result);
     }
