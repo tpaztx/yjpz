@@ -48,7 +48,7 @@ class Wph extends Api
     /**
      * 返回品牌数据
      */
-    public function brandList($areaId = '101101', $page = 1, $pageSize = 20)
+    public function brandLists($areaId = '101101', $page = 1, $pageSize = 20)
     {
         try {
             $service = WpcVopOspServiceClient::getService();
@@ -73,6 +73,26 @@ class Wph extends Api
             $this->error('请求失败，请联系管理员！');
         }
     }
+
+    /**
+     * 返回品牌数据
+     */
+    public function brandList($areaId = '101101', $page = 1, $pageSize = 20, $cid = 0)
+    {
+        $result = '';
+        try {
+            if ($cid == 0) {
+                $result = BrandList::limit($page*$pageSize, $pageSize)->select();
+            }else{
+                $result = BrandList::where('cateId', 'in', $cid)->limit($page*$pageSize, $pageSize)->select();
+            }
+            $this->success('请求成功！',$result);
+        } catch(\Osp\Exception\OspException $e){
+            $this->error('请求失败，请联系管理员！');
+        }
+    }
+
+
 
     /**
      * 获取用户定位
@@ -100,31 +120,32 @@ class Wph extends Api
     }
 
     /**
-     * 品牌列表00
+     * 品牌列表
      */
     public function getBrandList()
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $result = $this->brandList('101101', $pageIndex, $pageSize);
+        $id = $this->request->request('id')?:0;
+        $result = $this->brandList('101101', $pageIndex, $pageSize, $id);
         if ($result) {
-            $data['pageIndex'] = $result['pageIndex'];
-            $data['pageSize'] = $result['pageSize'];
-            $data['pageTotal'] = $result['pageTotal'];
-            $data['totalNum'] = $result['totalNum'];
-            $brandList = object_to_array($result['brandList']);
-            foreach ($brandList as $k => $v) {
-                $obj[] = [
-                    'adId' => $v['adId'],
-                    'brandName' => $v['brandName'],
-                    'brandImage' => $v['brandImage'],
-                    'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
-                    'goods' => $v['goods'],
-                ];
-            }
-            $data['brandList'] = $obj;
+            // $data['pageIndex'] = $result['pageIndex'];
+            // $data['pageSize'] = $result['pageSize'];
+            // $data['pageTotal'] = $result['pageTotal'];
+            // $data['totalNum'] = $result['totalNum'];
+            // $brandList = object_to_array($result['brandList']);
+            // foreach ($brandList as $k => $v) {
+            //     $obj[] = [
+            //         'adId' => $v['adId'],
+            //         'brandName' => $v['brandName'],
+            //         'brandImage' => $v['brandImage'],
+            //         'endTime' => time2string(strtotime($v['sellTimeTo']) - time()),
+            //         'goods' => $v['goods'],
+            //     ];
+            // }
+            // $data['brandList'] = $obj;
         }
-        $this->success('请求成功！', $data);
+        $this->success('请求成功！', $result);
     }
 
     /** 
