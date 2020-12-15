@@ -67,6 +67,7 @@ class Wph extends Api
         // }
  
         $brandListMode = new BrandList; 
+        $GoodsListModel = new GoodsList;
         $result = collection($brandListMode::field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
@@ -75,7 +76,7 @@ class Wph extends Api
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
         foreach ($result as $k => $v) {
-            $result[$k]['count'] = 10;
+            $result[$k]['count'] = $GoodsListModel::where("cateId='".$v['cateId']."'")->count('id');
         }
         dump($result);die;
         // $this->success('请求成功！', $data);
