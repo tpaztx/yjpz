@@ -28,44 +28,6 @@ class Wph extends Api
      */
     public function getCateGroyList()
     {
-        $areaId = $this->request->request('areaId')?:'';
-        //先获取数据总页数
-        $pageIndex = $page_total = true;
-        $page_total = $this->brandList();
-        $data = [];
-        if ($page_total) {
-            $pageTotal = $page_total['pageTotal'];
-        }
-        //页数大于1的情况下循环请求获取数据
-        // if ($pageTotal && $pageTotal > 1) {
-        //     $pageIndex = 1;
-        //     do {
-        //         try {
-        //             $list = $this->brandList($areaId, $pageIndex, 20);
-        //             $pageIndex = $list['pageIndex']?:1;
-        //             if ($list)
-        //             {
-        //                 $brandList = object_to_array($list['brandList']);
-        //                 foreach ($brandList as $k => $v) {
-        //                     if (!empty($v['adCategoryList'])) {
-        //                         foreach ($v['adCategoryList'] as $key => $val) {
-        //                             $data[] = [
-        //                                 'name' => $val['cateName'],
-        //                                 'cateid' => $val['cateId'],
-        //                                 'total' => count($v['goods']),
-        //                             ];
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         } catch(\Osp\Exception\OspException $e){
-        //             $this->error('请求失败，请联系管理员！');
-        //         }
-        //         $pageIndex++;
-        //     } while ($pageIndex <= $pageTotal);
-        //     $data = $this->second_array_unique_bykey($data, 'name');
-        // }
- 
         $brandListMode = new BrandList; 
         $GoodsListModel = new GoodsList;
         $result = collection($brandListMode::field('id,cateId,cateName')->select())->toArray();
@@ -74,7 +36,6 @@ class Wph extends Api
             $result[$key]['cateName'] = explode(',', $val['cateName']);
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
-        // dump($result);die;
         foreach ($result as $k => $v) {
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
@@ -96,7 +57,7 @@ class Wph extends Api
             $ctx->setAppSecret(Config::get('wph.AppSecret'));
             $ctx->setAppURL("https://gw.vipapis.com/");
             $ctx->setLanguage("zh");
-            $request1= new \com\vip\wpc\ospservice\vop\request\WpcBrandListRequest();
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcBrandListRequest();
             $request1->areaId = $areaId;
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
