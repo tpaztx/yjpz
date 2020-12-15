@@ -77,14 +77,14 @@ class Wph extends Api
     /**
      * 返回品牌数据
      */
-    public function brandList($areaId = '101101', $page = 1, $pageSize = 20, $cid = 0)
+    public function brandList($page = 1, $pageSize = 20, $cid = 0)
     {
         $result = '';
         try {
             if ($cid == 0) {
-                $result = BrandList::limit($page*$pageSize, $pageSize)->select();
+                $result = BrandList::limit(($page - 1)*$pageSize, $pageSize)->select();
             }else{
-                $result = BrandList::where('cateId', 'in', $cid)->limit($page*$pageSize, $pageSize)->select();
+                $result = BrandList::where('cateId', 'in', $cid)->limit(($page - 1)*$pageSize, $pageSize)->select();
             }
             return $result;
         } catch(Exception $e){
@@ -159,15 +159,13 @@ class Wph extends Api
      */
     public function goodsList($page, $pageSize)
     {
-        $result = '';
+        $result = $this->brandList($page, $pageSize);
         try {
-            $result = GoodsList::alias('g')->join('brand_list b', 'g.adId=b.adId', 'left')
-                                ->field('b.id,b.brandName,b.brandImage,b.sellTimeTo')
-                                ->field('g.goodImage,count(g.id) as countTotal')
-                                ->limit($page*$pageSize, $pageSize)
-                                ->select();
-                                dump(GoodsList::getLastSQL());die;
-                                dump($result);die;
+            foreach ($result as $k => $v) {
+                $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->select();
+                $result[$k]['goods'] = $goods;
+                $result[$k]['godosTotal'] = count($goods);
+            }
         } catch (Exception $e) {
             $this->error('请求失败！', $e->getMesssges);
         }
