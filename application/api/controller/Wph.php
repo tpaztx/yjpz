@@ -135,7 +135,7 @@ class Wph extends Api
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
         }
-        dump('this here');
+        dump('this here'); 
         dump($result);die; 
         $this->success('请求成功！', $result);
     }
