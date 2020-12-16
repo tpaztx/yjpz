@@ -15,7 +15,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
-use think\Cookie;
+use think\Cache;
 use think\Log;
 
 /**
@@ -256,17 +256,17 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        ignore_user_abort(true);
-        set_time_limit(0);
+        // ignore_user_abort(true);
+        // set_time_limit(0);
         $brandListModel = new BrandList;
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         $data = [];
         //设置循环节点
-        if (Cookie::get('brandNum')) {
-            $brandNum = Cookie::get('brandNum');
+        if (Cache::get('brandNum')) {
+            $brandNum = Cache::get('brandNum');
         }else{
-            Cookie::set('brandNum', 0);
-            $brandNum = Cookie::get('brandNum');
+            Cache::set('brandNum', 0);
+            $brandNum = Cache::get('brandNum');
         }
         $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
         if ($adId && !empty($adId)) {
@@ -279,9 +279,9 @@ class Common extends Api
                 }
                 if ($pageTotal && $pageTotal > 1)
                 {
-                    Cookie::set('goods_index', 1);
+                    Cache::set('goods_index', 1);
                     do {
-                        $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        $goods = $this->goodsListWph('', Cache::get('goods_index'), 20, $v['adId']);
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
@@ -302,16 +302,16 @@ class Common extends Api
                                 db('goods_list')->insert($goods_info);
                             }
                         }
-                        Cookie::set('goods_index', Cookie::get('goods_index') + 1);
-                    } while (Cookie::get('goods_index') <= 10);
+                        Cache::set('goods_index', Cache::get('goods_index') + 1);
+                    } while (Cache::get('goods_index') <= 10);
                 }
-                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
-                Cookie::set('brandNum', Cookie::get('brandNum') + 1);
+                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
+                Cache::set('brandNum', Cache::get('brandNum') + 1);
             }
             // sleep(60);
             // $this->inputGoodsList();
         }else{
-            Cookie::set('brandNum', 0);
+            Cache::set('brandNum', 0);
             $this->inputGoodsList();
         }
     }
