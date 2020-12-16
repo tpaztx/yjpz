@@ -257,7 +257,7 @@ class Common extends Api
     public function inputGoodsList()
     {
         $brandListModel = new BrandList;
-        $pageIndex = $page_total = $brandNum = true;
+        $pageIndex = $page_total = $brandNum = $brandAdId = true;
         $data = [];
         //设置循环节点
         if (Cookie::get('brandNum')) {
@@ -271,6 +271,7 @@ class Common extends Api
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
+                $brandAdId = $v['adId'];
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 if ($page_total) { 
                     $pageTotal = $page_total['pageTotal'];
@@ -283,6 +284,7 @@ class Common extends Api
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
+
                             $goods_info['adId'] = $v['adId'];
                             $goods_info['goodId'] = $val['goodId'];
                             $goods_info['goodImage'] = $val['goodImage'];
@@ -304,8 +306,8 @@ class Common extends Api
                     } while (Cookie::get('goods_index') <= 10);
                 }
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
-                echo "成功执行！". '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum');
             }
+            echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Cookie::get('brandNum');
             Cookie::set('brandNum', Cookie::get('brandNum') + 1);
         }else{
             Cookie::set('brandNum', 0);
