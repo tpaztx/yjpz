@@ -217,7 +217,7 @@ class Common extends Api
                 } catch(\Osp\Exception\OspException $e){
                     $this->error('请求失败，请联系管理员！');
                 }
-                Cookie::set('brand_index', Cookie::get('brand_index') + 1)
+                Cookie::set('brand_index', Cookie::get('brand_index') + 1);
             } while (Cookie::get('brand_index') <= $pageTotal);
             // $data = $this->second_array_unique_bykey($data, 'name');
         }
