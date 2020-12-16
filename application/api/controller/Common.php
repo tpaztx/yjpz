@@ -256,6 +256,7 @@ class Common extends Api
     public function inputGoodsList()
     {
         ignore_user_abort(true);
+        set_time_limit(0);
         $brandListModel = new BrandList;
         $pageIndex = $page_total = true;
         $data = [];
@@ -294,6 +295,7 @@ class Common extends Api
                         Cookie::set('goods_index', Cookie::get('goods_index') + 1);
                     } while (Cookie::get('goods_index') <= 10);
                 }
+                Log::write('执行类目ID：'.$v['adId']);
             }
         }
     }
