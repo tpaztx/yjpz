@@ -306,9 +306,8 @@ class Common extends Api
                     } while (Cookie::get('goods_index') <= 10);
                 }
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
+                Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             }
-            echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Cookie::get('brandNum');
-            Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             sleep(180);
             $this->inputGoodsList();
         }else{
@@ -339,7 +338,7 @@ class Common extends Api
             $request1->adId = $adId;
             $list = collection($service->getGoodsList($request1))->toArray();
             if ($list) {
-                // $this->success('请求成功！', $list);
+                $this->success('请求成功！', $list);
                 return $list;
             }
         } catch(\Osp\Exception\OspException $e){
