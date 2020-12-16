@@ -261,6 +261,7 @@ class Common extends Api
         $data = [];
         //设置循环节点
         if (Cookie::get('brandNum')) {
+            dump('this here');die;
             $brandNum = Cookie::get('brandNum');
         }else{
             Cookie::set('brandNum', 0);
