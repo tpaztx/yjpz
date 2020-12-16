@@ -255,6 +255,7 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
+        ignore_user_abort(true);
         $brandListModel = new BrandList;
         $pageIndex = $page_total = true;
         $data = [];
