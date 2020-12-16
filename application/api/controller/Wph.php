@@ -41,7 +41,6 @@ class Wph extends Api
             $result[$key]['cateName'] = $v['cateName'];
             $result[$k]['count'] = $GoodsListModel::where('cateId', 'in', $v['cateId'])->count('id');
         }
-        
         $this->success('请求成功！', $result);
     }
 

@@ -14,6 +14,7 @@ use app\common\model\Config as Configs;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
+use app\common\model\BrandList;
 
 /**
  * 公共接口
@@ -243,6 +244,52 @@ class Common extends Api
                 // $this->success('请求成功！', $list);
                 return $list;
             }
+        } catch(\Osp\Exception\OspException $e){
+            $this->error('请求失败，请联系管理员！');
+        }
+    }
+
+    /**
+     * 定时拉取商品信息
+     */
+    public function inputGoodsList()
+    {
+        $brandListModel = new BrandList;
+        $adId = $brandListModel::field('id,adId')->select();
+        if ($adId) {
+            foreach ($adId as $k => $v) {
+                $goods = $this->goodsListWph('', 1, 20, $v['adId']);
+                dump($goods);die;
+            }
+        }
+    }
+
+    /**
+     * 返回品牌对应的商品的数据
+     */
+    public function goodsListWph($areaId = '101101', $page = 1, $pageSize = 20, $adId = '')
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcGoodsListRequest();
+            $request1->areaId = $areaId;
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->page = $page;
+            $request1->pageSize = $pageSize;
+            $request1->adId = $adId;
+            $list = collection($service->getGoodsList($request1))->toArray();
+            if ($list) {
+                // $this->success('请求成功！', $list);
+                return $list;
+            }
+            // var_dump($service->getGoodsList($request1));
         } catch(\Osp\Exception\OspException $e){
             $this->error('请求失败，请联系管理员！');
         }
