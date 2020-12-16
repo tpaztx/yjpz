@@ -192,23 +192,23 @@ class Common extends Api
                                 db('brand_list')->insert($band_info);
                             }
                             
-                            $isHave = 0;
-                            //存储商品信息
-                            $goodsList = object_to_array($v['goods']);
-                            foreach ($goodsList as $keys => $vals) {
-                                $goods_info['adId'] = $adId;
-                                $goods_info['goodId'] = $vals['goodId'];
-                                $goods_info['goodImage'] = $vals['goodImage'];
-                                $goods_info['logo'] = $vals['logo'];
-                                $goods_info['timelog'] = time();
-                                $goods_info['cateId'] = $band_info['cateId'];
-                                $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
-                                if ($isHave>0) {
-                                    db('goods_list')->where('id', $isHave)->update($goods_info);
-                                }else{
-                                    db('goods_list')->insert($goods_info);
-                                }
-                            }
+                            // $isHave = 0;
+                            // //存储商品信息
+                            // $goodsList = object_to_array($v['goods']);
+                            // foreach ($goodsList as $keys => $vals) {
+                            //     $goods_info['adId'] = $adId;
+                            //     $goods_info['goodId'] = $vals['goodId'];
+                            //     $goods_info['goodImage'] = $vals['goodImage'];
+                            //     $goods_info['logo'] = $vals['logo'];
+                            //     $goods_info['timelog'] = time();
+                            //     $goods_info['cateId'] = $band_info['cateId'];
+                            //     $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
+                            //     if ($isHave>0) {
+                            //         db('goods_list')->where('id', $isHave)->update($goods_info);
+                            //     }else{
+                            //         db('goods_list')->insert($goods_info);
+                            //     }
+                            // }
                             unset($band_info);
                             // unset($goods_info); 
                         }
@@ -258,7 +258,7 @@ class Common extends Api
         $brandListModel = new BrandList;
         $pageIndex = $page_total = true;
         $data = [];
-        $adId = $brandListModel::field('id,adId')->select();
+        $adId = $brandListModel::field('id,adId,cateId')->select();
         if ($adId) {
             foreach ($adId as $k => $v) {
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
@@ -272,13 +272,22 @@ class Common extends Api
                     do {
                         $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
                         $isHave = 0;
-                        foreach ($goods as $key => $val) {
-                            $goods_info['adId'] = $adId;
-                            $goods_info['goodId'] = $vals['goodId'];
-                            $goods_info['goodImage'] = $vals['goodImage'];
-                            $goods_info['logo'] = $vals['logo'];
-                            $goods_info['timelog'] = time();
-                            $goods_info['cateId'] = $band_info['cateId'];
+                        foreach ($goods['goods'] as $key => $val) {
+                            $goods_info['adId'] = $v['adId'];
+                            $goods_info['goodId'] = $val['goodId'];
+                            $goods_info['goodImage'] = $val['goodImage'];
+                            $goods_info['logo'] = $val['logo'];
+                            $goods_info['sn'] = $val['sn'];
+                            $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
+                            $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                            $goods_info['isMp'] = $val['isMp'];
+                            dump($goods_info);die;
+                            $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
+                            if ($isHave>0) {
+                                db('goods_list')->where('id', $isHave)->update($goods_info);
+                            }else{
+                                db('goods_list')->insert($goods_info);
+                            }
                         }
                         Cookie::set('goods_index', Cookie::get('goods_index') + 1);
                     } while (Cookie::get('goods_index') <= 10);
