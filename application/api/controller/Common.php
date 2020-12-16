@@ -15,6 +15,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
+use think\Cookie;
 
 /**
  * 公共接口
@@ -255,11 +256,28 @@ class Common extends Api
     public function inputGoodsList()
     {
         $brandListModel = new BrandList;
+        $pageIndex = $page_total = true;
+        $data = [];
         $adId = $brandListModel::field('id,adId')->select();
         if ($adId) {
             foreach ($adId as $k => $v) {
-                $goods = $this->goodsListWph('', 1, 20, $v['adId']);
+                $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 dump($goods);die;
+                if ($page_total) {
+                    $pageTotal = $page_total['pageTotal'];
+                }
+                if ($pageTotal && $pageTotal > 1)
+                {
+                    // $pageIndex = 1;
+                    Cookie::set('goods_index', 1);
+                    do {
+                        // $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        Cookie::set('goods_index', Cookie::get('goods_index') + 1);
+                        dump(Cookie::get('goods_index'));
+                        // $pageIndex = Cookie::get('goods_index');
+                        // $pageIndex++;
+                    } while (Cookie::get('goods_index') <= 10);
+                }
             }
         }
     }
