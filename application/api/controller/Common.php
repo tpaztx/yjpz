@@ -156,10 +156,10 @@ class Common extends Api
         //页数大于1的情况下循环请求获取数据
         if ($pageTotal && $pageTotal > 1) {
             $pageIndex = 1;
+            Cookie::set('brand_index', 1);
             do {
                 try {
-                    $list = $this->brandList('101101', $pageIndex, 20);
-                    $pageIndex = $list['pageIndex']?:1;
+                    $list = $this->brandList('101101', Cookie::get('brand_index'), 20);
                     if ($list)
                     {
                         $brandList = object_to_array($list['brandList']); 
@@ -210,15 +210,15 @@ class Common extends Api
                                 }
                             }
                             unset($band_info);
-                            unset($goods_info);
+                            // unset($goods_info);
                         }
 
                     }
                 } catch(\Osp\Exception\OspException $e){
                     $this->error('请求失败，请联系管理员！');
                 }
-                $pageIndex++;
-            } while ($pageIndex <= $pageTotal);
+                Cookie::set('brand_index', Cookie::get('brand_index') + 1)
+            } while (Cookie::get('brand_index') <= $pageTotal);
             // $data = $this->second_array_unique_bykey($data, 'name');
         }
         $this->success('定时拉取品牌信息成功');
@@ -262,19 +262,25 @@ class Common extends Api
         if ($adId) {
             foreach ($adId as $k => $v) {
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
+                dump($page_total);die;
                 if ($page_total) {
                     $pageTotal = $page_total['pageTotal'];
                 }
                 if ($pageTotal && $pageTotal > 1)
                 {
-                    // $pageIndex = 1;
                     Cookie::set('goods_index', 1);
                     do {
-                        // $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        $isHave = 0;
+                        foreach ($goods as $key => $val) {
+                            $goods_info['adId'] = $adId;
+                            $goods_info['goodId'] = $vals['goodId'];
+                            $goods_info['goodImage'] = $vals['goodImage'];
+                            $goods_info['logo'] = $vals['logo'];
+                            $goods_info['timelog'] = time();
+                            $goods_info['cateId'] = $band_info['cateId'];
+                        }
                         Cookie::set('goods_index', Cookie::get('goods_index') + 1);
-                        dump(Cookie::get('goods_index'));
-                        // $pageIndex = Cookie::get('goods_index');
-                        // $pageIndex++;
                     } while (Cookie::get('goods_index') <= 10);
                 }
             }
