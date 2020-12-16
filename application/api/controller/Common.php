@@ -15,7 +15,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
-use think\Session;
+use think\Cookie;
 use think\Log;
 
 /**
