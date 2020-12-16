@@ -269,6 +269,8 @@ class Common extends Api
         $adId = $brandListModel::field('id,adId,cateId')->limit($brandNum, 1)->select();
         if ($adId && !empty($adId)) {
             $adId = object_to_array($adId);
+        dump($adId);die;
+            
             foreach ($adId as $k => $v)
             {
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
