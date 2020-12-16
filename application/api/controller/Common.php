@@ -261,13 +261,13 @@ class Common extends Api
         $data = [];
         //设置循环节点
         if (Cookie::get('brandNum')) {
-            dump('this here');die;
             $brandNum = Cookie::get('brandNum');
         }else{
             Cookie::set('brandNum', 0);
             $brandNum = Cookie::get('brandNum');
         }
-        $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
+        $adId = db('brand_list')->field('id,adId,cateId')->limit(1, 1)->select();
+        dump($adId);die;
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
