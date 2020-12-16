@@ -282,10 +282,10 @@ class Common extends Api
                     Cookie::set('goods_index', 1);
                     do {
                         $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        $this->success('ok', $goods);
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
-
                             $goods_info['adId'] = $v['adId'];
                             $goods_info['goodId'] = $val['goodId'];
                             $goods_info['goodImage'] = $val['goodImage'];
@@ -296,7 +296,6 @@ class Common extends Api
                             $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
                             $goods_info['marketPrice'] = $val['sizes'][0]['commission'];
                             $goods_info['isMp'] = $val['isMp']?1:0;
-                            // dump($goods_info);die;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
