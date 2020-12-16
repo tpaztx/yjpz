@@ -15,7 +15,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
-use think\Cookie;
+use think\Session;
 use think\Log;
 
 /**
@@ -262,11 +262,11 @@ class Common extends Api
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         $data = [];
         //设置循环节点
-        if (Cookie::get('brandNum')) {
-            $brandNum = Cookie::get('brandNum');
+        if (Session::get('brandNum')) {
+            $brandNum = Session::get('brandNum');
         }else{
-            Cookie::set('brandNum', 0);
-            $brandNum = Cookie::get('brandNum');
+            Session::set('brandNum', 0);
+            $brandNum = Session::get('brandNum');
         }
         $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
         if ($adId && !empty($adId)) {
@@ -279,9 +279,9 @@ class Common extends Api
                 }
                 if ($pageTotal && $pageTotal > 1)
                 {
-                    Cookie::set('goods_index', 1);
+                    Session::set('goods_index', 1);
                     do {
-                        $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
+                        $goods = $this->goodsListWph('', Session::get('goods_index'), 20, $v['adId']);
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
@@ -303,17 +303,17 @@ class Common extends Api
                                 db('goods_list')->insert($goods_info);
                             }
                         }
-                        Cookie::set('goods_index', Cookie::get('goods_index') + 1);
-                    } while (Cookie::get('goods_index') <= 10);
+                        Session::set('goods_index', Session::get('goods_index') + 1);
+                    } while (Session::get('goods_index') <= 10);
                 }
-                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
+                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Session::get('brandNum'));
             }
-            echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Cookie::get('brandNum');
-            Cookie::set('brandNum', Cookie::get('brandNum') + 1);
+            echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Session::get('brandNum');
+            Session::set('brandNum', Session::get('brandNum') + 1);
             // sleep(5);
             // $this->inputGoodsList();
         }else{
-            Cookie::set('brandNum', 0);
+            Session::set('brandNum', 0);
             $this->inputGoodsList();
         }
     }
