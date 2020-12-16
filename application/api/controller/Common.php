@@ -280,8 +280,8 @@ class Common extends Api
                             $goods_info['sn'] = $val['sn'];
                             $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
                             $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
-                            $goods_info['isMp'] = $val['isMp'];
-                            dump($goods_info);die;
+                            $goods_info['isMp'] = $val['isMp']?1:0;
+                            // dump($goods_info);die;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
