@@ -267,7 +267,6 @@ class Common extends Api
             $brandNum = Cookie::get('brandNum');
         }
         $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
-        
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
@@ -307,7 +306,7 @@ class Common extends Api
                 }
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
             }
-            dump($brandAdId);die;
+            dump($brandAdId);die; 
             echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Cookie::get('brandNum');
             Cookie::set('brandNum', Cookie::get('brandNum') + 1);
         }else{
