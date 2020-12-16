@@ -293,7 +293,7 @@ class Common extends Api
                             $goods_info['sn'] = $val['sn'];
                             $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
                             $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
-                            $goods_info['marketPrice'] = $val['sizes'][0]['commission'];
+                            $goods_info['commission'] = $val['sizes'][0]['commission'];
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
@@ -308,7 +308,7 @@ class Common extends Api
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
                 Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             }
-            sleep(180);
+            sleep(60);
             $this->inputGoodsList();
         }else{
             Cookie::set('brandNum', 0);
