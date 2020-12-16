@@ -210,7 +210,7 @@ class Common extends Api
                                 }
                             }
                             unset($band_info);
-                            // unset($goods_info);
+                            // unset($goods_info); 
                         }
 
                     }
