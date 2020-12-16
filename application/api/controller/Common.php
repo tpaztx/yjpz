@@ -256,8 +256,6 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        // ignore_user_abort(true);
-        // set_time_limit(0);
         $brandListModel = new BrandList;
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         $data = [];
@@ -308,8 +306,7 @@ class Common extends Api
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
                 Cache::set('brandNum', Cache::get('brandNum') + 1);
             }
-            // sleep(60);
-            // $this->inputGoodsList();
+            echo '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum');
         }else{
             Cache::set('brandNum', 0);
             $this->inputGoodsList();
