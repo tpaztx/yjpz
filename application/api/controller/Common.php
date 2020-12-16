@@ -16,6 +16,7 @@ use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
 use think\Cookie;
+use think\Log;
 
 /**
  * 公共接口
