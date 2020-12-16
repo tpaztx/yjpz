@@ -266,6 +266,7 @@ class Common extends Api
             Cookie::set('brandNum', 1);
             $brandNum = Cookie::get('brandNum');
         }
+        dump($brandNum);die;
         $adId = $brandListModel::field('id,adId,cateId')->where('id', $brandNum)->select();
         if ($adId) {
             $adId = object_to_array($adId);
