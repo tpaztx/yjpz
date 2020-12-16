@@ -262,8 +262,7 @@ class Common extends Api
         if ($adId) {
             foreach ($adId as $k => $v) {
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
-                dump($page_total);die;
-                if ($page_total) {
+                if ($page_total) { 
                     $pageTotal = $page_total['pageTotal'];
                 }
                 if ($pageTotal && $pageTotal > 1)
