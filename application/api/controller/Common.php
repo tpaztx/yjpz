@@ -294,6 +294,7 @@ class Common extends Api
                             $goods_info['sn'] = $val['sn'];
                             $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
                             $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                            $goods_info['marketPrice'] = $val['sizes'][0]['commission'];
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             // dump($goods_info);die;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
