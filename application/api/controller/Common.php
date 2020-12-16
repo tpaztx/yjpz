@@ -151,7 +151,6 @@ class Common extends Api
         if ($page_total) {
             $pageTotal = $page_total['pageTotal'];
         }
-
         //页数大于1的情况下循环请求获取数据
         if ($pageTotal && $pageTotal > 1) {
             $pageIndex = 1;

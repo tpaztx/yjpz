@@ -48,7 +48,7 @@ class Wph extends Api
     /**
      * 返回品牌数据
      */
-    public function brandLists($areaId = '101101', $page = 1, $pageSize = 20)
+    public function brandListsWph($areaId = '101101', $page = 1, $pageSize = 20)
     {
         try {
             $service = WpcVopOspServiceClient::getService();
@@ -88,6 +88,37 @@ class Wph extends Api
             }
             return $result;
         } catch(Exception $e){
+            $this->error('请求失败，请联系管理员！');
+        }
+    }
+
+    /**
+     * 返回品牌对应的商品的数据
+     */
+    public function goodsListWph($areaId = '101101', $page = 1, $pageSize = 20, $adId = '')
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcGoodsListRequest();
+            $request1->areaId = $areaId;
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->page = $page;
+            $request1->pageSize = $pageSize;
+            $request1->adId = $adId;
+            $list = collection($service->getGoodsList($request1))->toArray();
+            if ($list) {
+                // $this->success('请求成功！', $list);
+                return $list;
+            }
+            // var_dump($service->getGoodsList($request1));
+        } catch(\Osp\Exception\OspException $e){
             $this->error('请求失败，请联系管理员！');
         }
     }
@@ -164,8 +195,9 @@ class Wph extends Api
         try {
             foreach ($result as $k => $v) {
                 $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->select();
+                $goodsList = $this->goodsListWph('', $page, $pageSize, $v['adId']);
                 $result[$k]['goods'] = $goods;
-                $result[$k]['godosTotal'] = count($goods);
+                $result[$k]['godosTotal'] = $goodsList['totalNum'];
             }
         } catch (Exception $e) {
             $this->error('请求失败！', $e->getMesssges);
