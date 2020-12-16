@@ -282,7 +282,7 @@ class Common extends Api
                     Cookie::set('goods_index', 1);
                     do {
                         $goods = $this->goodsListWph('', Cookie::get('goods_index'), 20, $v['adId']);
-                        $this->success('ok', $goods);
+                        $this->success('ok', $goods); 
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
