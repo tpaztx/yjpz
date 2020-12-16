@@ -30,7 +30,7 @@ class Wph extends Api
     {
         $brandListMode = new BrandList; 
         $GoodsListModel = new GoodsList;
-        $result = collection($brandListMode::field('id,cateId,cateName')->select())->toArray();
+        $result = collection($brandListMode::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
             $result[$key]['cateName'] = explode(',', $val['cateName']);
