@@ -303,7 +303,7 @@ class Common extends Api
                         Cookie::set('goods_index', Cookie::get('goods_index') + 1);
                     } while (Cookie::get('goods_index') <= 10);
                 }
-                Log::write('执行类目ID：'.$v['adId']);
+                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
                 Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             }
         }else{
