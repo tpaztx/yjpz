@@ -256,14 +256,21 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        ignore_user_abort(true);
-        set_time_limit(0);
         $brandListModel = new BrandList;
-        $pageIndex = $page_total = true;
+        $pageIndex = $page_total = $brandNum = true;
         $data = [];
-        $adId = $brandListModel::field('id,adId,cateId')->select();
+        //设置循环节点
+        if (Cookie::get('brandNum')) {
+            $brandNum = Cookie::get('brandNum');
+        }else{
+            Cookie::set('brandNum', 1);
+            $brandNum = Cookie::get('brandNum');
+        }
+        $adId = $brandListModel::field('id,adId,cateId')->where('id', $brandNum)->select();
         if ($adId) {
-            foreach ($adId as $k => $v) {
+            $adId = object_to_array($adId);
+            foreach ($adId as $k => $v)
+            {
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 if ($page_total) { 
                     $pageTotal = $page_total['pageTotal'];
@@ -297,7 +304,11 @@ class Common extends Api
                     } while (Cookie::get('goods_index') <= 10);
                 }
                 Log::write('执行类目ID：'.$v['adId']);
+                Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             }
+        }else{
+            Cookie::set('brandNum', 1);
+            $this->inputGoodsList();
         }
     }
 
