@@ -267,7 +267,7 @@ class Common extends Api
             $brandNum = Cookie::get('brandNum');
         }
         $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
-        dump($adId);die;
+        // dump($adId);die;
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
