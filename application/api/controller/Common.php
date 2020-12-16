@@ -310,7 +310,7 @@ class Common extends Api
             }
             echo "成功执行！". '【执行类目ID】：'.$brandAdId.'======【brandNum】：'.Cookie::get('brandNum');
             Cookie::set('brandNum', Cookie::get('brandNum') + 1);
-            sleep(5);
+            sleep(180);
             $this->inputGoodsList();
         }else{
             Cookie::set('brandNum', 0);
