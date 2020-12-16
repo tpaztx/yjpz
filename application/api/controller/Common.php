@@ -308,8 +308,8 @@ class Common extends Api
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
                 Cookie::set('brandNum', Cookie::get('brandNum') + 1);
             }
-            sleep(60);
-            $this->inputGoodsList();
+            // sleep(60);
+            // $this->inputGoodsList();
         }else{
             Cookie::set('brandNum', 0);
             $this->inputGoodsList();
