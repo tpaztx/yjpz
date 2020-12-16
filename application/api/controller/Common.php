@@ -304,9 +304,9 @@ class Common extends Api
                     } while (Cookie::get('goods_index') <= 10);
                 }
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum'));
-                Cookie::set('brandNum', Cookie::get('brandNum') + 1);
                 echo "成功执行！". '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cookie::get('brandNum');
             }
+            Cookie::set('brandNum', Cookie::get('brandNum') + 1);
         }else{
             Cookie::set('brandNum', 0);
             $this->inputGoodsList();
