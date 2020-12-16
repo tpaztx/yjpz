@@ -22,7 +22,7 @@ use think\Cookie;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList'];
     protected $noNeedRight = '*';
 
     /**
