@@ -263,12 +263,12 @@ class Common extends Api
         if (Cookie::get('brandNum')) {
             $brandNum = Cookie::get('brandNum');
         }else{
-            Cookie::set('brandNum', 1);
+            Cookie::set('brandNum', 0);
             $brandNum = Cookie::get('brandNum');
         }
-        $adId = $brandListModel::field('id,adId,cateId')->where('id', $brandNum)->select();
+        $adId = $brandListModel::field('id,adId,cateId')->limit($brandNum, 1)->select();
         dump($adId);die;
-        if ($adId) {
+        if ($adId && !empty($adId)) {
             $adId = object_to_array($adId);
             foreach ($adId as $k => $v)
             {
@@ -309,7 +309,7 @@ class Common extends Api
             }
             echo "成功执行！";
         }else{
-            Cookie::set('brandNum', 1);
+            Cookie::set('brandNum', 0);
             $this->inputGoodsList();
         }
     }
