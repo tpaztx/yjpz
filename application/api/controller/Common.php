@@ -272,6 +272,7 @@ class Common extends Api
             {
                 $brandAdId = $v['adId'];
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
+                $pageTotal = false;
                 if ($page_total) { 
                     $pageTotal = $page_total['pageTotal'];
                 }else{
