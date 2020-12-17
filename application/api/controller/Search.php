@@ -48,7 +48,7 @@ class Search extends Api
                 $this->success('未查询到数据结果！');
             }
             foreach ($result as $key => $val) {
-                $result[$key]['goodBigImage'] = unserialize($val['goodBigImage']);
+                $result[$key]['goodBigImage'] = $val['goodBigImage']?unserialize($val['goodBigImage']):'';
             }
             $this->success('请求成功！', $result);
         }else{
