@@ -285,7 +285,7 @@ class Common extends Api
                             //尺码文字
                             foreach ($val['sizes'] as $keys => $vals) {
                                 $arr[$keys] = $vals['sizeName'];
-                                $goods_info['sizes_text'] = '有货尺码：'implode($arr, '、');
+                                $goods_info['sizes_text'] = $arr?'有货尺码：'implode($arr, '、'):'';
                             }
 
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
