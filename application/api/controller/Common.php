@@ -342,7 +342,8 @@ class Common extends Api
                 return $list;
             }
         } catch(\Osp\Exception\OspException $e){
-            $this->error('请求失败，请联系管理员！');
+            // $this->error('请求失败，请联系管理员！');
+            return false;
         }
     }
 }
