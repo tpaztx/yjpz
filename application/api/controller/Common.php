@@ -305,7 +305,6 @@ class Common extends Api
                                 $arr[$keys] = $vals['sizeName'];
                                 $goods_info['sizes_text'] = implode($arr, ',');
                             }
-                            dump($goods_info['sizes_text']);die;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
