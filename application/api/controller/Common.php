@@ -284,8 +284,12 @@ class Common extends Api
                             $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
                             //尺码文字
                             foreach ($val['sizes'] as $keys => $vals) {
-                                $arr[$keys] = $vals['sizeName'];
-                                $goods_info['sizes_text'] = $arr?'有货尺码：'implode($arr, '、'):'';
+                                if ($vals['sizeName'] && !empty($vals['sizeName'])) {
+                                    $arr[$keys] = $vals['sizeName'];
+                                    $goods_info['sizes_text'] = $arr?'有货尺码：'implode($arr, '、'):'';
+                                }else{
+                                    $goods_info['sizes_text'] = '有货尺码：'
+                                }
                             }
 
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
