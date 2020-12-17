@@ -25,11 +25,23 @@ class Search extends Api
      * 客户端搜索
      * $star    从第几条数据开始处理分页数据 ++ 之后作为下次分页获取数据的起始点
      * $pageSize    每次返回的数据数量
+     * price 0=从低到高1=从高到低
+     * sale 0=从低到高1=从高到低
      */
     public function search()
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
+        $price = $this->request->request('price')?:'';
+        $sale = $this->request->request('sale')?:'';
+
+        $order = 'id';
+        if ($price !='') {
+            $order = $price==1 ? 'vipshopPrice desc' : 'vipshopPrice';
+        }
+        // if ($sale !='') {
+        //     $order = $sale==1 ? ''
+        // }
         $keyWord = trim($this->request->request('keyWord'));
         if (!$keyWord) $this->error('请输入搜索内容！');
         $searchModel = new SearchKeyword;
@@ -39,7 +51,8 @@ class Search extends Api
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
         $result = GoodsList::where("goodName like '%".$keyWord."%'")
-                            ->field('goodId,goodName,color,material,sizes_text,sn,goodBigImage')
+                            ->field('goodId,goodName,color,material,sizes_text,sn,goodBigImage,vipshopPrice,marketPrice,commission')
+                            ->order($order)
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
                             ->select();
                             // dump(GoodsList::getLastSQL());die;
