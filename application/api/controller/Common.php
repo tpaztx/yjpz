@@ -192,28 +192,8 @@ class Common extends Api
                             }else{
                                 db('brand_list')->insert($band_info);
                             }
-                            
-                            // $isHave = 0;
-                            // //存储商品信息
-                            // $goodsList = object_to_array($v['goods']);
-                            // foreach ($goodsList as $keys => $vals) {
-                            //     $goods_info['adId'] = $adId;
-                            //     $goods_info['goodId'] = $vals['goodId'];
-                            //     $goods_info['goodImage'] = $vals['goodImage'];
-                            //     $goods_info['logo'] = $vals['logo'];
-                            //     $goods_info['timelog'] = time();
-                            //     $goods_info['cateId'] = $band_info['cateId'];
-                            //     $isHave = db('goods_list')->where('goodId', $vals['goodId'])->value('id');
-                            //     if ($isHave>0) {
-                            //         db('goods_list')->where('id', $isHave)->update($goods_info);
-                            //     }else{
-                            //         db('goods_list')->insert($goods_info);
-                            //     }
-                            // }
                             unset($band_info);
-                            // unset($goods_info); 
                         }
-
                     }
                 } catch(\Osp\Exception\OspException $e){
                     $this->error('请求失败，请联系管理员！');
