@@ -274,6 +274,9 @@ class Common extends Api
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 if ($page_total) { 
                     $pageTotal = $page_total['pageTotal'];
+                }else{
+                    Cache::set('brandNum', 0);
+                    $this->inputGoodsList();
                 }
                 if ($pageTotal && $pageTotal > 1)
                 {
