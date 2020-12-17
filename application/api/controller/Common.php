@@ -157,10 +157,10 @@ class Common extends Api
         //页数大于1的情况下循环请求获取数据
         if ($pageTotal && $pageTotal > 1) {
             $pageIndex = 1;
-            Cookie::set('brand_index', 1);
+            Cache::set('brand_index', 1);
             do {
                 try {
-                    $list = $this->brandList('101101', Cookie::get('brand_index'), 20);
+                    $list = $this->brandList('101101', Cache::get('brand_index'), 20);
                     if ($list)
                     {
                         $brandList = object_to_array($list['brandList']); 
@@ -198,8 +198,8 @@ class Common extends Api
                 } catch(\Osp\Exception\OspException $e){
                     $this->error('请求失败，请联系管理员！');
                 }
-                Cookie::set('brand_index', Cookie::get('brand_index') + 1);
-            } while (Cookie::get('brand_index') <= $pageTotal);
+                Cache::set('brand_index', Cache::get('brand_index') + 1);
+            } while (Cache::get('brand_index') <= $pageTotal);
             // $data = $this->second_array_unique_bykey($data, 'name');
         }
         $this->success('定时拉取品牌信息成功');
