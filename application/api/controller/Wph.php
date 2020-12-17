@@ -174,7 +174,7 @@ class Wph extends Api
     {
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $id = $this->request->request('id')?:0;
+        $id = $this->request->request('adId')?:0;
         $result = $this->goodsList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
@@ -192,7 +192,7 @@ class Wph extends Api
         $result = $this->brandList($page, $pageSize, $cid);
         try {
             foreach ($result as $k => $v) {
-                $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->select();
+                $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->limit(5)->select();
                 $goodsList = $this->goodsListWph('', $page, $pageSize, $v['adId']);
                 $result[$k]['goods'] = $goods;
                 $result[$k]['godosTotal'] = $goodsList['totalNum'];
