@@ -42,9 +42,9 @@ class Search extends Api
                             ->field('goodId,goodName,color,material,sizes_text,sn,goodBigImage')
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
                             ->select();
-                            dump(GoodsList::getLastSQL());die;
+                            // dump(GoodsList::getLastSQL());die;
         if ($result) {
-            if (empty($data)) {
+            if (empty($result)) {
                 $this->success('未查询到数据结果！');
             }
             foreach ($result as $key => $val) {
