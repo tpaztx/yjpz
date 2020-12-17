@@ -174,7 +174,6 @@ class Common extends Api
                             $band_info['sellTimeFrom'] = $v['sellTimeFrom'];
                             $band_info['sellTimeTo'] = $v['sellTimeTo'];
                             $band_info['brandDesc'] = $v['brandDesc'];
-                            dump($band_info);die;
                             $band_info['cateId'][] = $band_info['cateName'][] = '';
                             if (!empty($v['adCategoryList'])) {
                                 foreach ($v['adCategoryList'] as $key => $val) {
