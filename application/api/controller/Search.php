@@ -38,7 +38,7 @@ class Search extends Api
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
-        $result = GoodsList::where("goodsName like '%".$keyWord."%'")
+        $result = GoodsList::where("goodName like '%".$keyWord."%'")
                             ->field('goodId,goodName,color,material,sizes_text,sn,goodBigImage')
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
                             ->select();
