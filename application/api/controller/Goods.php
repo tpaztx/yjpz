@@ -31,7 +31,7 @@ class Goods extends Api
             $goods = $wph->goodsDetailWph('101101', $goodFullId);
             if ($goods && !empty($goods)) {
                 foreach ($goods as $key => $value) {
-                    $result = $value['sizeTableJson'];
+                    $result = $value->sizeTableJson;
                 }
                 $this->success('请求成功！', $result);
             }else{
