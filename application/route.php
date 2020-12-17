@@ -57,6 +57,8 @@ Route::post([
 	'api/search' => 'api/search/search',
 	//尺码助手
 	'api/getGoodsSize' => 'api/goods/getGoodsSize', 
+	//品牌商品详情
+
 
   
     //小店-店铺设置
