@@ -84,6 +84,8 @@ class Wph extends Api
                 dump('this here');die;
                 $result = BrandList::limit(($page - 1)*$pageSize, $pageSize)->select();
             }else{
+                dump('this here1111');die;
+
                 $result = BrandList::where('cateId', 'in', $cid)->limit(($page - 1)*$pageSize, $pageSize)->select();
             }
             return $result;
