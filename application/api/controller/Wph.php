@@ -122,8 +122,6 @@ class Wph extends Api
         }
     }
 
-
-
     /**
      * 获取用户定位
      */
@@ -201,6 +199,35 @@ class Wph extends Api
             $this->error('请求失败！', $e->getMesssges);
         }
         return $result;
+    }
+
+    /**
+     * 返回商品详情数据
+     */
+    public function goodsDetailWph($areaId = '101101', $goodFullIds = '')
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcGoodsDetailRequest();
+            $request1->areaId = $areaId;
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->goodFullIds="goodFullIds";
+            // var_dump($service->getGoodsDetail($request1));
+            $list = collection($service->getGoodsDetail($request1))->toArray();
+            if ($list) {
+                // $this->success('请求成功！', $list);
+                return $list;
+            }
+        } catch(\Osp\Exception\OspException $e){
+            $this->error('请求失败，请联系管理员！');
+        }
     }
 
     /** 
