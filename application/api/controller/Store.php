@@ -8,6 +8,7 @@ use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use app\admin\model\Store as StoreM;
 use app\common\model\BrandList;
+use app\common\model\GoodsList;
 use think\Db;
 
 class Store extends Api
@@ -75,7 +76,7 @@ class Store extends Api
                     $array[] = $item;
                 }
             }
-            $list['brandList'] = $array;
+            $list = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -95,14 +96,13 @@ class Store extends Api
         $time = time();
         $list = BrandList::where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
-            $array = $this->object_array($list['brandList']);
-            $array2 = array();
+            $array = array();
             foreach ($array as $k=>$item){
                 if(in_array($item['adId'],$downIdArray)){
-                    $array2[] = $item;
+                    $array[] = $item;
                 }
             }
-            $list['brandList'] = $array2;
+            $list = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -141,5 +141,41 @@ class Store extends Api
                 $this->error('操作失败！');
             }
             $this->success('操作成功！');
+    }
+    /**
+     * 转发（整场）
+     * @param $status 1普通模式 2小店模式
+     * @param $adId 品牌id
+     */
+    public function forward()
+    {
+        $user = $this->auth->getUser();
+        $storeM = new \app\admin\model\Store();
+        $store = $storeM->getStore($user['id']);
+        $status = $this->request->param('status');
+        $adId = $this->request->param('adId');
+        if ($status == 1) {
+            $data['qrcode'] = $this->qrcode('pages/index/index?store_id=' . $store['id']);
+        }
+        if ($status == 2) {
+            $data['qrcode'] = $this->qrcode('pages/index/Sonpages/PinpaiDetail?store_id=' . $store['id'] . '&adId=' . $adId);
+        }
+        $data['goods'] = GoodsList::where('adId', $adId)->limit('0', '10')->order('id', 'asc')->select();
+        $data['sellTimeFrom'] = BrandList::where('adId', $adId)->value('sellTimeFrom');
+        if (empty($data)) {
+            $this->error('获取失败！');
+        }
+        $this->success('获取成功！', $data);
+    }
+    /**
+     * 改价设置
+     * @param $type 1统一改价 2品牌改价 3商品改价
+     */
+    public function PriceChange()
+    {
+        $user = $this->auth->getUser();
+        $storeM = new \app\admin\model\Store();
+        $store = $storeM->getStore($user['id']);
+        $type = $this->request->param('type');
     }
 }
