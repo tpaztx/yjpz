@@ -27,7 +27,7 @@ class Goods extends Api
         $goodFullId = $this->request->request('goodFullId')?:0;
         if ($goodFullId) {
             $wph = new Wph;
-            $goods = $wph::goodsDetailWph('101101', $goodFullId);
+            $goods = Wph::goodsDetailWph('101101', $goodFullId);
             if ($goods && !empty($goods)) {
                 $this->success('ok',$goods);
                 // $result = $goods
