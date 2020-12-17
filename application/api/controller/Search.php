@@ -49,7 +49,7 @@ class Search extends Api
             foreach ($result as $key => $val) {
                 $result[$key]['goodBigImage'] = unserialize($val['goodBigImage']);
             }
-            $this->success('请求成功！', ['list' => $data, 'star' => $star+5]);
+            $this->success('请求成功！', $result);
         }else{
             $this->error('请求失败！');
         }
