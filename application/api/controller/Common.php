@@ -303,7 +303,7 @@ class Common extends Api
                             //尺码文字
                             foreach ($val['sizes'] as $keys => $vals) {
                                 $goods_info['sizes_text'][$keys] = $vals['sizeName'];
-                                // $goods_info['sizes_text'] = implode($goods_info['sizes_text'], '、');
+                                $goods_info['sizes_text'] = implode($goods_info['sizes_text'], '、');
                             }
                             dump($goods_info['sizes_text']);die;
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
