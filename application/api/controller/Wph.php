@@ -162,7 +162,7 @@ class Wph extends Api
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $id = $this->request->request('id')?:0;
-        $result = $this->brandList('101101', $pageIndex, $pageSize, $id);
+        $result = $this->brandList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
