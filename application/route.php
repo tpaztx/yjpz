@@ -55,6 +55,8 @@ Route::post([
 	'api/searchLogDel' => 'api/search/searchLogDel',
 	//搜索
 	'api/search' => 'api/search/search',
+	//尺码助手
+	'api/getGoodsSize' => 'api/goods/getGoodsSize',
 
   
     //小店-店铺设置
