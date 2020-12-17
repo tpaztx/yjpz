@@ -27,10 +27,13 @@ class Goods extends Api
         $goodFullId = $this->request->request('goodFullId')?:0;
         if ($goodFullId) {
             $wph = new Wph;
+            $result;
             $goods = $wph->goodsDetailWph('101101', $goodFullId);
             if ($goods && !empty($goods)) {
-                $this->success('ok',$goods);
-                // $result = $goods
+                foreach ($goods as $key => $value) {
+                    $result = $value['sizeTableJson'];
+                }
+                $this->success('请求成功！', $result);
             }else{
                 $this->error('查询商品信息异常！');
             }
