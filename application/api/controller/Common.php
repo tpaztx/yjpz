@@ -300,6 +300,11 @@ class Common extends Api
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
+                            //尺码文字
+                            foreach ($val['sizes'] as $keys => $vals) {
+                                $goods_info['sizes_text'][$keys] = $vals['sizeName'];
+                                $goods_info['sizes_text'] = implode('、', $goods_info['sizes_text']);
+                            }
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
