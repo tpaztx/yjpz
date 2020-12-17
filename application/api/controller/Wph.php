@@ -218,7 +218,7 @@ class Wph extends Api
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
-            $request1->goodFullIds="goodFullIds";
+            $request1->goodFullIds = $goodFullIds;
             // var_dump($service->getGoodsDetail($request1));
             $list = collection($service->getGoodsDetail($request1))->toArray();
             if ($list) {
