@@ -178,4 +178,6 @@ class Store extends Api
         $store = $storeM->getStore($user['id']);
         $type = $this->request->param('type');
     }
+
+    
 }
