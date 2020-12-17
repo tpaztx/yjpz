@@ -300,13 +300,14 @@ class Common extends Api
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
+                            //商品主图
+                            $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
                             //尺码文字
                             foreach ($val['sizes'] as $keys => $vals) {
                                 $arr[$keys] = $vals['sizeName'];
                                 $goods_info['sizes_text'] = implode($arr, ',');
                             }
-                            //商品主图
-                            $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
+
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
