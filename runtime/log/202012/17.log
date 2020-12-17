@@ -1,0 +1,1032 @@
+---------------------------------------------------------------
+[ 2020-12-17T10:34:29+08:00 ] 127.0.0.1 GET yjpz.cc/
+[运行时间：0.058755s] [吞吐率：17.02req/s] [内存消耗：3,178.62kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000111s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002167s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000338s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001187s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000245s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:34:30+08:00 ] 127.0.0.1 GET yjpz.cc/admin/index/login
+[运行时间：0.032060s] [吞吐率：31.19req/s] [内存消耗：3,481.78kb] [文件加载：141]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001471s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000199s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000906s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.000263s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ RUN ] app\admin\controller\Index->login[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\view\index\login.html [ array (
+  0 => 'breadcrumb',
+  1 => 'site',
+  2 => 'config',
+  3 => 'auth',
+  4 => 'admin',
+  5 => 'background',
+  6 => 'title',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000160s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:34:30+08:00 ] 127.0.0.1 GET yjpz.cc/index.php?s=/captcha
+[运行时间：0.030195s] [吞吐率：33.12req/s] [内存消耗：2,169.14kb] [文件加载：119]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000022s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001554s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000236s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'method',
+  'method' => 
+  array (
+    0 => '\\think\\captcha\\CaptchaController',
+    1 => 'index',
+  ),
+  'var' => 
+  array (
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'id' => NULL,
+)
+[ info ] [ RUN ] think\captcha\CaptchaController->index[ E:\phpstudy_pro\WWW\yjpz\vendor\topthink\think-captcha\src\CaptchaController.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:34:30+08:00 ] 127.0.0.1 GET yjpz.cc/admin/ajax/lang?callback=define&controllername=index&lang=zh-cn&v=1608172469&v=1608172469
+[运行时间：0.032235s] [吞吐率：31.02req/s] [内存消耗：3,496.71kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000012s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001455s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000190s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'ajax',
+    2 => 'lang',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'callback' => 'define',
+  'controllername' => 'index',
+  'lang' => 'zh-cn',
+  'v' => '1608172469',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001667s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.000156s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/ajax.php
+[ info ] [ RUN ] app\admin\controller\Ajax->lang[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Ajax.php ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000126s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:34:30+08:00 ] 127.0.0.1 GET yjpz.cc/uploads/20201205/09e32e27aea7cf9f0b57b137e8cea144.jpg
+[运行时间：0.021712s] [吞吐率：46.06req/s] [内存消耗：2,134.23kb] [文件加载：120]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001480s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000200s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'uploads',
+    1 => '20201205',
+    2 => '09e32e27aea7cf9f0b57b137e8cea144.jpg',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:35:20+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.342684s] [吞吐率：2.92req/s] [内存消耗：3,222.81kb] [文件加载：136]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001516s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000254s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e9682a78-5a66-4800-89ac-4a12e7346cd2',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001071s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:35:38+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.537117s] [吞吐率：1.86req/s] [内存消耗：3,872.70kb] [文件加载：143]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000073s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002170s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000364s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'b1a014ae-2bcc-4e5c-996a-0d11206aa096',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.005101s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [64]app\common\controller\Api::qrcode(): Failed opening required 'vendor\autoload.php' (include_path='.;C:\php\pear')[E:\phpstudy_pro\WWW\yjpz\application\common\controller\Api.php:341]
+---------------------------------------------------------------
+[ 2020-12-17T10:36:13+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.467442s] [吞吐率：2.14req/s] [内存消耗：3,872.70kb] [文件加载：143]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000017s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001554s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000215s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '45940487-fe97-4bc1-8fe4-35f3ad1c394a',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.002418s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [64]app\common\controller\Api::qrcode(): Failed opening required '/vendor/autoload.php' (include_path='.;C:\php\pear')[E:\phpstudy_pro\WWW\yjpz\application\common\controller\Api.php:341]
+---------------------------------------------------------------
+[ 2020-12-17T10:36:26+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.577382s] [吞吐率：1.73req/s] [内存消耗：4,114.22kb] [文件加载：157]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000021s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001643s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000215s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '796bbb8e-ef51-4d9e-9bdf-71d600f0034b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000891s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]致命错误: Class 'app\common\controller\ErrorCorrectionLevel' not found[E:\phpstudy_pro\WWW\yjpz\application\common\controller\Api.php:352]
+---------------------------------------------------------------
+[ 2020-12-17T10:37:19+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.440459s] [吞吐率：2.27req/s] [内存消耗：4,112.31kb] [文件加载：158]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001541s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000241s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'cc6a1c29-6ce7-4750-8093-f8daf7d62b40',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000878s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]Invalid label font path: E:\phpstudy_pro\WWW\yjpz\application\common\controller/vendor/endroid/qr-code/assets/fonts/noto_sans.otf[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\QrCode.php:300]
+---------------------------------------------------------------
+[ 2020-12-17T10:37:58+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.595037s] [吞吐率：1.68req/s] [内存消耗：4,112.31kb] [文件加载：158]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002171s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000358s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e56e189e-fdd0-4ff8-9fb7-090dca39053b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001112s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]Invalid label font path: E:\phpstudy_pro\WWW\yjpz\application\common\controller/vendor/endroid/qr-code/assets/fonts/noto_sans.otf[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\QrCode.php:300]
+---------------------------------------------------------------
+[ 2020-12-17T10:38:00+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.512323s] [吞吐率：1.95req/s] [内存消耗：4,112.31kb] [文件加载：158]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001561s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000224s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'f1246bfd-b88a-4f93-ab23-12997592c991',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000879s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]Invalid label font path: E:\phpstudy_pro\WWW\yjpz\application\common\controller/vendor/endroid/qr-code/assets/fonts/noto_sans.otf[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\QrCode.php:300]
+---------------------------------------------------------------
+[ 2020-12-17T10:38:10+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.566956s] [吞吐率：1.76req/s] [内存消耗：4,842.83kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000018s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002595s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000542s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '8f04a479-5e45-48bc-a2f2-bf383cd62878',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001254s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:40:09+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.471110s] [吞吐率：2.12req/s] [内存消耗：4,842.23kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000020s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002168s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000344s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'c90d4e44-a998-4d43-bc37-bf41d931d53f',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000991s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:40:15+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.470135s] [吞吐率：2.13req/s] [内存消耗：4,842.75kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001561s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000232s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e6bcd65a-4fc9-4c44-b2f1-68c9b18dad56',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000932s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:40:25+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.549280s] [吞吐率：1.82req/s] [内存消耗：3,954.99kb] [文件加载：151]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000018s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002084s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000343s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '2ab90184-8275-41ad-b5c3-e2a18db1a081',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001049s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:40:31+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.461708s] [吞吐率：2.17req/s] [内存消耗：4,842.88kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001511s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000208s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e58035b8-5840-4f2d-a76d-d8c92263aa3b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000961s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:41:00+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.556759s] [吞吐率：1.80req/s] [内存消耗：4,842.75kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001539s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000205s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '3518588b-4c27-4671-8a86-ceaa45d2cbea',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000901s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:41:04+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.467135s] [吞吐率：2.14req/s] [内存消耗：4,842.14kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001599s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000214s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '19f31496-5241-48f7-bc9d-827323f678a0',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000887s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:41:08+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.483429s] [吞吐率：2.07req/s] [内存消耗：4,062.73kb] [文件加载：153]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001486s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000195s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'f08042c8-4e4a-4dad-946f-47c56768577f',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000902s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:41:21+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.497889s] [吞吐率：2.01req/s] [内存消耗：4,842.14kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001617s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000202s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '34e47e7e-cbac-4d53-b396-5cb1a8ad1586',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000886s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]mime_content_type(E:\phpstudy_pro\WWW\yjpz\application\common\controller/logo.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:47]
+---------------------------------------------------------------
+[ 2020-12-17T10:42:03+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.492492s] [吞吐率：2.03req/s] [内存消耗：4,682.03kb] [文件加载：167]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001653s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000216s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'd63fdb58-9d21-4940-9bcd-83a345eaad92',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000913s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:42:13+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.444559s] [吞吐率：2.25req/s] [内存消耗：3,221.70kb] [文件加载：136]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002118s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000361s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001089s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:42:13+08:00 ] 127.0.0.1 GET yjpz.cc/favicon.ico
+[运行时间：0.022051s] [吞吐率：45.35req/s] [内存消耗：2,134.16kb] [文件加载：120]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001597s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000231s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'favicon.ico',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=s87c9bjk5u29cn4kmpfpl99it0; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://yjpz.cc/api/store/forward',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:42:30+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.574100s] [吞吐率：1.74req/s] [内存消耗：4,682.23kb] [文件加载：167]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001505s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000205s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '5b829373-9bac-4c57-878f-1a251efd8646',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000994s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:42:56+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.456562s] [吞吐率：2.19req/s] [内存消耗：4,682.14kb] [文件加载：167]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001580s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000208s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e087706f-84ba-44a4-bb3a-d4c2d3ebb12d',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000867s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T10:43:01+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.478428s] [吞吐率：2.09req/s] [内存消耗：4,841.99kb] [文件加载：174]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002216s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000456s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '98b3e300-1525-4c41-838e-b67fde2877db',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001184s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [2]file_put_contents(public/qrcode.png): failed to open stream: No such file or directory[E:\phpstudy_pro\WWW\yjpz\vendor\endroid\qr-code\src\Writer\AbstractWriter.php:75]
+---------------------------------------------------------------
+[ 2020-12-17T10:43:08+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.460011s] [吞吐率：2.17req/s] [内存消耗：4,682.14kb] [文件加载：167]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000017s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001807s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000270s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '454ebff2-9b33-4052-a70e-c11b242a34c5',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000999s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-17T11:14:52+08:00 ] 127.0.0.1 GET yjpz.cc/api/store/forward
+[运行时间：0.499510s] [吞吐率：2.00req/s] [内存消耗：4,681.94kb] [文件加载：167]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000020s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002098s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000361s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'store',
+    2 => 'forward',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '08c5b897-c058-4a51-864b-6a2d7d430d3b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001097s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Store->forward[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Store.php ]
+[ info ] [ LOG ] INIT File
