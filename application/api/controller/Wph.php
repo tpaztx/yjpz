@@ -193,9 +193,9 @@ class Wph extends Api
         try {
             foreach ($result as $k => $v) {
                 $goods = GoodsList::where('adId', $v['adId'])->field('goodImage')->limit(5)->select();
-                $goodsList = $this->goodsListWph('', $page, $pageSize, $v['adId']);
+                // $goodsList = $this->goodsListWph('', $page, $pageSize, $v['adId']);
                 $result[$k]['goods'] = $goods;
-                $result[$k]['godosTotal'] = $goodsList['totalNum'];
+                $result[$k]['godosTotal'] = GoodsList::where('adId', $v['adId'])->count('id');
             }
         } catch (Exception $e) {
             $this->error('请求失败！', $e->getMesssges);
