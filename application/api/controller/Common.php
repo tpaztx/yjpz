@@ -277,6 +277,8 @@ class Common extends Api
                             $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
                             $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
                             $goods_info['commission'] = $val['sizes'][0]['commission'];
+                            $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
+                            $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
@@ -287,7 +289,8 @@ class Common extends Api
                                 if ($vals['sizeName'] && !empty($vals['sizeName'])) {
                                     $arr[$keys] = $vals['sizeName'];
                                     $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
-                                }else{
+                                }
+                                else{
                                     $goods_info['sizes_text'] = '有货尺码：';
                                 }
                             }
