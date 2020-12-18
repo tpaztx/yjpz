@@ -42,7 +42,7 @@ class Brand extends Model
 
     public function show()
     {
-        return $this->hasMany('BrandMaterial','brand_id','id');
+        return $this->hasMany('BrandMaterial','brand_id','brand_id');
     }
 
     
