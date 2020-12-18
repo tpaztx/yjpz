@@ -53,12 +53,10 @@ class BrandMaterial extends Model
         }
         return $imagesArray;
     }
-    
 
-
-
-
-
-
+    public function brand()
+    {
+        return $this->belongsTo('Brand','brand_id','id');
+    }
 
 }

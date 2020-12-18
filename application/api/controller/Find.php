@@ -42,7 +42,7 @@ class Find extends Api
             $this->error('非法请求！');
         }
         $brand_id = $this->request->param('brand_id');
-        $list = BrandMaterial::where('brand_id',$brand_id)->select();
+        $list = BrandMaterial::with('brand')->where('brand_id',$brand_id)->select();
         if(empty($list)){
             $this->error('无品牌数据!');
         }
