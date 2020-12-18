@@ -6,10 +6,12 @@ use app\admin\model\Store;
 use app\common\controller\Api;
 use app\common\library\Ems;
 use app\common\library\Sms;
+use app\common\library\Token;
 use fast\Random;
 use think\Db;
 use think\Validate;
 use app\common\model\User as UserM;
+use function Qiniu\json_decode;
 
 /**
  * 会员接口
@@ -355,6 +357,94 @@ class User extends Api
      */
     public function wxLogin()
     {
-        
+        $code = $this->request->param('code') ?? '';
+        $type = $this->request->param('type') ?? '';
+        $phone = $this->request->param('phone') ?? '';
+        $appid = $this->AppId;
+        $secret = $this->AppSecret;
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid . "&secret=" . $secret . "&code=" . $code . "&grant_type=authorization_code";
+        $list = $this->http ( $url, 'GET' );
+        $list = $list [1];
+        $list = \GuzzleHttp\json_decode( $list, true );
+        if(!empty($list['openid']) && isset($list['openid'])){
+            if(!empty($phone) && $type == 'APP'){
+
+            }
+            $row = \app\admin\model\User::where('openid',$list['openid'])->find();
+            if($row){
+                $token = Random::uuid();
+                Token::set($token, $row['id']);
+                $row['token'] = $token;
+                $this->success('登录成功！',$row);
+            }
+            //获取用户信息
+            $url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $list['access_token'] . "&openid=" . $list['openid']  . "&lang=zh_CN ";
+            $list = $this->http ( $url, 'GET' );
+            $list = $list [1];
+            $result = \GuzzleHttp\json_decode ( $list, true );
+            //保存用户信息
+            $data ['openid'] = $result ['openid'];
+            $data ['nickname'] = $result ['nickname'];
+            $data ['gender'] = $result ['sex'];
+            $data ['city'] = $result ['city'];
+            $data ['province'] = $result ['province'];
+            $data ['avatar'] = $result ['headimgurl'];
+            $data ['country'] = $result ['country'];
+            $data ['type'] = $type;
+            $user = \app\admin\model\User::create($data);
+            if($user){
+                $token = Random::uuid();
+                Token::set($token, $user['id']);
+                $user['token'] = $token;
+                $this->success('登录成功！',$user);
+            }
+            $this->error('服务器繁忙！');
+        }else{
+            $this->error('授权失败！');
+        }
+    }
+
+
+    private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
+        $ci = curl_init ();
+        /* Curl settings */
+        curl_setopt ( $ci, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1 );
+        curl_setopt ( $ci, CURLOPT_CONNECTTIMEOUT, 30 );
+        curl_setopt ( $ci, CURLOPT_SSL_VERIFYPEER, FALSE );
+        curl_setopt ( $ci, CURLOPT_SSL_VERIFYHOST, FALSE );
+        curl_setopt ( $ci, CURLOPT_TIMEOUT, 30 );
+        curl_setopt ( $ci, CURLOPT_RETURNTRANSFER, true );
+
+        switch ($method) {
+            case 'POST' :
+                curl_setopt ( $ci, CURLOPT_POST, true );
+                if (! empty ( $postfields )) {
+                    curl_setopt ( $ci, CURLOPT_POSTFIELDS, $postfields );
+                    $this->postdata = $postfields;
+                }
+                break;
+        }
+        curl_setopt ( $ci, CURLOPT_URL, $url );
+        curl_setopt ( $ci, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ci, CURLINFO_HEADER_OUT, true );
+
+        $response = curl_exec ( $ci );
+        $http_code = curl_getinfo ( $ci, CURLINFO_HTTP_CODE );
+
+        if ($debug) {
+            echo "=====post data======\r\n";
+            var_dump ( $postfields );
+
+            echo '=====info=====' . "\r\n";
+            print_r ( curl_getinfo ( $ci ) );
+
+            echo '=====$response=====' . "\r\n";
+            print_r ( $response );
+        }
+        curl_close ( $ci );
+        return array (
+            $http_code,
+            $response
+        );
     }
 }
