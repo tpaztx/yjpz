@@ -9,6 +9,7 @@ use app\common\controller\Api;
 use app\admin\model\Store as StoreM;
 use app\common\model\BrandList;
 use app\common\model\GoodsList;
+use app\common\model\PriceChange;
 use think\Db;
 
 class Store extends Api
@@ -170,12 +171,64 @@ class Store extends Api
     /**
      * 改价设置
      * @param $type 1统一改价 2品牌改价 3商品改价
+     * @param  $symbol +增加指定价格  -打折   *增加指定百分比
+     * @param  $object_id 所属对象id 品牌id、商品id
+     * @param  $number 改价数值
      */
     public function PriceChange()
     {
         $user = $this->auth->getUser();
         $storeM = new \app\admin\model\Store();
         $store = $storeM->getStore($user['id']);
+        $symbol = $this->request->param('symbol');
+        $number = $this->request->param('number');
         $type = $this->request->param('type');
+        $object_id = $this->request->param('object_id') ?? 0;
+        $data = [
+            'store_id'=>$store['id'],
+            'symbol'=>$symbol,
+            'number'=>$number,
+            'type'=>$type,
+            'object_id'=>$object_id,
+        ];
+        if($type == 1 || $type == 2) {
+            $row = PriceChange::where(['store_id' => $store['id'], 'type' => $type, 'object_id' => $object_id])->find();
+            if (!$row) {
+                $res = PriceChange::create($data);
+            } else {
+                $row->symbol = $symbol;
+                $row->number = $number;
+                $res=$row->save();
+            }
+        }
+        if($type == 3){
+            $array = explode(',',$object_id);
+            // 启动事务
+            Db::startTrans();
+            try{
+                foreach ($array as $item){
+                    $row = PriceChange::where(['store_id' => $store['id'], 'type' => $type, 'object_id' => $item])->find();
+                    if (!$row) {
+                        $data['object_id'] = $item;
+                        PriceChange::create($data);
+                    } else {
+                        $row->symbol = $symbol;
+                        $row->number = $number;
+                        $row->save();
+                    }
+                }
+                // 提交事务
+                Db::commit();
+                $res = true;
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                $res = false;
+            }
+        }
+        if(!$res){
+            $this->error('改价失败！请稍后再试！');
+        }
+        $this->success('改价成功！');
     }
 }

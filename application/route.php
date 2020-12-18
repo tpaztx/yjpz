@@ -73,4 +73,7 @@ Route::post([
     'api/downBrand'=>'api/store/downBrand',
     //商品上下架
     'api/storeDown'=>'api/store/storeDown',
+    //整场转发
+    'api/forward'=>'api/store/forward',
+    'api/PriceChange'=>'api/store/PriceChange',
 ]);
