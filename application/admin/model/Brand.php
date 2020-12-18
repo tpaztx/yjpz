@@ -39,7 +39,11 @@ class Brand extends Model
         $value = $value ? $value : $data['updatetime'];
         return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
     }
-    
+
+    public function show()
+    {
+        return $this->hasMany('BrandMaterial','brand_id','id');
+    }
 
     
 
