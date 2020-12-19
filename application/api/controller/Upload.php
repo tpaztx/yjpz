@@ -8,6 +8,8 @@ use app\common\controller\Api;
 
 class Upload extends Api
 {
+    protected $noNeedLogin = '';
+    protected $noNeedRight = '*';
     public function upload()
     {
        $upload = new \app\common\library\Upload();
