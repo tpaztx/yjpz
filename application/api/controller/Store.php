@@ -74,9 +74,14 @@ class Store extends Api
         }])
             ->where('sellTimeTo','>',$time)
             ->paginate($limit,false,[ 'query' => request()->param()]);
+        $this->success('1111',$list);
         if(!empty($list)){
             $array = array();
             foreach ($list as $k=>$item){
+                $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
+                if($item['cellTimeTo'] > time()){
+
+                }
                 if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $item;
                 }
