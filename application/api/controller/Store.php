@@ -94,6 +94,7 @@ class Store extends Api
             $data['count'] = $count;
             $this->success('请求成功！',$data);
         }
+
         $this->error('无数据！');
     }
     /**
