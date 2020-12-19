@@ -12,12 +12,15 @@ use think\Db;
 use think\Validate;
 use app\common\model\User as UserM;
 use function Qiniu\json_decode;
+use function Symfony\Component\String\u;
 
 /**
  * 会员接口
  */
 class User extends Api
 {
+    protected $AppId = 'wxcebf3e4c3aebac0f';
+    protected $AppSecret = '4408178209ce1eb88e7464f7b996262c';
     protected $noNeedLogin = ['login', 'mobilelogin', 'register', 'resetpwd', 'changeemail', 'changemobile', 'third'];
     protected $noNeedRight = '*';
 
@@ -37,7 +40,7 @@ class User extends Api
     /**
      * 会员登录
      *
-     * @param string $account  账号
+     * @param string $account 账号
      * @param string $password 密码
      */
     public function login()
@@ -59,7 +62,7 @@ class User extends Api
     /**
      * 手机验证码登录
      *
-     * @param string $mobile  手机号
+     * @param string $mobile 手机号
      * @param string $captcha 验证码
      */
     public function mobilelogin()
@@ -100,9 +103,9 @@ class User extends Api
      *
      * @param string $username 用户名
      * @param string $password 密码
-     * @param string $email    邮箱
-     * @param string $mobile   手机号
-     * @param string $code   验证码
+     * @param string $email 邮箱
+     * @param string $mobile 手机号
+     * @param string $code 验证码
      */
     public function register()
     {
@@ -136,10 +139,10 @@ class User extends Api
 
 //        // 启动事务
         Db::startTrans();
-        try{
-            $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid'=>$trade_code]);
+        try {
+            $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid' => $trade_code]);
             $data = ['userinfo' => $this->auth->getUserinfo()];
-            Store::create(['user_id'=>$data['userinfo']['id']]);
+            Store::create(['user_id' => $data['userinfo']['id']]);
             // 提交事务
             Db::commit();
             $ret = true;
@@ -167,10 +170,10 @@ class User extends Api
     /**
      * 修改会员个人信息
      *
-     * @param string $avatar   头像地址
+     * @param string $avatar 头像地址
      * @param string $username 用户名
      * @param string $nickname 昵称
-     * @param string $bio      个人简介
+     * @param string $bio 个人简介
      */
     public function profile()
     {
@@ -202,7 +205,7 @@ class User extends Api
     /**
      * 修改邮箱
      *
-     * @param string $email   邮箱
+     * @param string $email 邮箱
      * @param string $captcha 验证码
      */
     public function changeemail()
@@ -236,7 +239,7 @@ class User extends Api
     /**
      * 修改手机号
      *
-     * @param string $mobile   手机号
+     * @param string $mobile 手机号
      * @param string $captcha 验证码
      */
     public function changemobile()
@@ -271,7 +274,7 @@ class User extends Api
      * 第三方登录
      *
      * @param string $platform 平台名称
-     * @param string $code     Code码
+     * @param string $code Code码
      */
     public function third()
     {
@@ -289,7 +292,7 @@ class User extends Api
             $loginret = \addons\third\library\Service::connect($platform, $result);
             if ($loginret) {
                 $data = [
-                    'userinfo'  => $this->auth->getUserinfo(),
+                    'userinfo' => $this->auth->getUserinfo(),
                     'thirdinfo' => $result
                 ];
                 $this->success(__('Logged in successful'), $data);
@@ -301,9 +304,9 @@ class User extends Api
     /**
      * 重置密码
      *
-     * @param string $mobile      手机号
+     * @param string $mobile 手机号
      * @param string $newpassword 新密码
-     * @param string $captcha     验证码
+     * @param string $captcha 验证码
      */
     public function resetpwd()
     {
@@ -359,29 +362,21 @@ class User extends Api
     {
         $code = $this->request->param('code') ?? '';
         $type = $this->request->param('type') ?? '';
-        $phone = $this->request->param('phone') ?? '';
+        $mobile = $this->request->param('mobile') ?? '';
         $appid = $this->AppId;
         $secret = $this->AppSecret;
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid . "&secret=" . $secret . "&code=" . $code . "&grant_type=authorization_code";
-        $list = $this->http ( $url, 'GET' );
+        $list = $this->http($url, 'GET');
         $list = $list [1];
-        $list = \GuzzleHttp\json_decode( $list, true );
-        if(!empty($list['openid']) && isset($list['openid'])){
-            if(!empty($phone) && $type == 'APP'){
+        $list = \GuzzleHttp\json_decode($list, true);
+        if (!empty($list['openid']) && isset($list['openid'])) {
 
-            }
-            $row = \app\admin\model\User::where('openid',$list['openid'])->find();
-            if($row){
-                $token = Random::uuid();
-                Token::set($token, $row['id']);
-                $row['token'] = $token;
-                $this->success('登录成功！',$row);
-            }
             //获取用户信息
-            $url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $list['access_token'] . "&openid=" . $list['openid']  . "&lang=zh_CN ";
-            $list = $this->http ( $url, 'GET' );
+            $url = "https://api.weixin.qq.com/sns/userinfo?access_token=" . $list['access_token'] . "&openid=" . $list['openid'] . "&lang=zh_CN ";
+            $list = $this->http($url, 'GET');
             $list = $list [1];
-            $result = \GuzzleHttp\json_decode ( $list, true );
+            $result = \GuzzleHttp\json_decode($list, true);
+
             //保存用户信息
             $data ['openid'] = $result ['openid'];
             $data ['nickname'] = $result ['nickname'];
@@ -391,16 +386,43 @@ class User extends Api
             $data ['avatar'] = $result ['headimgurl'];
             $data ['country'] = $result ['country'];
             $data ['type'] = $type;
+            $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
+            if ($row) {
+                $token = Random::uuid();
+                Token::set($token, $row['id']);
+                $row['token'] = $token;
+                $this->success('登录成功！', $row);
+            }
+            if ($type == 'APP' && !empty($mobile)) {
+                $user = \app\admin\model\User::where('mobile', $mobile)->find();
+                if ($user) {
+                    $user ['openid'] = $result ['openid'];
+                    $user ['nickname'] = $result ['nickname'];
+                    $user ['gender'] = $result ['sex'];
+                    $user ['city'] = $result ['city'];
+                    $user ['province'] = $result ['province'];
+                    $user ['avatar'] = $result ['headimgurl'];
+                    $user ['country'] = $result ['country'];
+                    $user ['type'] = $type;
+                    $res = $user->save();
+                    if (!$res) {
+                        $user->delete();
+                        $this->error('授权失败！');
+                    }
+                    $token = Random::uuid();
+                    Token::set($token, $user['id']);
+                    $user['token'] = $token;
+                    $this->success('授权成功！', $user);
+                }
+            }
             $user = \app\admin\model\User::create($data);
-            if($user){
+            if ($user) {
                 $token = Random::uuid();
                 Token::set($token, $user['id']);
                 $user['token'] = $token;
-                $this->success('登录成功！',$user);
+                $this->success('授权成功！', $user);
             }
             $this->error('服务器繁忙！');
-        }else{
-            $this->error('授权失败！');
         }
     }
 
