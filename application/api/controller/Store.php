@@ -90,9 +90,9 @@ class Store extends Api
                     $array[] = $item;
                 }
             }
-            $list['list'] = $array;
-            $list['count'] = $count;
-            $this->success('请求成功！',$list);
+            $data['list'] = $array;
+            $data['count'] = $count;
+            $this->success('请求成功！',$data);
         }
         $this->error('无数据！');
     }
