@@ -21,7 +21,7 @@ class User extends Api
 {
     protected $AppId = 'wxcebf3e4c3aebac0f';
     protected $AppSecret = '4408178209ce1eb88e7464f7b996262c';
-    protected $noNeedLogin = ['login', 'mobilelogin', 'register', 'resetpwd', 'changeemail', 'changemobile', 'third'];
+    protected $noNeedLogin = ['login', 'mobilelogin', 'register', 'resetpwd', 'changeemail', 'changemobile', 'third','wxLogin'];
     protected $noNeedRight = '*';
 
     public function _initialize()
