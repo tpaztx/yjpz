@@ -74,7 +74,11 @@ class Store extends Api
         }])
             ->where('sellTimeTo','>',$time)
             ->paginate($limit,false,[ 'query' => request()->param()]);
-        $this->success('1111',$list['data']);
+        $count = count(BrandList::with(['goods'=>function($query){
+            $query->limit(0,1);
+        }])
+            ->where('sellTimeTo','>',$time)
+            ->select());
         if(!empty($list)){
             $array = array();
             foreach ($list as $k=>$item){
@@ -86,7 +90,7 @@ class Store extends Api
                     $array[] = $item;
                 }
             }
-            $list = $array;
+            $list['count'] = $count-count($downIdArray);
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
@@ -115,6 +119,7 @@ class Store extends Api
                 }
             }
             $list = $array;
+            $list['count'] = count($downIdArray);
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');
