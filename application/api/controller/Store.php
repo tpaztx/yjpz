@@ -69,6 +69,7 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
         $time = date('Y-m-d H:i:s',time());
+        dump($time);exit;
         $list = BrandList::with(['goods'=>function($query){
             $query->limit(0,1);
         }])
