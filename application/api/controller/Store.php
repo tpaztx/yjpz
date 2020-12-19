@@ -83,8 +83,8 @@ class Store extends Api
             $array = array();
             foreach ($list as $k=>$item){
                 $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
-                if($item['cellTimeTo'] > time()){
-
+                if($item['sellTimeTo'] > time()){
+                    $item['sellTimeTo'] = ceil(($item['sellTimeTo']-time())/86400);
                 }
                 if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $item;
@@ -114,6 +114,10 @@ class Store extends Api
         if(!empty($list)){
             $array = array();
             foreach ($array as $k=>$item){
+                $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
+                if($item['sellTimeTo'] > time()){
+                    $item['sellTimeTo'] = ceil(($item['sellTimeTo']-time())/86400);
+                }
                 if(in_array($item['adId'],$downIdArray)){
                     $array[] = $item;
                 }
