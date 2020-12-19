@@ -19,4 +19,8 @@ class BrandList Extends Model
     protected $append = [
     ];
 
+    public function goods()
+    {
+        return $this->hasMany('GoodsList','adId','adId');
+    }
 }

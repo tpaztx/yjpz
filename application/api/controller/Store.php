@@ -69,7 +69,11 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
         $time = time();
-        $list = BrandList::where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
+        $list = BrandList::with(['goods'=>function($query){
+            $query->limit(0,1);
+        }])
+            ->where('sellTimeTo','>',$time)
+            ->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
             $array = array();
             foreach ($list as $k=>$item){
@@ -230,5 +234,29 @@ class Store extends Api
             $this->error('改价失败！请稍后再试！');
         }
         $this->success('改价成功！');
+    }
+    /**
+     * H5小店模式 (品牌商品)
+     */
+    public function smallStoreBrandShow()
+    {
+        $limit = $this->request->param('limit') ?? 10;
+        $store_id = $this->request->param('store_id');
+        $orderFile = $this->request->param('orderFile');
+        $orderRule = $this->request->param('orderRule');
+        $adId = $this->request->param('adId');
+        //验证该品牌是否下架
+        $check = StoreDown::where('store_id',$store_id)->whereIn('ad_id',$adId)->find();
+        if($check){
+            $this->error('该品牌已下架！');
+        }
+        //获取对该品牌下的商品并进行改价
+        $goodsList = GoodsList::where('adId',$adId)->paginate($limit,false,[ 'query' => request()->param()]);
+        $PriceChange = new PriceChange();
+        $goodsList=$PriceChange->changePrice($store_id,$goodsList);
+        if(!$goodsList){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$goodsList);
     }
 }
