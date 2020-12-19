@@ -171,7 +171,7 @@ class Wph extends Api
      */
     public function getGoodsList()
     {
-        $pageIndex = $this->request->request('pageIndex')?:1;
+        $page = $this->request->request('page')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $id = $this->request->request('adId')?:0;
         $result = $this->goodsList($pageIndex, $pageSize, $id);
