@@ -66,7 +66,7 @@ Route::post([
     //图片上传
     'api/upload'=>'api/upload/upload',
     //小店信息
-    'api/store'=>'api/store/store',
+    'api/storeMessage'=>'api/store/storeMessage',
     //已上架品牌
     'api/upBrand'=>'api/store/upBrand',
     //已下架品牌
@@ -75,5 +75,6 @@ Route::post([
     'api/storeDown'=>'api/store/storeDown',
     //整场转发
     'api/forward'=>'api/store/forward',
+    //改价设置
     'api/PriceChange'=>'api/store/PriceChange',
 ]);

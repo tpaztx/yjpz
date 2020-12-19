@@ -46,7 +46,7 @@ class Store extends Api
     /**
      * 获取小店信息
      */
-    public function store()
+    public function storeMessage()
     {
         $user = $this->auth->getUser();
         $store = StoreM::where('user_id',$user['id'])->find();
