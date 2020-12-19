@@ -80,7 +80,6 @@ class Wph extends Api
     {
         $result = '';
         try {
-            dump('this ehre');die;
             if ($cid == 0) {
                 $result = BrandList::limit(($page - 1)*$pageSize, $pageSize)->select();
                 echo BrandList::getLastSQL();die; 
