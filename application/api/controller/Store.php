@@ -74,7 +74,7 @@ class Store extends Api
         }])
             ->where('sellTimeTo','>',$time)
             ->paginate($limit,false,[ 'query' => request()->param()]);
-        $this->success('1111',$list);
+        $this->success('1111',$list->data);
         if(!empty($list)){
             $array = array();
             foreach ($list as $k=>$item){
