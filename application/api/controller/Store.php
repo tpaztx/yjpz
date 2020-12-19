@@ -99,7 +99,9 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
         $time = time();
-        $list = BrandList::where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
+        $list = BrandList::with(['goods'=>function($query){
+            $query->limit(0,1);
+        }])->where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
             $array = array();
             foreach ($array as $k=>$item){
