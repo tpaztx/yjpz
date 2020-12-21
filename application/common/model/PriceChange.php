@@ -26,8 +26,8 @@ class PriceChange extends Model
     {
         if(!empty($goodsList)){
             foreach ($goodsList as &$item){
-                $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id',$item['goodId']])->find();
-                $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id',$item['adId']])->find();
+                $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id'=>$item['goodId']])->find();
+                $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id'=>$item['adId']])->find();
                 $all = $this->where(['store_id'=>$store_id,'type'=>1])->find();
                 if($goodId){
                     switch ($goodId['symbol']){
@@ -83,8 +83,8 @@ class PriceChange extends Model
     public function changePrice($store_id,$goods)
     {
         if($goods){
-                $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id',$goods['goodId']])->find();
-                $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id',$goods['adId']])->find();
+                $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id'=>$goods['goodId']])->find();
+                $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id'=>$goods['adId']])->find();
                 $all = $this->where(['store_id'=>$store_id,'type'=>1])->find();
                 if($goodId){
                     switch ($goodId['symbol']){
