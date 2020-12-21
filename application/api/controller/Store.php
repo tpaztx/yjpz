@@ -102,8 +102,7 @@ class Store extends Api
             ->whereIn('adId',$downIdArray)
             ->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
-            $array = array();
-            foreach ($array as $k=>&$item){
+            foreach ($list as $k=>&$item){
                 $item['goods'] = GoodsList::where('adId',$item['adId'])->find();
                 $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
                 if($item['sellTimeTo'] > time()){
