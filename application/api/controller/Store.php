@@ -69,9 +69,7 @@ class Store extends Api
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
         $time = date('Y-m-d H:i:s',time());
-        $list = BrandList::with(['goods'=>function($query){
-            $query->limit(0,1);
-        }])
+        $list = BrandList::with(['goods'])
             ->where('sellTimeTo','>',$time)
             ->paginate($limit,false,[ 'query' => request()->param()]);
         $count = BrandList::with(['goods'=>function($query){
