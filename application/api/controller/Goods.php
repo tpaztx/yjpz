@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
+use app\common\model\PriceChange;
 use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
 use app\api\controller\Wph;
@@ -40,5 +41,18 @@ class Goods extends Api
         }else{
             $this->error('缺少请求参数商品ID！');
         }
+    }
+    /**
+     * 商品详情
+     */
+    public function goodShow()
+    {
+        $goodId  = $this->request->param('goodId');
+        $user = $this->auth->getUser();
+        $store = \app\admin\model\Store::getStore($user['id']);
+        dump($store);
+        $good = GoodsList::where('goodId',$goodId)->find();
+        $changePrice = new PriceChange();
+        $changePrice->changePrice($store['id'],$good);
     }
 }
