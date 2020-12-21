@@ -86,7 +86,7 @@ class Store extends Api
                 if($item['sellTimeTo'] > time()){
                     $item['sellTimeTo'] = ceil(($item['sellTimeTo']-time())/86400);
                 }
-                if(!in_array($item['adId'],$downIdArray) && !empty($item['goods'])){
+                if(!in_array($item['adId'],$downIdArray)){
                     $array[] = $item;
                 }
             }
