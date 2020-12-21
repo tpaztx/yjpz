@@ -60,6 +60,8 @@ class Goods extends Api
         $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
         if($good['brand']['sellTimeTo'] > time()){
             $good['brand']['sellTimeTo'] = ceil(($good['brand']['sellTimeTo']-time())/86400);
+        }else{
+            $good['brand']['sellTimeTo'] = '已超过选购时间！';
         }
         if(!$good){
             $this->error('服务器繁忙！');
