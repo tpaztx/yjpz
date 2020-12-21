@@ -49,10 +49,17 @@ class Goods extends Api
     {
         $goodId  = $this->request->param('goodId');
         $user = $this->auth->getUser();
-        $store = \app\admin\model\Store::getStore($user['id']);
-        dump($store);
-        $good = GoodsList::where('goodId',$goodId)->find();
+        $storeM = new \app\admin\model\Store();
+        $store=$storeM->getStore($user['id']);
+        $good = GoodsList::with(['brand'=>function($query){
+            $query->field('adId,brandName,sellTimeTo,brandImage');
+        }])->where('goodId',$goodId)->find();
         $changePrice = new PriceChange();
-        $changePrice->changePrice($store['id'],$good);
+        $good = $changePrice->changePrice($store['id'],$good);
+        $good['goodBigImage'] = unserialize($good['goodBigImage']);
+        if(!$good){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$good);
     }
 }
