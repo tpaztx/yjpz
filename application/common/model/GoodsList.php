@@ -21,6 +21,6 @@ class GoodsList Extends Model
 
     public function brand()
     {
-        return $this->belongsTo('Brand','adId','adId');
+        return $this->belongsTo('BrandList','adId','adId');
     }
 }
