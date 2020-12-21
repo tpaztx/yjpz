@@ -57,9 +57,9 @@ class Goods extends Api
         $changePrice = new PriceChange();
         $good = $changePrice->changePrice($store['id'],$good);
         $good['goodBigImage'] = unserialize($good['goodBigImage']);
-        $item['sellTimeTo'] = strtotime($good['sellTimeTo']);
-        if($item['sellTimeTo'] > time()){
-            $good['sellTimeTo'] = ceil(($good['sellTimeTo']-time())/86400);
+        $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
+        if($good['brand']['sellTimeTo'] > time()){
+            $good['brand']['sellTimeTo'] = ceil(($good['brand']['sellTimeTo']-time())/86400);
         }
         if(!$good){
             $this->error('服务器繁忙！');
