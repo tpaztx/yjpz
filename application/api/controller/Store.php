@@ -48,8 +48,13 @@ class Store extends Api
      */
     public function storeMessage()
     {
-        $user = $this->auth->getUser();
-        $store = StoreM::where('user_id',$user['id'])->find();
+        $store_id = $this->request->param('store_id') ?? null;
+        if(!empty($store_id)){
+            $store = StoreM::where('id',$store_id)->find();
+        }else{
+            $user = $this->auth->getUser();
+            $store = StoreM::where('user_id',$user['id'])->find();
+        }
         if(!$store){
             $this->error('服务器繁忙！');
         }
