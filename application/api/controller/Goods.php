@@ -10,6 +10,7 @@ use app\common\model\BrandList;
 use app\api\controller\Wph;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
+use think\Config;
 
 /**
  * 商品相关
