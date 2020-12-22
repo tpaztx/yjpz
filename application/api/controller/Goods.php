@@ -6,6 +6,7 @@ use app\common\controller\Api;
 use app\common\model\PriceChange;
 use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
+use app\common\model\BrandList;
 use app\api\controller\Wph;
 
 /**
@@ -42,6 +43,34 @@ class Goods extends Api
             $this->error('缺少请求参数商品ID！');
         }
     }
+
+    /**
+     * 品牌详情
+     * adId 广告ID
+     */
+    public function getBrandInfo()
+    {
+        $page = $this->request->request('page')?:1;
+        $pageSize = $this->request->request('pageSize')?:10;
+        $adId = $this->request->request('adId')?:0;
+        if ($adId == 0) $this->error('缺少请求参数商品ID！');
+
+        $brand_result = BrandList::where('cateId', 'in', $cid)
+                                    ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
+                                    ->limit(($page - 1)*$pageSize, $pageSize)
+                                    ->select();
+        if ($brand_result && !empty($brand_result)) {
+            foreach ($brand_result as $key => $val)
+            {
+                $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
+                $goods = GoodsList::where('adId', $v['adId'])->field('goodImage,goodId,goodName,sn,vipshopPrice,marketPrice,isMp,commission,color,material,sizes_text,goodBigImage,suggestAddPrice,suggestPrice')->select();
+                $brand_result[$key]['goods'] = $goods;
+            }
+            $this->success('请求成功！', $brand_result);
+        }
+        $this->error('请求失败！');
+    }
+
     /**
      * 商品详情
      */
