@@ -55,7 +55,7 @@ class Goods extends Api
         $adId = $this->request->request('adId')?:0;
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
 
-        $brand_result = BrandList::where('cateId', 'in', $cid)
+        $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
                                     ->limit(($page - 1)*$pageSize, $pageSize)
                                     ->select();
