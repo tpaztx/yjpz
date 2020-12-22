@@ -340,50 +340,11 @@ class Api
      * 生成二维码
      */
     public function qrcode($url){
-        $qrCode = new QrCode();
-        $qrCode->setText($url); //设置二维码上的内容
-
-        $qrCode->setSize(300);  //二维码尺寸
-
-        $qrCode->setWriterByName('png'); //设置输出的二维码图片格式
-
-        $qrCode->setMargin(10);
-
-        $qrCode->setEncoding('UTF-8');
-
-        $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH()); //设置二维码的纠错率，可以有low、medium、quartile、hign多个纠错率
-
-        $qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]); //设置二维码的rgb颜色和透明度a，这里是黑色
-
-        $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]); //设置二维码图片的背景底色，这里是白色
-
-//可能的指定二维码下方的文字，写死15px的字体大小，字体
-
-//        $qrCode->setLabelFontPath(__DIR__.'/vendor/endroid/qr-code/assets/fonts/noto_sans.otf'); //字体路径
-
-//        $qrCode->setLabel('二维码下方的文字1'); //文字
-
-        $qrCode->setLabelFontSize(16); //字体大小
-
-//或统一用setLabel('二维码下方的文字','字体大小','字体路径','对齐方式')来设置
-
-//        $qrCode->setLabel('二维码下方的文字2', 16, __DIR__.'/vendor/endroid/qr-code/assets/fonts/noto_sans.otf', LabelAlignment::CENTER());
-
-        $qrCode->setLabelMargin(['t'=>50]); //设置标签边距 array('t' => 10,'r' => 20,'b' => 10,'l' => 30)
-
-//如果要加上logo水印，则在调用setLogoPath和setLogoSize方法
-
-//        $qrCode->setLogoPath(__DIR__.'/logo.png'); //logo水印图片的所在的路径
-
-        $qrCode->setLogoSize(150, 200); //设置logo水印的大小，单位px ，参数如果是一个int数字等比例缩放
-
-//保存二维码
-//        $qrCode->writeFile('public/qrcode.png');
-
-
-//输出二维码
-//        header('Content-Type: '.$qrCode->getContentType());
-
-        return $qrCode->writeString();
+        require_once './application/api/controller/phpqrcode.php';
+        $qecode = new \QRcode();
+        $qecode->png($url,false,"L","5",2);
+        $imageString = base64_encode(ob_get_contents());
+        ob_end_clean();
+        return "data:image/jpg;base64,".$imageString;
     }
 }
