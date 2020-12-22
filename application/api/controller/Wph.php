@@ -182,7 +182,7 @@ class Wph extends Api
                 $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])->count('id');
             }
         }
-        $this->success('请求成功！', $result);
+        $this->success('请求成功！', $result); 
     }
 
     /**
