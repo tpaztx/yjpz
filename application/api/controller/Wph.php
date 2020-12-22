@@ -179,7 +179,7 @@ class Wph extends Api
             foreach ($result as $k => $v) {
                 $v['goods'] = GoodsList::where('adId',$v['adId'])->limit(0,5)->select();
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
-                $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])count('id');
+                $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])->count('id');
             }
         }
         $this->success('请求成功！', $result);
