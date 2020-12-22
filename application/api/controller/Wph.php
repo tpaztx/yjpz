@@ -127,7 +127,7 @@ class Wph extends Api
             $request1->adId = $adId;
             $list = collection($service->getGoodsList($request1))->toArray();
             if ($list) {
-                // $this->success('请求成功！', $list);
+                $this->success('请求成功！', $list);
                 return $list;
             }
             // var_dump($service->getGoodsList($request1));
@@ -179,9 +179,10 @@ class Wph extends Api
             foreach ($result as $k => $v) {
                 $v['goods'] = GoodsList::where('adId',$v['adId'])->limit(0,5)->select();
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
+                $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])->count('id');
             }
         }
-        $this->success('请求成功！', $result);
+        $this->success('请求成功！', $result); 
     }
 
     /**

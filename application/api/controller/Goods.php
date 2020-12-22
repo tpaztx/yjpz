@@ -8,6 +8,9 @@ use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
 use app\common\model\BrandList;
 use app\api\controller\Wph;
+use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
+use Osp\Context\InvocationContextFactory;
+use think\Config;
 
 /**
  * 商品相关
@@ -96,5 +99,38 @@ class Goods extends Api
             $this->error('服务器繁忙！');
         }
         $this->success('请求成功！',$good);
+    }
+
+
+    /**
+     * 图文详情
+     */
+    public function getGoodsDesc()
+    {
+        $goodFullId = $this->request->request('goodFullId')?:0;
+        if ($goodFullId==0) $this->error('缺少请求参数商品ID！');
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcGoodsDetailRequest();
+            $request1->areaId = '101101';
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->goodFullIds = $goodFullId;
+            $list = collection($service->getGoodsDetail($request1))->toArray();
+            if ($list) {
+                foreach ($list as $key => $val) {
+                    $result = $val->dcImageURLs;
+                }
+                $this->success('请求成功！', $result);
+            }
+        } catch(\Osp\Exception\OspException $e){
+            $this->error('请求失败，请联系管理员！'); 
+        }
     }
 }
