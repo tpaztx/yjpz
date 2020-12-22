@@ -176,7 +176,7 @@ class Wph extends Api
                     unset($result[$k]);
                     continue;
                 }
-                if( time() < strtotime($v['sellTimeTo'])){
+                if( time() > strtotime($v['sellTimeTo'])){
                     unset($result[$k]);
                     continue;
                 }
