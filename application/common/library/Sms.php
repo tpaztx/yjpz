@@ -100,7 +100,6 @@ class Sms
         $sms = \app\common\model\Sms::where(['mobile' => $mobile, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
-            dump($sms);die;
         if ($sms) {
             if ($sms['createtime'] > $time && $sms['times'] <= self::$maxCheckNums) {
                 $correct = $code == $sms['code'];
