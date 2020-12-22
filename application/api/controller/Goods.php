@@ -63,7 +63,7 @@ class Goods extends Api
             foreach ($brand_result as $key => $val)
             {
                 $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
-                $goods = GoodsList::where('adId', $v['adId'])->field('goodImage,goodId,goodName,sn,vipshopPrice,marketPrice,isMp,commission,color,material,sizes_text,goodBigImage,suggestAddPrice,suggestPrice')->select();
+                $goods = GoodsList::where('adId', $val['adId'])->field('goodImage,goodId,goodName,sn,vipshopPrice,marketPrice,isMp,commission,color,material,sizes_text,goodBigImage,suggestAddPrice,suggestPrice')->select();
                 $brand_result[$key]['goods'] = $goods;
             }
             $this->success('请求成功！', $brand_result);
