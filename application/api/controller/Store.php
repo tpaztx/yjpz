@@ -260,7 +260,7 @@ class Store extends Api
         //获取对该品牌下的商品并进行改价
         $goodsList = GoodsList::where('adId',$adId)->paginate($limit,false,[ 'query' => request()->param()]);
         $PriceChange = new PriceChange();
-        $goodsList=$PriceChange->changePrice($store_id,$goodsList);
+        $goodsList=$PriceChange->changePriceArray($store_id,$goodsList);
         if(!$goodsList){
             $this->error('服务器繁忙！');
         }
