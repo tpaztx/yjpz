@@ -155,7 +155,7 @@ class Wph extends Api
 
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $id = $this->request->request('adId')?:0;
+        $id = $this->request->request('cateid')?:0;
         $result = $this->brandList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
