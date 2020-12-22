@@ -125,7 +125,7 @@ class Goods extends Api
             $list = collection($service->getGoodsDetail($request1))->toArray();
             if ($list) {
                 foreach ($list as $key => $val) {
-                    $result = $val['dcImageURLs'];
+                    $result = $val->dcImageURLs;
                 }
                 $this->success('请求成功！', $result);
             }
