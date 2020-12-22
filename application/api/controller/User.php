@@ -327,9 +327,9 @@ class User extends Api
                 $this->error(__('User not found'));
             }
             $ret = Sms::check($mobile, $captcha, 'resetpwd');
-            if (!$ret) {
-                $this->error(__('Captcha is incorrect'));
-            }
+            // if (!$ret) {
+            //     $this->error(__('Captcha is incorrect'));
+            // }
             Sms::flush($mobile, 'resetpwd');
         // } 
         // else {
