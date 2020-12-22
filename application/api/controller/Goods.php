@@ -124,7 +124,10 @@ class Goods extends Api
             $request1->goodFullIds = $goodFullId;
             $list = collection($service->getGoodsDetail($request1))->toArray();
             if ($list) {
-                $this->success('请求成功！', $list);
+                foreach ($list as $key => $val) {
+                    $result = $val['dcImageURLs'];
+                }
+                $this->success('请求成功！', $result);
             }
         } catch(\Osp\Exception\OspException $e){
             $this->error('请求失败，请联系管理员！');
