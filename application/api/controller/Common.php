@@ -23,7 +23,7 @@ use think\Log;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol'];
     protected $noNeedRight = '*';
 
     /**
@@ -345,5 +345,19 @@ class Common extends Api
             // $this->error('请求失败，请联系管理员！');
             return false;
         }
+    }
+
+    /**
+     * 获取协议说明相关内容
+     */
+    public function protocol()
+    {
+        $id = $this->request->request('id');
+        if (!$id) $this->error('缺少请求协议ID！');
+        $result = \app\common\model\Categroy::where('id', $id)->value('description');
+        if ($result) {
+            $this->success('请求成功！', $result);
+        }
+
     }
 }

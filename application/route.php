@@ -43,6 +43,8 @@ Route::post([
 	'api/getSelectAddress' => 'api/wph/getSelectAddress',
 	//密码重置
 	'api/resetpwd' => 'api/User/resetpwd',
+	//获取协议&说明
+	'api/protocol' => 'api/protocol',
 
 	/* 客户端 */
 	//首页-banner轮播
