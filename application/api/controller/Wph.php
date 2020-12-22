@@ -29,7 +29,6 @@ class Wph extends Api
     public function getCateGroyList()
     {
         $brandListMode = new BrandList; 
-        $GoodsListModel = new GoodsList;
         $result = collection($brandListMode::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
@@ -39,7 +38,7 @@ class Wph extends Api
         foreach ($result as $k => $v) {
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
-            $result[$k]['count'] = $GoodsListModel::where('cateId', 'in', $v['cateId'])->count('id');
+            $result[$k]['count'] = $brandListMode::where('cateId', 'in', $v['cateId'])->count('id');
         }
         $this->success('请求成功！', $result);
     }
