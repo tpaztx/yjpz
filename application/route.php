@@ -41,6 +41,8 @@ Route::post([
 	'api/getCateGroyList' => 'api/wph/getCateGroyList',
 	//获取用户地址
 	'api/getSelectAddress' => 'api/wph/getSelectAddress',
+	//密码重置
+	'api/resetpwd' => 'api/User/resetpwd',
 
 	/* 客户端 */
 	//首页-banner轮播
@@ -58,7 +60,7 @@ Route::post([
 	//尺码助手
 	'api/getGoodsSize' => 'api/goods/getGoodsSize', 
 	//品牌商品详情
-
+	'api/getBrandInfo' => 'api/goods/getBrandInfo',
 
   
     //小店-店铺设置

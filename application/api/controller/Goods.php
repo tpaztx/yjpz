@@ -8,7 +8,7 @@ use app\common\model\GoodsList;
 use app\api\controller\Wph;
 
 /**
- * 示例接口
+ * 商品相关
  */
 class Goods extends Api
 {
@@ -41,4 +41,6 @@ class Goods extends Api
             $this->error('缺少请求参数商品ID！');
         }
     }
+
+    public 
 }

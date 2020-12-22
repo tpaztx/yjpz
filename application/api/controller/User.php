@@ -137,7 +137,7 @@ class User extends Api
         //     $this->error(__('Captcha is incorrect'));
         // }
 
-//        // 启动事务
+        // 启动事务
         Db::startTrans();
         try {
             $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid' => $trade_code]);
@@ -310,15 +310,15 @@ class User extends Api
      */
     public function resetpwd()
     {
-        $type = $this->request->request("type");
+        // $type = $this->request->request("type");
         $mobile = $this->request->request("mobile");
-        $email = $this->request->request("email");
+        // $email = $this->request->request("email");
         $newpassword = $this->request->request("newpassword");
         $captcha = $this->request->request("captcha");
         if (!$newpassword || !$captcha) {
             $this->error(__('Invalid parameters'));
         }
-        if ($type == 'mobile') {
+        // if ($type == 'mobile') {
             if (!Validate::regex($mobile, "^1\d{10}$")) {
                 $this->error(__('Mobile is incorrect'));
             }
@@ -331,20 +331,21 @@ class User extends Api
                 $this->error(__('Captcha is incorrect'));
             }
             Sms::flush($mobile, 'resetpwd');
-        } else {
-            if (!Validate::is($email, "email")) {
-                $this->error(__('Email is incorrect'));
-            }
-            $user = \app\common\model\User::getByEmail($email);
-            if (!$user) {
-                $this->error(__('User not found'));
-            }
-            $ret = Ems::check($email, $captcha, 'resetpwd');
-            if (!$ret) {
-                $this->error(__('Captcha is incorrect'));
-            }
-            Ems::flush($email, 'resetpwd');
-        }
+        // } 
+        // else {
+        //     if (!Validate::is($email, "email")) {
+        //         $this->error(__('Email is incorrect'));
+        //     }
+        //     $user = \app\common\model\User::getByEmail($email);
+        //     if (!$user) {
+        //         $this->error(__('User not found'));
+        //     }
+        //     $ret = Ems::check($email, $captcha, 'resetpwd');
+        //     if (!$ret) {
+        //         $this->error(__('Captcha is incorrect'));
+        //     }
+        //     Ems::flush($email, 'resetpwd');
+        // }
         //模拟一次登录
         $this->auth->direct($user->id);
         $ret = $this->auth->changepwd($newpassword, '', true);
@@ -424,6 +425,14 @@ class User extends Api
             }
             $this->error('服务器繁忙！');
         }
+    }
+
+    /**
+     * 效验验证码
+     */
+    public function authSms()
+    {
+
     }
 
 
