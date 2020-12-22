@@ -45,6 +45,8 @@ Route::post([
 	'api/resetpwd' => 'api/User/resetpwd',
 	//获取协议&说明
 	'api/protocol' => 'api/common/protocol',
+	//微信JSSDK
+	'api/wxSdk' => 'api/User/wxSdk',
 
 	/* 客户端 */
 	//首页-banner轮播
