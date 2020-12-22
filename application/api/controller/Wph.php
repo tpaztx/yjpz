@@ -87,7 +87,7 @@ class Wph extends Api
     public function brandList($page = 1, $pageSize = 20, $cid = 0)
     {
         $result = '';
-        $time = time();
+        $time = date('Y-m-d H:i:s',time());
         try {
             if ($cid == 0) {
                 $result = BrandList::where('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
