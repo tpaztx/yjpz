@@ -84,13 +84,17 @@ class Wph extends Api
     /**
      * 返回品牌数据
      */
-    public function brandList($page = 1, $pageSize = 20, $cid = 0)
+    public function brandList($page = 1, $pageSize = 20, $cid = 0,$downIdArray = null)
     {
         $result = '';
         $time = date('Y-m-d H:i:s',time());
         try {
             if ($cid == 0) {
-                $result = BrandList::where('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $result = BrandList::where('sellTimeTo','>',$time )->where(function ($query) use ($downIdArray){
+                    if(!empty($downIdArray)){
+                        $query->whereNotIn('adId',$downIdArray);
+                    }
+                })->limit(($page - 1)*$pageSize, $pageSize)->select();
                 // echo BrandList::getLastSQL();die; 
             }else{
                 $result = BrandList::where('cateId', 'in', $cid)->where('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
@@ -170,13 +174,9 @@ class Wph extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store_id);
-        $result = $this->brandList($pageIndex, $pageSize, $id);
+        $result = $this->brandList($pageIndex, $pageSize, $id,$downIdArray);
         if ($result) {
             foreach ($result as $k => $v) {
-                if(in_array($v['adId'],$downIdArray)){
-                    unset($result[$k]);
-                    continue;
-                }
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
         }
