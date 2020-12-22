@@ -354,7 +354,7 @@ class Common extends Api
     {
         $id = $this->request->request('id');
         if (!$id) $this->error('缺少请求协议ID！');
-        $result = \app\common\model\Categroy::where('id', $id)->value('description');
+        $result = \app\common\model\Category::where('id', $id)->value('description');
         if ($result) {
             $this->success('请求成功！', $result);
         }
