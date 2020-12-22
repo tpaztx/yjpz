@@ -130,7 +130,7 @@ class Goods extends Api
                 $this->success('请求成功！', $result);
             }
         } catch(\Osp\Exception\OspException $e){
-            $this->error('请求失败，请联系管理员！');
+            $this->error('请求失败，请联系管理员！'); 
         }
     }
 }
