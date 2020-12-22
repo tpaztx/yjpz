@@ -65,6 +65,8 @@ Route::post([
 	'api/getGoodsSize' => 'api/goods/getGoodsSize', 
 	//品牌商品详情
 	'api/getBrandInfo' => 'api/goods/getBrandInfo',
+	//图文详情
+	'api/getGoodsDesc' => 'api/goods/getGoodsDesc',
 
   
     //小店-店铺设置
