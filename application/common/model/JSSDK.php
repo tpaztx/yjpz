@@ -17,7 +17,7 @@ class JSSDK {
 
     // 注意 URL 一定要动态获取，不能 hardcode.
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//    $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
     $timestamp = time();
     $nonceStr = $this->createNonceStr();
@@ -31,7 +31,7 @@ class JSSDK {
       "appId"     => $this->appId,
       "nonceStr"  => $nonceStr,
       "timestamp" => $timestamp,
-      "url"       => $url,
+//      "url"       => $url,
       "signature" => $signature,
       "rawString" => $string
     );
@@ -55,7 +55,7 @@ class JSSDK {
             // 如果是企业号用以下 URL 获取 ticket
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
-            $res = json_decode(curl_get($url));
+            $res = json_decode($this->httpGet($url));
             $ticket = $res->ticket;
             if ($ticket) {
                 // $data->expire_time = time() + 7000;
@@ -75,7 +75,7 @@ class JSSDK {
         // $data = json_decode($this->get_php_file("access_token.php"));
         if (!Cookie::has('wx_access_token')) {
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
-            $res = json_decode(curl_get($url));
+            $res = json_decode($this->httpGet($url));
             $access_token = $res->access_token;
             if ($access_token) {
               // $data->expire_time = time() + 7000;
