@@ -360,4 +360,17 @@ class Common extends Api
         }
 
     }
+
+    /**
+     * 定时清除失效品牌
+     */
+    public function delBrand()
+    {
+        $brandListModel = new BrandList;
+        $brand_list = $brandListModel->where('sellTimeTo<'.date('Y-m-d H:i:s', time()))->field('id,adId')->select();
+        foreach ($brand_list as $key => $val) {
+            db('goods_list')->where('adId', $val->adId)->delete();
+            db('brand_list')->where('id', $val->id)->delete();
+        }
+    }
 }
