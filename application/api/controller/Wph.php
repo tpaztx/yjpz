@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
@@ -28,6 +29,10 @@ class Wph extends Api
      */
     public function getCateGroyList()
     {
+        $store_id = $this->request->param('store_id');
+        //获取小店已下架品牌id
+        $storeDown = new StoreDown;
+        $downIdArray = $storeDown->getDownId($store_id);
         $brandListMode = new BrandList; 
         $result = collection($brandListMode::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
@@ -38,7 +43,11 @@ class Wph extends Api
         foreach ($result as $k => $v) {
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
-            $result[$k]['count'] = $brandListMode::where('cateId', 'in', $v['cateId'])->count('id');
+            $result[$k]['count'] = $brandListMode::where('cateId', 'in', $v['cateId'])->where(function ($query) use ($downIdArray,$store_id){
+                if(isset($store_id) && !empty($store_id)){
+                    $query->whereNotIn('adId',$downIdArray);
+                }
+            })->count('id');
         }
         $this->success('请求成功！', $result);
     }
@@ -156,9 +165,17 @@ class Wph extends Api
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $id = $this->request->request('cateid')?:0;
+        $store_id = $this->request->request('store_id');
+        //获取小店已下架品牌id
+        $storeDown = new StoreDown;
+        $downIdArray = $storeDown->getDownId($store_id);
         $result = $this->brandList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
+                if(in_array($v['adId'],$downIdArray)){
+                    unset($result[$k]);
+                    continue;
+                }
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
         }
