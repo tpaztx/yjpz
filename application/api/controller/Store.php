@@ -60,7 +60,8 @@ class Store extends Api
         }
         $this->success('请求成功！',$store);
     }
-    
+
+
     /**
      * 已上架品牌
      */
