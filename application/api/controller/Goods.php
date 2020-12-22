@@ -8,6 +8,8 @@ use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
 use app\common\model\BrandList;
 use app\api\controller\Wph;
+use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
+use Osp\Context\InvocationContextFactory;
 
 /**
  * 商品相关
