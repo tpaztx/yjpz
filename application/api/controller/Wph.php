@@ -177,6 +177,7 @@ class Wph extends Api
         $result = $this->brandList($pageIndex, $pageSize, $id,$downIdArray);
         if ($result) {
             foreach ($result as $k => $v) {
+                $v['goods'] = GoodsList::where('adId',$v['adId'])->limit(0,5)->select();
                 $result[$k]['endTime'] = time2string(strtotime($v['sellTimeTo']) - time());
             }
         }
