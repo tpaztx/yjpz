@@ -7,11 +7,13 @@ use app\common\controller\Api;
 use app\common\library\Ems;
 use app\common\library\Sms;
 use app\common\library\Token;
+use app\common\model\JSSDK;
 use fast\Random;
 use think\Db;
 use think\Validate;
 use app\common\model\User as UserM;
 use function Qiniu\json_decode;
+use function Symfony\Component\String\s;
 use function Symfony\Component\String\u;
 
 /**
@@ -27,6 +29,20 @@ class User extends Api
     public function _initialize()
     {
         parent::_initialize();
+    }
+
+
+    /**
+     * 微信jssdk信息
+     */
+    public function wxSdk()
+    {
+        $sdk = new JSSDK("$this->AppId","$this->AppSecret","");
+        $array = $sdk->getSignPackage();
+        if(!$array){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$array);
     }
 
     /**
@@ -426,6 +442,8 @@ class User extends Api
             $this->error('服务器繁忙！');
         }
     }
+    //用户地址添加
+
 
     /**
      * 效验验证码
