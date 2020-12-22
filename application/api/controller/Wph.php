@@ -87,12 +87,13 @@ class Wph extends Api
     public function brandList($page = 1, $pageSize = 20, $cid = 0)
     {
         $result = '';
+        $time = time();
         try {
             if ($cid == 0) {
-                $result = BrandList::limit(($page - 1)*$pageSize, $pageSize)->select();
+                $result = BrandList::limit(($page - 1)*$pageSize, $pageSize)->where('sellTimeTo','>',$time )->select();
                 // echo BrandList::getLastSQL();die; 
             }else{
-                $result = BrandList::where('cateId', 'in', $cid)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $result = BrandList::where('cateId', 'in', $cid)->where('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
             }
             return $result;
         } catch(Exception $e){
@@ -173,10 +174,6 @@ class Wph extends Api
         if ($result) {
             foreach ($result as $k => $v) {
                 if(in_array($v['adId'],$downIdArray)){
-                    unset($result[$k]);
-                    continue;
-                }
-                if( time() > strtotime($v['sellTimeTo'])){
                     unset($result[$k]);
                     continue;
                 }
