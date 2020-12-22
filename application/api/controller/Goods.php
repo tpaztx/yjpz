@@ -42,10 +42,6 @@ class Goods extends Api
             $this->error('缺少请求参数商品ID！');
         }
     }
-<<<<<<< HEAD
-
-    public 
-=======
     /**
      * 商品详情
      */
@@ -72,5 +68,4 @@ class Goods extends Api
         }
         $this->success('请求成功！',$good);
     }
->>>>>>> c2810477a821b2f130449fc45d8ef94f358c287b
 }
