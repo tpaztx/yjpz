@@ -57,7 +57,7 @@ class Search extends Api
         }
         $result = GoodsList::where("goodName like '%".$keyWord."%'")
                             ->where($where)
-                            ->field('goodId,goodFullId,goodName,color,material,sizes_text,sn,goodBigImage,vipshopPrice,marketPrice,commission')
+                            ->field('adId,goodId,goodFullId,goodName,color,material,sizes_text,sn,goodBigImage,vipshopPrice,marketPrice,commission')
                             ->order($order)
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
                             ->select();
