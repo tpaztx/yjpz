@@ -61,7 +61,7 @@ class Search extends Api
                             ->order($order)
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
                             ->select();
-                            // dump(GoodsList::getLastSQL());die;
+                            dump(GoodsList::getLastSQL());die;
         if ($result) {
             if (empty($result)) {
                 $this->success('未查询到数据结果！');
