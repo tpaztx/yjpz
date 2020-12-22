@@ -34,10 +34,15 @@ class Search extends Api
         $pageSize = $this->request->request('pageSize')?:10;
         $price = $this->request->request('price')?:'';
         $sale = $this->request->request('sale')?:'';
+        $adId = $this->request->request('adId')?:0;
 
         $order = 'id';
         if ($price !='') {
             $order = $price==1 ? 'vipshopPrice desc' : 'vipshopPrice';
+        }
+        $where = '1=1';
+        if ($adId > 0) {
+            $where = 'adId='.$adId;
         }
         // if ($sale !='') {
         //     $order = $sale==1 ? ''
@@ -51,6 +56,7 @@ class Search extends Api
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
         $result = GoodsList::where("goodName like '%".$keyWord."%'")
+                            ->where($where)
                             ->field('goodId,goodFullId,goodName,color,material,sizes_text,sn,goodBigImage,vipshopPrice,marketPrice,commission')
                             ->order($order)
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
