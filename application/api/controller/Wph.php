@@ -85,6 +85,7 @@ class Wph extends Api
                 // echo BrandList::getLastSQL();die; 
             }else{
                 $result = BrandList::where('cateId', 'in', $cid)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                echo RrandList::getLastSQL();die;
             }
             return $result;
         } catch(Exception $e){
@@ -156,7 +157,7 @@ class Wph extends Api
 
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
-        $id = $this->request->request('id')?:0;
+        $id = $this->request->request('adId')?:0;
         $result = $this->brandList($pageIndex, $pageSize, $id);
         if ($result) {
             foreach ($result as $k => $v) {
