@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
+use app\common\model\PriceChange;
 use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
 use app\api\controller\Wph;
@@ -41,6 +42,35 @@ class Goods extends Api
             $this->error('缺少请求参数商品ID！');
         }
     }
+<<<<<<< HEAD
 
     public 
+=======
+    /**
+     * 商品详情
+     */
+    public function goodShow()
+    {
+        $goodId  = $this->request->param('goodId');
+        $user = $this->auth->getUser();
+        $storeM = new \app\admin\model\Store();
+        $store=$storeM->getStore($user['id']);
+        $good = GoodsList::with(['brand'=>function($query){
+            $query->field('adId,brandName,sellTimeTo,brandImage');
+        }])->where('goodId',$goodId)->find();
+        $changePrice = new PriceChange();
+        $good = $changePrice->changePrice($store['id'],$good);
+        $good['goodBigImage'] = unserialize($good['goodBigImage']);
+        $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
+        if($good['brand']['sellTimeTo'] > time()){
+            $good['brand']['sellTimeTo'] = ceil(($good['brand']['sellTimeTo']-time())/86400);
+        }else{
+            $good['brand']['sellTimeTo'] = '已超过选购时间！';
+        }
+        if(!$good){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$good);
+    }
+>>>>>>> c2810477a821b2f130449fc45d8ef94f358c287b
 }

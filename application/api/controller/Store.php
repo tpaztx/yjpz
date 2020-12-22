@@ -68,22 +68,21 @@ class Store extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray=$storeDown->getDownId($store['id']);
-        $time = time();
-        $list = BrandList::with(['goods'=>function($query){
-            $query->limit(0,1);
-        }])
-            ->where('sellTimeTo','>',$time)
+        $time = date('Y-m-d H:i:s',time());
+        $list = BrandList::where('sellTimeTo','>',$time)
+            ->whereNotIn('adId',$downIdArray)
             ->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
-            $array = array();
-            foreach ($list as $k=>$item){
-                if(!in_array($item['adId'],$downIdArray)){
-                    $array[] = $item;
+            foreach ($list as $k=>&$item){
+                $item['goods'] = GoodsList::where('adId',$item['adId'])->find();
+                $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
+                if($item['sellTimeTo'] > time()){
+                    $item['sellTimeTo'] = ceil(($item['sellTimeTo']-time())/86400);
                 }
             }
-            $list = $array;
             $this->success('请求成功！',$list);
         }
+
         $this->error('无数据！');
     }
     /**
@@ -98,18 +97,18 @@ class Store extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store['id']);
-        $time = time();
-        $list = BrandList::with(['goods'=>function($query){
-            $query->limit(0,1);
-        }])->where('sellTimeTo','>',$time)->paginate($limit,false,[ 'query' => request()->param()]);
+        $time = date('Y-m-d H:i:s',time());
+        $list = BrandList::where('sellTimeTo','>',$time)
+            ->whereIn('adId',$downIdArray)
+            ->paginate($limit,false,[ 'query' => request()->param()]);
         if(!empty($list)){
-            $array = array();
-            foreach ($array as $k=>$item){
-                if(in_array($item['adId'],$downIdArray)){
-                    $array[] = $item;
+            foreach ($list as $k=>&$item){
+                $item['goods'] = GoodsList::where('adId',$item['adId'])->find();
+                $item['sellTimeTo'] = strtotime($item['sellTimeTo']);
+                if($item['sellTimeTo'] > time()){
+                    $item['sellTimeTo'] = ceil(($item['sellTimeTo']-time())/86400);
                 }
             }
-            $list = $array;
             $this->success('请求成功！',$list);
         }
         $this->error('无数据！');

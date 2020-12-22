@@ -384,6 +384,6 @@ class Api
 //输出二维码
 //        header('Content-Type: '.$qrCode->getContentType());
 
-        exit($qrCode->writeString());
+        return $qrCode->writeString();
     }
 }

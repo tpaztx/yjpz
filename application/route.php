@@ -79,4 +79,6 @@ Route::post([
     'api/forward'=>'api/store/forward',
     //改价设置
     'api/PriceChange'=>'api/store/PriceChange',
+    //商品详情
+    'api/goodShow'=>'api/goods/goodShow',
 ]);

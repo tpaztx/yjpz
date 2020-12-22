@@ -19,4 +19,8 @@ class GoodsList Extends Model
     protected $append = [
     ];
 
+    public function brand()
+    {
+        return $this->belongsTo('BrandList','adId','adId');
+    }
 }
