@@ -69,6 +69,8 @@ Route::post([
 	'api/getGoodsDesc' => 'api/goods/getGoodsDesc',
 	//进货页展示数据
 	'api/purchase' => 'api/goods/purchase',
+	//新增收货地址
+	'api/insertAddress' => 'api/index/insertAddress',
 
   
     //小店-店铺设置
