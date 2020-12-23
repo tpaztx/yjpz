@@ -31,6 +31,7 @@ class Index extends Api
         $params = $this->request->request();
         if ($params && !empty($params))
         {
+            dump('this here');die;
             if ($params['default'] == 1) {
                 $id = Address::where(['user_id'=>$this->auth->id, 'default'=>'1'])->value('id');
                 Address::where(['user_id'=>$this->auth->id, 'id'=>$id])->update(['default'=>'0']);
