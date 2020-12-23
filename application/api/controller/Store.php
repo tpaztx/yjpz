@@ -249,8 +249,12 @@ class Store extends Api
     {
         $limit = $this->request->param('limit') ?? 10;
         $store_id = $this->request->param('store_id');
-        $orderFile = $this->request->param('orderFile');
-        $orderRule = $this->request->param('orderRule');
+            $orderFiled = $this->request->param('orderFiled') ?? 'goodId';
+        $orderRule = $this->request->param('orderRule') ?? 'asc';
+        $catNameOne = $this->request->param('catNameOne');
+        $catNameTwo = $this->request->param('catNameTwo');
+        $minPrice = $this->request->param('minPrice');
+        $maxPrice = $this->request->param('maxPrice');
         $adId = $this->request->param('adId');
         //验证该品牌是否下架
         $check = StoreDown::where('store_id',$store_id)->whereIn('ad_id',$adId)->find();
@@ -258,7 +262,21 @@ class Store extends Api
             $this->error('该品牌已下架！');
         }
         //获取对该品牌下的商品并进行改价
-        $goodsList = GoodsList::where('adId',$adId)->paginate($limit,false,[ 'query' => request()->param()]);
+        $goodsList = GoodsList::where('adId',$adId)
+            ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice){
+                if($catNameTwo && $catNameTwo){
+                    $query->where('catNameOne',$catNameOne);
+                    $query->where('catNameTwo',$catNameTwo);
+                }
+                if($minPrice){
+                    $query->where('suggestPrice','>',$minPrice);
+                }
+                if($maxPrice){
+                    $query->where('suggestPrice','<',$maxPrice);
+                }
+            })
+            ->order($orderFiled,$orderRule)
+            ->paginate($limit,false,[ 'query' => request()->param()]);
         $PriceChange = new PriceChange();
         $goodsList=$PriceChange->changePriceArray($store_id,$goodsList);
         if(!$goodsList){
