@@ -237,15 +237,16 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        $brandListModel = new BrandList;
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
-        $data = [];
         //设置循环节点
-        if (Cache::get('brandNum')) {
-            $brandNum = Cache::get('brandNum');
-        }else{
-            Cache::set('brandNum', 0);
-            $brandNum = Cache::get('brandNum');
+        $brandNum = $this->request->param('brandNum');
+        if(!$brandNum){
+            if (Cache::get('brandNum')) {
+                $brandNum = Cache::get('brandNum');
+            }else{
+                Cache::set('brandNum', 0);
+                $brandNum = Cache::get('brandNum');
+            }
         }
         $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
         if ($adId && !empty($adId)) {
