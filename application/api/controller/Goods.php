@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\admin\model\StoreDown;
 use app\common\controller\Api;
 use app\common\model\PriceChange;
 use app\common\model\Search as SearchKeyword;
@@ -102,7 +103,41 @@ class Goods extends Api
         }
         $this->success('请求成功！',$good);
     }
-
+    /**
+     * 商品分类
+     */
+    public function goodCate()
+    {
+        $adId = $this->request->param('adId');
+        $store_id = $this->request->param('store_id');
+        $storeDownM = new StoreDown();
+        $downArray = $storeDownM->getDownId($store_id);
+        $catNameOneArray = GoodsList::where(function ($query) use ($adId,$downArray){
+            if($adId){
+                $query->where('adId',$adId);
+            }
+            $query->whereNotIn('adId',$downArray);
+        })
+            ->field('id,adId,catNameOne')
+            ->group('catNameOne')
+            ->select();
+        foreach ($catNameOneArray as $item){
+            $item['children'] = GoodsList::where(function($query) use($adId,$downArray,$item){
+                if($adId){
+                    $query->where('adId',$adId);
+                }
+                $query->whereNotIn('adId',$downArray);
+                $query->where('catNameOne',$item['catNameOne']);
+            })
+                ->field('id,adId,catNameOne,catNameTwo')
+                ->group('catNameTwo')
+                ->select();
+        }
+        if(!$catNameOneArray){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$catNameOneArray);
+    }
 
     /**
      * 图文详情

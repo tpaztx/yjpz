@@ -91,4 +91,6 @@ Route::post([
     'api/smallStoreBrandShow'=>'api/store/smallStoreBrandShow',
     //商品详情
     'api/goodShow'=>'api/goods/goodShow',
+    //商品分类
+    'api/goodCate'=>'api/goods/goodCate',
 ]);
