@@ -124,7 +124,7 @@ class Goods extends Api
     }
 
     /**
-     * 进货页展示数据
+     * 进货页展示数据000
      */
     public function purchase()
     {
@@ -142,7 +142,7 @@ class Goods extends Api
                 $result['goodImage'] = $val->goodImage?:'';
                 $result['sizes'] = $val->sizes; 
             }
-            $this->success('请求成功！', $result);
+            $this->success('请求成功！', $result);     
         }
     }
 }
