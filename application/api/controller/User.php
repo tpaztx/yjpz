@@ -442,8 +442,6 @@ class User extends Api
             $this->error('服务器繁忙！');
         }
     }
-    //用户地址添加
-
 
     /**
      * 效验验证码
