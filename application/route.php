@@ -67,6 +67,8 @@ Route::post([
 	'api/getBrandInfo' => 'api/goods/getBrandInfo',
 	//图文详情
 	'api/getGoodsDesc' => 'api/goods/getGoodsDesc',
+	//进货页展示数据
+	'api/purchase' => 'api/goods/purchase',
 
   
     //小店-店铺设置
