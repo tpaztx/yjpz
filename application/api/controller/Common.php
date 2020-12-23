@@ -283,6 +283,9 @@ class Common extends Api
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
+                            $goods_info['catNameOne'] = $val['catNameOne'];
+                            $goods_info['catNameTwo'] = $val['catNameTwo'];
+                            $goods_info['catNameThree'] = $val['catNameThree'];
                             //商品主图
                             $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
                             //尺码文字
