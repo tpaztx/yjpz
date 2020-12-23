@@ -85,6 +85,8 @@ Route::post([
     'api/forward'=>'api/store/forward',
     //改价设置
     'api/PriceChange'=>'api/store/PriceChange',
+    //H5小店商品列表
+    'api/smallStoreBrandShow'=>'api/store/smallStoreBrandShow',
     //商品详情
     'api/goodShow'=>'api/goods/goodShow',
 ]);

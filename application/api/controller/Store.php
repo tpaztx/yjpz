@@ -48,14 +48,20 @@ class Store extends Api
      */
     public function storeMessage()
     {
-        $user = $this->auth->getUser();
-        $store = StoreM::where('user_id',$user['id'])->find();
+        $store_id = $this->request->param('store_id') ?? null;
+        if(!empty($store_id)){
+            $store = StoreM::where('id',$store_id)->find();
+        }else{
+            $user = $this->auth->getUser();
+            $store = StoreM::where('user_id',$user['id'])->find();
+        }
         if(!$store){
             $this->error('服务器繁忙！');
         }
         $this->success('请求成功！',$store);
     }
-    
+
+
     /**
      * 已上架品牌
      */
@@ -254,7 +260,7 @@ class Store extends Api
         //获取对该品牌下的商品并进行改价
         $goodsList = GoodsList::where('adId',$adId)->paginate($limit,false,[ 'query' => request()->param()]);
         $PriceChange = new PriceChange();
-        $goodsList=$PriceChange->changePrice($store_id,$goodsList);
+        $goodsList=$PriceChange->changePriceArray($store_id,$goodsList);
         if(!$goodsList){
             $this->error('服务器繁忙！');
         }

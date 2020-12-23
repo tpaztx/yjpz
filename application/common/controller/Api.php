@@ -340,7 +340,7 @@ class Api
      * 生成二维码
      */
     public function qrcode($url){
-        require_once './application/api/controller/phpqrcode.php';
+        require_once 'phpqrcode.php';
         $qecode = new \QRcode();
         $qecode->png($url,false,"L","5",2);
         $imageString = base64_encode(ob_get_contents());
