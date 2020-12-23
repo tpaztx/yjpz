@@ -46,8 +46,6 @@ class Index extends Api
                 $data['mobile'] = $params['mobile']?:'';
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
-                dump($data);die;
-
                 $result = Address::create()->insert($data);
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
