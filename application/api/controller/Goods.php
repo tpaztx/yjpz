@@ -141,7 +141,7 @@ class Goods extends Api
                 $result['material'] = $val->material?:'';
                 $result['goodImage'] = $val->goodImage?:'';
                 foreach ($val->sizes as $k => $v) {
-                    $result['sizes'] = [
+                    $result['sizes'][$k] = [
                         'sizeName' => $v->sizeName,
                         'vipshopPrice' => (float)$v->vipshopPrice + (float)$v->suggestAddPrice
                     ];
