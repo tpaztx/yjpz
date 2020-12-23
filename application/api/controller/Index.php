@@ -36,6 +36,16 @@ class Index extends Api
                 Address::where(['user_id'=>$this->auth->id, 'id'=>$id])->update(['default'=>'0']);
             }
             try {
+                $data['user_id'] = $this->auth->id;
+                $data['province'] = $params['province']?:'';
+                $data['city'] = $params['city']?:'';
+                $data['area'] = $params['area']?:'';
+                $data['address'] = $params['address']?:'';
+                $data['default'] = $params['default']?:'0';
+                $data['name'] = $params['name']?:'';
+                $data['mobile'] = $params['mobile']?:'';
+                $data['is_time'] = $params['is_time']?:0;
+                $data['time_log'] = time();
                 $result = Address::create()->insert($params);
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
