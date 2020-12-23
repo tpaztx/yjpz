@@ -31,7 +31,6 @@ class Index extends Api
         $params = $this->request->request();
         if ($params && !empty($params))
         {
-            dump('this here');die;
             if ($params['default'] == 1) {
                 $id = Address::where(['user_id'=>$this->auth->id, 'default'=>'1'])->value('id');
                 Address::where(['user_id'=>$this->auth->id, 'id'=>$id])->update(['default'=>'0']);
@@ -47,6 +46,8 @@ class Index extends Api
                 $data['mobile'] = $params['mobile']?:'';
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
+                dump($data);die;
+
                 $result = Address::create()->insert($data);
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
