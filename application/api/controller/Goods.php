@@ -124,7 +124,7 @@ class Goods extends Api
     }
 
     /**
-     * 进货页展示数据000
+     * 进货页展示数据
      */
     public function purchase()
     {
@@ -140,7 +140,13 @@ class Goods extends Api
                 $result['color'] = $val->color?:'';
                 $result['material'] = $val->material?:'';
                 $result['goodImage'] = $val->goodImage?:'';
-                $result['sizes'] = $val->sizes; 
+                foreach ($val->sizes as $k => $v) {
+                    $result['sizes'] = [
+                        'sizeName' => $val->sizeName,
+                        'vipshopPrice' => (float)$val->vipshopPrice + (float)$val->suggestAddPrice
+                    ];
+                }
+                 
             }
             $this->success('请求成功！', $result);     
         }
