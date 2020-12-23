@@ -140,7 +140,7 @@ class Goods extends Api
                 $result['color'] = $val->color?:'';
                 $result['material'] = $val->material?:'';
                 $result['goodImage'] = $val->goodImage?:'';
-                $result['sizes'] = $val->sizes;
+                $result['sizes'] = $val->sizes; 
             }
             $this->success('请求成功！', $result);
         }
