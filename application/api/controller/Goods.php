@@ -142,11 +142,10 @@ class Goods extends Api
                 $result['goodImage'] = $val->goodImage?:'';
                 foreach ($val->sizes as $k => $v) {
                     $result['sizes'] = [
-                        'sizeName' => $val->sizeName,
-                        'vipshopPrice' => (float)$val->vipshopPrice + (float)$val->suggestAddPrice
+                        'sizeName' => $v->sizeName,
+                        'vipshopPrice' => (float)$v->vipshopPrice + (float)$v->suggestAddPrice
                     ];
                 }
-                 
             }
             $this->success('请求成功！', $result);     
         }
