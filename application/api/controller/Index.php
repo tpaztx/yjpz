@@ -70,7 +70,7 @@ class Index extends Api
         $result['image'] = $pic;
         //保存图片
         $api = 'http://www.baidu.com?trade_code='.$code;
-        $url = "/qrcode_".$this->auth->id.'_' . time() . ".png";
+        $url = "/qrcode_".$this->auth->id.".png";
         $pathname = APP_PATH . '../public/uploads/wxCode';
         if(!is_dir($pathname)) {
             mkdir($pathname);
