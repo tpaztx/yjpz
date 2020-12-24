@@ -6,6 +6,7 @@ use app\common\controller\Api;
 use addons\adszone\model\AdszoneAds;
 use app\common\model\Address;
 use app\common\model\Config;
+use app\common\model\User;
 use Endroid\QrCode\QrCode;
 
 /**
