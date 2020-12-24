@@ -37,7 +37,8 @@ class User extends Api
      */
     public function wxSdk()
     {
-        $sdk = new JSSDK("$this->AppId","$this->AppSecret","");
+        $url = $this->request->param('url');
+        $sdk = new JSSDK("$this->AppId","$this->AppSecret","$url");
         $array = $sdk->getSignPackage();
         if(!$array){
             $this->error('服务器繁忙！');
