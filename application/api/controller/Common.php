@@ -377,4 +377,13 @@ class Common extends Api
             db('brand_list')->where('id', $val->id)->delete();
         }
     }
+
+    /**
+     * 获取平台基础配置相关信息
+     */
+    public function getConfig()
+    {
+        $result = Configs::where('name', 'in', 'server_phone')->column('value');
+        $this->success('请求成功！', $result);
+    }
 }

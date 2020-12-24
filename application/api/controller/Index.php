@@ -47,6 +47,9 @@ class Index extends Api
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
                 $result = Address::create()->insert($data);
+                if ($result) {
+                    $this->success('请求成功！');
+                }
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
             }
