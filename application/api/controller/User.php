@@ -387,7 +387,6 @@ class User extends Api
         $list = $this->http($url, 'GET');
         $list = $list [1];
         $list = \GuzzleHttp\json_decode($list, true);
-        dump($list);exit;
         if (!empty($list['openid']) && isset($list['openid'])) {
 
             //获取用户信息
@@ -443,6 +442,7 @@ class User extends Api
             }
             $this->error('服务器繁忙！');
         }
+        $this->error($list);
     }
 
     /**
