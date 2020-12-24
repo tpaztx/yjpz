@@ -70,7 +70,6 @@ class Index extends Api
         $result['image'] = $pic;
         //保存图片
         $api = 'http://www.baidu.com?trade_code='.$code;
-        $wxCode = new QrCode($api);
         $url = "/qrcode_".$this->auth->id.'_' . time() . ".png";
         $pathname = APP_PATH . '../public/uploads/wxCode';
         if(!is_dir($pathname)) {
@@ -78,10 +77,8 @@ class Index extends Api
         }
         $filename = $pathname . $url;
         if (!is_dir($filename)) {
-            $fp = fopen($filename, 'w+');
-            fwrite($fp, $wxCode);
-            fclose ($fp);
-        }
+            $wxCode = new QrCode($api);
+            $wxCode->writeFile($filename);
         $result['qrCode'] = $filename;
         $this->success('请求成功！', $result);
     }
