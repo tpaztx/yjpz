@@ -5,6 +5,8 @@ namespace app\api\controller;
 use app\common\controller\Api;
 use addons\adszone\model\AdszoneAds;
 use app\common\model\Address;
+use app\common\model\Config;
+use Endroid\QrCode\QrCode;
 
 /**
  * 首页接口
@@ -54,5 +56,32 @@ class Index extends Api
                 $this->error('请求失败！', $e->getMessage);
             }
         }
+    }
+
+    /**
+     * 邀请海报
+     */
+    public function poster()
+    {
+        $code = User::where('id',$this->auth->id)->value('trade_code');
+        $pic = Config::where('name', 'poster')->value('value');
+        $result['myCode'] = $code;
+        $result['image'] = $pic;
+        //保存图片
+        $api = 'http://www.baidu.com?trade_code='.$code;
+        $wxCode = new QrCode($api);
+        $url = "/qrcode_".$this->auth->id.'_' . time() . ".png";
+        $pathname = APP_PATH . '../public/uploads/wxCode';
+        if(!is_dir($pathname)) {
+            mkdir($pathname);
+        }
+        $filename = $pathname . $url;
+        if (!is_dir($filename)) {
+            $fp = fopen($filename, 'w+');
+            fwrite($fp, $wxCode);
+            fclose ($fp);
+        }
+        $result['qrCode'] = $filename;
+        $this->success('请求成功！', $result);
     }
 }
