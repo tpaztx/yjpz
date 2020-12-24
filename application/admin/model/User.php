@@ -18,7 +18,6 @@ class User extends Model
     protected $updateTime = 'updatetime';
     // 追加属性
     protected $append = [
-        'prevtime_text',
         'logintime_text',
         'jointime_text'
     ];
@@ -66,12 +65,6 @@ class User extends Model
     public function getStatusList()
     {
         return ['normal' => __('Normal'), 'hidden' => __('Hidden')];
-    }
-
-    public function getPrevtimeTextAttr($value, $data)
-    {
-        $value = $value ? $value : $data['prevtime'];
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
     }
 
     public function getLogintimeTextAttr($value, $data)

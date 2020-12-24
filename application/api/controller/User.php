@@ -421,6 +421,7 @@ class User extends Api
                     $user ['province'] = $result ['province'];
                     $user ['avatar'] = $result ['headimgurl'];
                     $user ['country'] = $result ['country'];
+                    $user ['jointime'] = time();
                     $user ['type'] = $type;
                     $res = $user->save();
                     if (!$res) {
