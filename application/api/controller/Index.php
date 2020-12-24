@@ -60,7 +60,7 @@ class Index extends Api
     }
 
     /**
-     * 邀请海报
+     * 邀请海报00
      */
     public function poster()
     {
