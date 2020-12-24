@@ -191,4 +191,22 @@ class Goods extends Api
             $this->success('请求成功！', $result);     
         }
     }
+
+    /**
+     * 添加收藏商品
+     */
+    public function insertFavorites()
+    {
+        $goodId = $this->request->request('goodId')?:0;
+        if ($goodId == 0) {
+            $this->error('请填写商品ID！');
+        }
+        $data['user_id'] = $this->auth->id;
+        $data['goodId'] = $goodId;
+        $data['time_log'] = time();
+        $result = \app\common\model\Favorites::create()->insert($data);
+        if ($result) {
+            $this->success('请求成功！');
+        }
+    }
 }

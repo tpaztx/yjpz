@@ -73,6 +73,8 @@ Route::post([
 	'api/purchase' => 'api/goods/purchase',
 	//新增收货地址
 	'api/insertAddress' => 'api/index/insertAddress',
+	//添加收藏商品
+	'api/insertFavorites' => 'api/goods/insertFavorites',
 
   
     //小店-店铺设置
