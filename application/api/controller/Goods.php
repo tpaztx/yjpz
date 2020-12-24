@@ -218,7 +218,7 @@ class Goods extends Api
     {
         $ids = $this->request->request('ids')?:'';
         if (empty($ids)) {
-            $this->error('缺少请求参数商品ID！')
+            $this->error('缺少请求参数商品ID！');
         }
         $result = \app\common\model\Favorites::where('user_id', $this->auth->id)->where('goodId', 'in', $ids)->delete();
         if ($result) {
