@@ -47,6 +47,8 @@ Route::post([
 	'api/protocol' => 'api/common/protocol',
 	//微信JSSDK
 	'api/wxSdk' => 'api/User/wxSdk',
+	//获取平台基础配置相关信息
+	'api/getConfig' => 'api/common/getConfig',
 
 	/* 客户端 */
 	//首页-banner轮播
