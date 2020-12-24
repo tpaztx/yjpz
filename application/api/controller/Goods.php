@@ -210,4 +210,19 @@ class Goods extends Api
             $this->success('请求成功！');
         }
     }
+
+    /**
+     * 删除收藏商品
+     */
+    public function delFavorites()
+    {
+        $ids = $this->request->request('ids')?:'';
+        if (empty($ids)) {
+            $this->error('缺少请求参数商品ID！')
+        }
+        $result = \app\common\model\Favorites::where('user_id', $this->auth->id)->where('goodId', 'in', $ids)->delete();
+        if ($result) {
+            $this->success('请求成功！');
+        }
+    }
 }
