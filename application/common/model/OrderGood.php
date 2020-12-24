@@ -4,7 +4,9 @@
 namespace app\common\model;
 
 
-class OrderGood
+use think\Model;
+
+class OrderGood extends Model
 {
 // 表名
     protected $name = 'order_good';
