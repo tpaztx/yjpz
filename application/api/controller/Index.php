@@ -80,7 +80,7 @@ class Index extends Api
             $wxCode = new QrCode($api);
             $wxCode->writeFile($filename);
         }
-        $result['qrCode'] = $filename;
+        $result['qrCode'] = '/uploads/wxCode'.$url;
         $this->success('请求成功！', $result);
     }
 }
