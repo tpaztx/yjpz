@@ -383,7 +383,7 @@ class Common extends Api
      */
     public function getConfig()
     {
-        $result = Configs::where('name', 'in', 'server_phone')->column('value');
+        $result = Configs::where('name', 'in', 'server_phone')->select('value');
         $this->success('请求成功！', $result);
     }
 }
