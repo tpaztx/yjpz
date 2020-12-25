@@ -251,7 +251,7 @@ class Order extends Api
         $store_id = $steoM->getStore($user['id']);
         $status = $this->request->param('status');
         $after_sales = $this->request->param('after_sales');
-        OrderM::with('goods')
+        $orders = OrderM::with('goods')
             ->where(function ($query) use ($store_id,$status,$user,$after_sales){
                 //APP小店查看
                 if(isset($store_id) && !empty($store_id)){
@@ -272,6 +272,13 @@ class Order extends Api
             ->field('id,order_no,status,after_sales,createtime,updatetime')
             ->order('createtime','desc')
             ->select();
+        if(empty($orders)){
+            $this->error('无订单数据！');
+        }
+        if(!$orders){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$orders);
     }
 
 }
