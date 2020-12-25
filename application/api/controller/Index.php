@@ -49,7 +49,7 @@ class Index extends Api
                 $data['mobile'] = $params['mobile']?:'';
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
-                $result = Address::create()->insert($data);
+                $result = Address::insert($data);
                 if ($result) {
                     $this->success('请求成功！');
                 }
