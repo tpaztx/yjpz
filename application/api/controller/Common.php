@@ -233,7 +233,7 @@ class Common extends Api
     }
 
     /**
-     * 定时拉取商品信息 0000
+     * 定时拉取商品信息
      */
     public function inputGoodsList()
     {
