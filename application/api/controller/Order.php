@@ -241,4 +241,36 @@ class Order extends Api
         }
         $this->success('提交成功！');
     }
+    /**
+     * 订单列表
+     */
+    public function orderList()
+    {
+        $user = $this->auth->getUser();
+        $steoM = new \app\admin\model\Store();
+        $store_id = $steoM->getStore($user['id']);
+        $status = $this->request->param('status');
+        $after_sales = $this->request->param('after_sales');
+        OrderM::with('goods')
+            ->where(function ($query) use ($store_id,$status,$user,$after_sales){
+                //APP小店查看
+                if(isset($store_id) && !empty($store_id)){
+                    $query->where('store_id',$store_id);
+                }else{
+//                 H5用户查看
+                    $query->where('user_id',$user['id']);
+                }
+                //订单状态 不传为全部订单
+                if(isset($status)){
+                    $query->where('status',$status);
+                }
+                //是否有申请售后
+                if(isset($after_sales)){
+                    $query->where('after_sales','<>',0);
+                }
+            })
+            ->field('id,order_no,status,after_sales,createtime,updatetime')
+            ->order('createtime','desc')
+            ->select();
+    }
 }
