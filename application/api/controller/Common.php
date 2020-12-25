@@ -276,7 +276,6 @@ class Common extends Api
                             $goods_info['goodName'] = $val['goodName'];
                             $goods_info['logo'] = $val['logo'];
                             $goods_info['sn'] = $val['sn'];
-                            dump($val['sizes']);die;
                             $goods_info['vipshopPrice'] = $val['sizes']?$val['sizes'][0]['vipshopPrice']:'';
                             $goods_info['marketPrice'] = $val['sizes']?$val['sizes'][0]['marketPrice']:'';
                             $goods_info['commission'] = $val['sizes']?$val['sizes'][0]['commission']:'';
