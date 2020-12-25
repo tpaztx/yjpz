@@ -152,7 +152,7 @@ class Order extends Api
 // 启动事务
         Db::startTrans();
         try{
-            if(!empty($goods)){
+            if(!empty($param['goods'])){
                 $return_price = '';
                 foreach ($param['goods'] as $item){
                     $good = OrderGood::where(['goodId'=>$item['goodId'],'good_size'=>$item['size']])->find();
