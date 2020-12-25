@@ -49,7 +49,7 @@ class Index extends Api
                 $data['mobile'] = $params['mobile']?:'';
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
-                $result = Address::create()->insert($data);
+                $result = Address::insert($data);
                 if ($result) {
                     $this->success('请求成功！');
                 }
@@ -60,7 +60,20 @@ class Index extends Api
     }
 
     /**
-     * 邀请海报00
+     * 删除收货地址
+     */
+    public function delAddress()
+    {
+        $ids = $this->request->request('ids');
+        if (!$ids) $this->error('缺少请求参数！');
+        $result = Address::where('id', 'in', $ids)->delete();
+        if ($result) {
+            $this->success('请求成功！', $result);
+        }
+    }
+
+    /**
+     * 邀请海报
      */
     public function poster()
     {

@@ -8,6 +8,7 @@ use app\common\library\Ems;
 use app\common\library\Sms;
 use app\common\library\Token;
 use app\common\model\JSSDK;
+use app\common\model\Address;
 use fast\Random;
 use think\Db;
 use think\Validate;
@@ -449,11 +450,12 @@ class User extends Api
     }
 
     /**
-     * 效验验证码
+     * 获取用户的收货地址
      */
-    public function authSms()
+    public function getUserAddress()
     {
-
+        $result = Address::where('user_id', $this->auth->id)->select();
+        $this->success('请求成功！', $result);
     }
 
 
