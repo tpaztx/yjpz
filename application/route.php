@@ -126,4 +126,8 @@ Route::post([
     'api/returnLogistics'=>'api/order/returnLogistics',
     //订单列表
     'api/orderList'=>'api/order/orderList',
+    //订单详情
+    'api/orderShow'=>'api/order/orderShow',
+    //删除订单
+    'api/delOrder'=>'api/order/delOrder',
 ]);

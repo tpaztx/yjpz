@@ -254,7 +254,7 @@ class Order extends Api
         $orders = OrderM::with('goods')
             ->where(function ($query) use ($store_id,$status,$user,$after_sales){
                 //APP小店查看
-                if(isset($store_id) && !empty($store_id)){
+                if($store_id && !empty($store_id)){
                     $query->where('store_id',$store_id);
                 }else{
 //                 H5用户查看
@@ -280,5 +280,48 @@ class Order extends Api
         }
         $this->success('请求成功！',$orders);
     }
+    /**
+     * 订单详情
+     */
+    public function orderShow()
+    {
+        $order_id = $this->request->param('order_id');
+        $order = OrderM::with('goods')->where('id',$order_id)->find();
+        if(!$order){
+            $this->error('无效的订单！');
+        }
+        $this->success('请求成功！',$order);
+    }
+    /**
+     * 删除订单
+     */
+    public function delOrder()
+    {
+        $order_id = $this->request->param('order_id');
+        $order = OrderM::get($order_id);
+        if(!$order){
+            $this->error('无效的订单！');
+        }
+        if($order['status'] != -1){
+            $this->error('无法删除该订单！');
+        }
 
+        // 启动事务
+        Db::startTrans();
+        try{
+            $order->delete();
+            OrderGood::where('order_id',$order_id)->delete();
+            // 提交事务
+            Db::commit();
+            $res = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $res = false;
+        }
+        if(!$res){
+            $this->error($e->getMessage());
+        }
+        $this->success('删除成功！');
+    }
 }
