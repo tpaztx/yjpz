@@ -125,5 +125,5 @@ Route::post([
     //退货无聊
     'api/returnLogistics'=>'api/order/returnLogistics',
     //订单列表
-    'api/orderList'=>'api/orderList',
+    'api/orderList'=>'api/order/orderList',
 ]);
