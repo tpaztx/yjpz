@@ -55,10 +55,10 @@ class Order extends Api
             'total_price'=>$param['total_price'],
             'real_price'=>$param['real_price'],
             'yunfei_price'=>$param['yunfei_price'],
-            'username'=>$address['username'],
-            'phone'=>$address['phone'],
-            'address'=>$address['address'],
-            'time'=>$address['time'],
+            'username'=>$address['name'],
+            'phone'=>$address['mobile'],
+            'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
+            'time'=>$address['is_time'],
             'type'=>$param['type'],
         ];
         // 启动事务
@@ -75,7 +75,7 @@ class Order extends Api
                     'good_image'=>$item['good_image'],
                     'goodId'=>$item['goodId'],
                 ];
-                OrderGood::create($$OrderGood);
+                OrderGood::create($OrderGood);
             }
             // 提交事务
             Db::commit();
@@ -100,7 +100,7 @@ class Order extends Api
         if(!$order){
             $this->error('该订单不存在');
         }
-        if($order['status'] != 0 || $order['status'] != 1){
+        if($order['status'] != 0 && $order['status'] != 1){
             $this->error('该订单无法取消！');
         }
         $order['status'] = -1;
@@ -108,7 +108,7 @@ class Order extends Api
         if(!$res){
             $this->error('取消订单失败！');
         }
-        $this->success('取消订单单成功！');
+        $this->success('取消订单成功！');
     }
     /**
      * 申请退货页面数据
@@ -140,22 +140,21 @@ class Order extends Api
      */
     public function return_good()
     {
-        $order_id = $this->request->param('order_id');
-        $order = OrderM::get($order_id);
+        $param = $this->request->param();
+        $order = OrderM::get($param['order_id']);
         if(!$order || $order['status'] != 2){
             $this->error('无效的订单！');
         }
-        $reason = $this->request->param('reason');
-        if(!$reason){
+        if(!$param['reason']){
             $this->error('请选择退货原因！');
         }
-        $goods = $this->request->param('goods');
+
 // 启动事务
         Db::startTrans();
         try{
-            if(!empty($goods)){
-                $return_price = '';
-                foreach ($goods as $item){
+            if(!empty($param['goods'])){
+                $return_price = 0;
+                foreach ($param['goods'] as $item){
                     $good = OrderGood::where(['goodId'=>$item['goodId'],'good_size'=>$item['size']])->find();
                     if(!$good){
                         throw new Exception('存在无效的商品！');
@@ -165,11 +164,13 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
+                    $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
                 }
             }
             $order->after_sales = 1;
             $order->return_price = $return_price;
+            $order->reason = $param['reason'];
             $order->save();
             // 提交事务
             Db::commit();
