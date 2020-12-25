@@ -458,7 +458,6 @@ class User extends Api
         $this->success('请求成功！', $result);
     }
 
-
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
         $ci = curl_init ();
         /* Curl settings */
