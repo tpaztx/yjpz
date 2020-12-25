@@ -55,10 +55,10 @@ class Order extends Api
             'total_price'=>$param['total_price'],
             'real_price'=>$param['real_price'],
             'yunfei_price'=>$param['yunfei_price'],
-            'username'=>$address['username'],
-            'phone'=>$address['phone'],
-            'address'=>$address['address'],
-            'time'=>$address['time'],
+            'username'=>$address['name'],
+            'phone'=>$address['mobile'],
+            'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
+            'time'=>$address['is_time'],
             'type'=>$param['type'],
         ];
         // 启动事务
