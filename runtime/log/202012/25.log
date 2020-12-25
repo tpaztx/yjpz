@@ -1,0 +1,953 @@
+---------------------------------------------------------------
+[ 2020-12-25T11:47:15+08:00 ] 127.0.0.1 POST yjpz.cc/api/CreateOrder?store_id=3&total_price=1165&real_price=1165&yunfei_price=5&address_id=18&type=H5
+[运行时间：1.023286s] [吞吐率：0.98req/s] [内存消耗：3,914.97kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.010137s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.007124s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.004437s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'CreateOrder',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '834',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '2f9cab71-bb34-4ea2-b802-b31d21b51080',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'store_id' => '3',
+  'total_price' => '1165',
+  'real_price' => '1165',
+  'yunfei_price' => '5',
+  'address_id' => '18',
+  'type' => 'H5',
+  'good' => 
+  array (
+    0 => 
+    array (
+      'good_time' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '40*40cm/打开105*145cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+    1 => 
+    array (
+      'good_time' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '50*50cm/打开145*190cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001756s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->CreateOrder[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组索引: good_title[E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php:71]
+---------------------------------------------------------------
+[ 2020-12-25T11:52:10+08:00 ] 127.0.0.1 GET yjpz.cc/
+[运行时间：0.146618s] [吞吐率：6.82req/s] [内存消耗：3,209.60kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001944s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000321s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001025s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000274s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:10+08:00 ] 127.0.0.1 GET yjpz.cc/admin/index/login
+[运行时间：0.042510s] [吞吐率：23.52req/s] [内存消耗：3,513.16kb] [文件加载：141]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000012s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001318s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000179s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000828s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.007657s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ RUN ] app\admin\controller\Index->login[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\view\index\login.html [ array (
+  0 => 'breadcrumb',
+  1 => 'site',
+  2 => 'config',
+  3 => 'auth',
+  4 => 'admin',
+  5 => 'background',
+  6 => 'title',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000117s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:11+08:00 ] 127.0.0.1 GET yjpz.cc/index.php?s=/captcha
+[运行时间：0.059759s] [吞吐率：16.73req/s] [内存消耗：2,201.05kb] [文件加载：119]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001371s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000191s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'method',
+  'method' => 
+  array (
+    0 => '\\think\\captcha\\CaptchaController',
+    1 => 'index',
+  ),
+  'var' => 
+  array (
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'id' => NULL,
+)
+[ info ] [ RUN ] think\captcha\CaptchaController->index[ E:\phpstudy_pro\WWW\yjpz\vendor\topthink\think-captcha\src\CaptchaController.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:11+08:00 ] 127.0.0.1 GET yjpz.cc/admin/ajax/lang?callback=define&controllername=index&lang=zh-cn&v=1608868330&v=1608868330
+[运行时间：0.029962s] [吞吐率：33.38req/s] [内存消耗：3,528.72kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001365s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000196s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'ajax',
+    2 => 'lang',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'callback' => 'define',
+  'controllername' => 'index',
+  'lang' => 'zh-cn',
+  'v' => '1608868330',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001225s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.000142s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/ajax.php
+[ info ] [ RUN ] app\admin\controller\Ajax->lang[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Ajax.php ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000131s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:11+08:00 ] 127.0.0.1 GET yjpz.cc/uploads/20201205/09e32e27aea7cf9f0b57b137e8cea144.jpg
+[运行时间：0.030443s] [吞吐率：32.85req/s] [内存消耗：2,166.27kb] [文件加载：120]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001347s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000189s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'uploads',
+    1 => '20201205',
+    2 => '09e32e27aea7cf9f0b57b137e8cea144.jpg',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:16+08:00 ] 127.0.0.1 POST yjpz.cc/api/CreateOrder?store_id=3&total_price=1165&real_price=1165&yunfei_price=5&address_id=18&type=H5
+[运行时间：0.852966s] [吞吐率：1.17req/s] [内存消耗：3,888.84kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001482s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000222s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'CreateOrder',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '836',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '991b1650-a6dc-46f7-8b06-4da352eaca7b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'store_id' => '3',
+  'total_price' => '1165',
+  'real_price' => '1165',
+  'yunfei_price' => '5',
+  'address_id' => '18',
+  'type' => 'H5',
+  'good' => 
+  array (
+    0 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '40*40cm/打开105*145cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+    1 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '50*50cm/打开145*190cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000948s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->CreateOrder[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T11:52:37+08:00 ] 127.0.0.1 POST yjpz.cc/api/CreateOrder?store_id=3&total_price=1165&real_price=1165&yunfei_price=5&address_id=18&type=H5
+[运行时间：0.592902s] [吞吐率：1.69req/s] [内存消耗：3,919.63kb] [文件加载：144]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000012s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001390s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000197s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'CreateOrder',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '836',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'd8aa2170-dd51-414c-9fc6-1c74e9a58e37',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'store_id' => '3',
+  'total_price' => '1165',
+  'real_price' => '1165',
+  'yunfei_price' => '5',
+  'address_id' => '18',
+  'type' => 'H5',
+  'good' => 
+  array (
+    0 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '40*40cm/打开105*145cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+    1 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '50*50cm/打开145*190cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000912s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->CreateOrder[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义变量: order[E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php:70]
+---------------------------------------------------------------
+[ 2020-12-25T11:53:37+08:00 ] 127.0.0.1 POST yjpz.cc/api/CreateOrder?store_id=3&total_price=1165&real_price=1165&yunfei_price=5&address_id=18&type=H5
+[运行时间：1.057184s] [吞吐率：0.95req/s] [内存消耗：3,884.55kb] [文件加载：143]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001479s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000264s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'CreateOrder',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '836',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '24c758fe-fced-4fc4-ab60-d00d2c2bebec',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'store_id' => '3',
+  'total_price' => '1165',
+  'real_price' => '1165',
+  'yunfei_price' => '5',
+  'address_id' => '18',
+  'type' => 'H5',
+  'good' => 
+  array (
+    0 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '40*40cm/打开105*145cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+    1 => 
+    array (
+      'good_title' => '水晶绒刺绣抱枕被子两用多功能靠被办公室午睡被子汽车靠',
+      'good_price' => '58.00',
+      'good_num' => '10',
+      'good_size' => '50*50cm/打开145*190cm',
+      'good_image' => 'http://a.vpimg2.com/upload/merchandise/pdcpos/1100007977/2020/0925/118/63688828-b949-45c5-bde8-bb1fa06b468c_420_531.jpg',
+      'goodId' => '556224',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000911s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->CreateOrder[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:26:39+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.663386s] [吞吐率：1.51req/s] [内存消耗：3,913.38kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001946s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000389s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'bd5e0f59-06cb-48a3-b22a-4d97b1f4349f',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001031s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]variable type error：array[E:\phpstudy_pro\WWW\yjpz\thinkphp\library\think\Request.php:1162]
+---------------------------------------------------------------
+[ 2020-12-25T14:26:58+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.579753s] [吞吐率：1.72req/s] [内存消耗：3,913.42kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001372s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000198s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'a82c97fe-6c36-4b78-98c1-e03a3b0bc3be',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000893s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]variable type error：array[E:\phpstudy_pro\WWW\yjpz\thinkphp\library\think\Request.php:1162]
+---------------------------------------------------------------
+[ 2020-12-25T14:27:10+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.649565s] [吞吐率：1.54req/s] [内存消耗：3,824.73kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000020s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001521s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000258s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '3c9c40f4-531b-4711-8419-c55d614027a3',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000913s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:33:17+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.648616s] [吞吐率：1.54req/s] [内存消耗：3,827.70kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000017s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001849s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000307s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '06a55884-9dd5-40e9-9f4c-c0a232b33f15',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000963s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:33:50+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.592834s] [吞吐率：1.69req/s] [内存消耗：3,827.70kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001396s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000203s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '9f084c5c-950d-4575-a296-6661664a224e',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000868s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:51:42+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.671888s] [吞吐率：1.49req/s] [内存消耗：3,882.41kb] [文件加载：143]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001846s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000448s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'aa131426-c4e0-4717-a514-bf6f99caac3b',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001116s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:52:51+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.827551s] [吞吐率：1.21req/s] [内存消耗：3,894.03kb] [文件加载：143]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001360s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000188s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'bf8f9510-12e4-489a-bc3e-b930e3a1577c',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '11',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '11',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000856s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:53:06+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：0.898403s] [吞吐率：1.11req/s] [内存消耗：3,898.13kb] [文件加载：144]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001512s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000201s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '206063ff-6b25-478b-b19a-3b230391d2de',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '10',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '10',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000881s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T14:56:22+08:00 ] 127.0.0.1 POST yjpz.cc/api/return_good?order_id=6&reason=%E9%94%99%E5%8F%B7/%E9%94%99%E6%8B%8D
+[运行时间：1.045408s] [吞吐率：0.96req/s] [内存消耗：3,860.75kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001962s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000322s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'return_good',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '293',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '79d5cc17-096d-4388-b812-e6eb090c9210',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'content-type' => 'application/json',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+  'reason' => '错号/错拍',
+  'goods' => 
+  array (
+    0 => 
+    array (
+      'goodId' => '556224',
+      'size' => '40*40cm/打开105*145cm',
+      'return_num' => '10',
+    ),
+    1 => 
+    array (
+      'goodId' => '556224',
+      'size' => '50*50cm/打开145*190cm',
+      'return_num' => '10',
+    ),
+  ),
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001054s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
