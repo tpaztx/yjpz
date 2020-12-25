@@ -277,11 +277,11 @@ class Common extends Api
                             $goods_info['logo'] = $val['logo'];
                             $goods_info['sn'] = $val['sn'];
                             dump($val['sizes']);die;
-                            $goods_info['vipshopPrice'] = $val['sizes'][0]?$val['sizes'][0]['vipshopPrice']:'';
-                            $goods_info['marketPrice'] = $val['sizes'][0]?$val['sizes'][0]['marketPrice']:'';
-                            $goods_info['commission'] = $val['sizes'][0]?$val['sizes'][0]['commission']:'';
-                            $goods_info['suggestAddPrice'] = $val['sizes'][0]?$val['sizes'][0]['suggestAddPrice']:'';
-                            $goods_info['suggestPrice'] = $val['sizes'][0]?$val['sizes'][0]['suggestPrice']:'';
+                            $goods_info['vipshopPrice'] = $val['sizes']?$val['sizes'][0]['vipshopPrice']:'';
+                            $goods_info['marketPrice'] = $val['sizes']?$val['sizes'][0]['marketPrice']:'';
+                            $goods_info['commission'] = $val['sizes']?$val['sizes'][0]['commission']:'';
+                            $goods_info['suggestAddPrice'] = $val['sizes']?$val['sizes'][0]['suggestAddPrice']:'';
+                            $goods_info['suggestPrice'] = $val['sizes']?$val['sizes'][0]['suggestPrice']:'';
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
