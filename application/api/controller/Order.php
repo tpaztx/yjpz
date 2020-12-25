@@ -108,7 +108,7 @@ class Order extends Api
         if(!$res){
             $this->error('取消订单失败！');
         }
-        $this->success('取消订单单成功！');
+        $this->success('取消订单成功！');
     }
     /**
      * 申请退货页面数据
@@ -140,22 +140,21 @@ class Order extends Api
      */
     public function return_good()
     {
-        $order_id = $this->request->param('order_id');
-        $order = OrderM::get($order_id);
+        $param = $this->request->param();
+        $order = OrderM::get($param['order_id']);
         if(!$order || $order['status'] != 2){
             $this->error('无效的订单！');
         }
-        $reason = $this->request->param('reason');
-        if(!$reason){
+        if(!$param['reason']){
             $this->error('请选择退货原因！');
         }
-        $goods = $this->request->param('goods');
+
 // 启动事务
         Db::startTrans();
         try{
             if(!empty($goods)){
                 $return_price = '';
-                foreach ($goods as $item){
+                foreach ($param['goods'] as $item){
                     $good = OrderGood::where(['goodId'=>$item['goodId'],'good_size'=>$item['size']])->find();
                     if(!$good){
                         throw new Exception('存在无效的商品！');
@@ -170,6 +169,7 @@ class Order extends Api
             }
             $order->after_sales = 1;
             $order->return_price = $return_price;
+            $order->reason = $param['reason'];
             $order->save();
             // 提交事务
             Db::commit();
