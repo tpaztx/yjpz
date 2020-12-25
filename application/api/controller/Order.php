@@ -100,7 +100,7 @@ class Order extends Api
         if(!$order){
             $this->error('该订单不存在');
         }
-        if($order['status'] != 0 || $order['status'] != 1){
+        if($order['status'] != 0 && $order['status'] != 1){
             $this->error('该订单无法取消！');
         }
         $order['status'] = -1;
