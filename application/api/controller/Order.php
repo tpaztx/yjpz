@@ -164,6 +164,7 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
+                    $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
                 }
             }
