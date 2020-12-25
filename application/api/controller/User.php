@@ -403,6 +403,7 @@ class User extends Api
             $data ['province'] = $result ['province'];
             $data ['avatar'] = $result ['headimgurl'];
             $data ['country'] = $result ['country'];
+            $data ['trade_code'] = Random::alnum();
             $data ['type'] = $type;
             $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
             if ($row) {
@@ -423,6 +424,7 @@ class User extends Api
                     $user ['country'] = $result ['country'];
                     $user ['jointime'] = time();
                     $user ['type'] = $type;
+                    $user ['trade_code'] = Random::alnum();
                     $res = $user->save();
                     if (!$res) {
                         $user->delete();
