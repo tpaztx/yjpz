@@ -103,4 +103,21 @@ Route::post([
     'api/goodShow'=>'api/goods/goodShow',
     //商品分类
     'api/goodCate'=>'api/goods/goodCate',
+
+
+    /*
+     * 订单
+     */
+    //下单
+    'api/CreateOrder'=>'api/order/CreateOrder',
+    //取消订单
+    'api/cancelOrder'=>'api/order/cancelOrder',
+    //申请退货页面数据
+    'api/return_good_data'=>'api/order/return_good_data',
+    //申请退货
+    'api/return_good'=>'api/order/return_good',
+    //取消退货
+    'api/cancelReturnOrder'=>'api/order/cancelReturnOrder',
+    //退货无聊
+    'api/returnLogistics'=>'api/order/returnLogistics',
 ]);
