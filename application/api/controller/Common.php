@@ -294,7 +294,9 @@ class Common extends Api
                                 foreach ($val['sizes'] as $keys => $vals) {
                                     if ($vals['sizeName'] && !empty($vals['sizeName'])) {
                                         $arr[$keys] = $vals['sizeName'];
+                                        $arr2[$keys] = $vals['sizeId'];
                                         $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
+                                        $goods_info['sizeIds'] = implode($arr, '、');
                                     }
                                     else{
                                         $goods_info['sizes_text'] = '有货尺码：';
