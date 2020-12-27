@@ -23,57 +23,12 @@ class GoodsList Extends Model
     {
         return $this->belongsTo('BrandList','adId','adId');
     }
-    public function getSizesTextAttr($value)
+    public function getSizesJsonAttr($value)
     {
         if (!empty($value)) {
-            return $this->strArray($value);
+            return \GuzzleHttp\json_decode($value);
         }
         return $value;
     }
-    public function getSizeIdsAttr($value)
-    {
-        if (!empty($value)) {
-            return explode("、",$value);
-        }
-        return $value;
-    }
-    public function getVipshopPriceAttr($value)
-    {
-        if (!empty($value)) {
-            return explode("、",$value);
-        }
-        return $value;
-    }
-    public function getCommissionAttr($value)
-    {
-        if (!empty($value)) {
-            return explode("、",$value);
-        }
-        return $value;
-    }
-    public function getSuggestAddPriceAttr($value)
-    {
-        if (!empty($value)) {
-            return explode("、",$value);
-        }
-        return $value;
-    }
-    public function getSuggestPriceAttr($value)
-    {
-        if (!empty($value)) {
-            return explode("、",$value);
-        }
-        return $value;
-    }
-    /**
-     * 截取指定字符串后的内容并转为数组
-     */
-    public function strArray($str)
-    {
-        if($str != null){
-            $newString = strstr($str,"：");
-            $length = strlen("：");
-            return explode('、',substr($newString, $length));
-        }
-    }
+
 }
