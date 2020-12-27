@@ -9,6 +9,7 @@ use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
 use app\common\model\BrandList;
 use app\api\controller\Wph;
+use app\common\model\ShoppingCart;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
@@ -225,4 +226,74 @@ class Goods extends Api
             $this->success('请求成功！');
         }
     }
+    /**
+     * 添加购物车
+     */
+    public function addCart()
+    {
+        $user = $this->auth->getUser();
+        $param = $this->request->param();
+        $validate=$this->validate($param,[
+            'goodId'=>'require',
+            'size'=>'require',
+            'store_id'=>'require',
+            'num'=>'require',
+            'type'=>'require',
+        ],[
+            'goodId.require'=>'请选择商品',
+            'size.require'=>'请选择商品规格',
+            'store_id.require'=>'不存在的小店',
+            'num.require'=>'请选择数量',
+            'type.require'=>'缺少参数',
+        ]);
+        if($validate !== true){
+            $this->error($validate);
+        }
+        $row = ShoppingCart::where([
+            'user_id'=>$user['id'],
+            'goodId'=>$param['goodId'],
+            'size'=>$param['size'],
+            'store_id'=>$param['store_id'],
+        ])->find();
+        if($row){
+            if($param['type'] == '+'){
+                $row->num +=$param['num'];
+                $res = $row->save();
+            }else{
+                $row->num -=$param['num'];
+                $res= $row->save();
+            }
+            if(!$res){
+                $this->error('操作失败');
+            }
+            $this->success('操作成功！');
+        }
+        $param['user_id'] = $user['id'];
+        unset($param['type']);
+        $res=ShoppingCart::create($param);
+        if(!$res){
+            $this->error('操作失败');
+        }
+        $this->success('操作成功！');
+    }
+    /**
+     * 购物车列表
+     */
+    public function shoppingCart()
+    {
+        $store_id = $this->request->param('store_id');
+        $user = $this->auth->getUser();
+        $rows = ShoppingCart::with('goods')->where([
+            'user_id'=>$user['id'],
+            'store_id'=>$store_id,
+        ])->select();
+        if(empty($rows)){
+            $this->error('购物车无数据！');
+        }
+        if(!$rows){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$rows);
+    }
+    
 }

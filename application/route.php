@@ -107,6 +107,10 @@ Route::post([
     'api/goodShow'=>'api/goods/goodShow',
     //商品分类
     'api/goodCate'=>'api/goods/goodCate',
+    //购物车操作
+    'api/addCart'=>'api/goods/addCart',
+    //购物车列表
+    'api/shoppingCart'=>'api/goods/shoppingCart',
 
 
     /*
