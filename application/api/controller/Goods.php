@@ -103,12 +103,6 @@ class Goods extends Api
         if(!$good){
             $this->error('服务器繁忙！');
         }
-        if($good['sizes_text'] != null){
-            $newString = strstr($good['sizes_text'],"：");
-            $length = strlen("：");
-            $good['size'] = explode('、',substr($newString, $length));
-        }
-
         $this->success('请求成功！',$good);
     }
     /**

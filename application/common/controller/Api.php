@@ -347,4 +347,5 @@ class Api
         ob_end_clean();
         return "data:image/jpg;base64,".$imageString;
     }
+
 }
