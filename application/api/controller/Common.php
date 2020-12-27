@@ -300,13 +300,15 @@ class Common extends Api
                                         $goods_info['sizes_text'] = '有货尺码：';
                                     }
                                 }
-                                $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
-                                $goods_info['sizeIds'] = implode($arrSizeIds, '、');
-                                $goods_info['vipshopPrice'] = implode($vipshopPrice, '、');
-                                $goods_info['marketPrice'] = implode($marketPrice, '、');
-                                $goods_info['commission'] = implode($commission, '、');
-                                $goods_info['suggestAddPrice'] = implode($suggestAddPrice, '、');
-                                $goods_info['suggestPrice'] = implode($suggestPrice, '、');
+                                if ($vals['sizeName'] && !empty($vals['sizeName']) && !empty($vals['sizeId']) && !empty($vals['vipshopPrice']) && !empty($vals['marketPrice']) && !empty($vals['commission']) && !empty($vals['suggestAddPrice'])&& !empty($vals['suggestPrice'])) {
+                                    $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
+                                    $goods_info['sizeIds'] = implode($arrSizeIds, '、');
+                                    $goods_info['vipshopPrice'] = implode($vipshopPrice, '、');
+                                    $goods_info['marketPrice'] = implode($marketPrice, '、');
+                                    $goods_info['commission'] = implode($commission, '、');
+                                    $goods_info['suggestAddPrice'] = implode($suggestAddPrice, '、');
+                                    $goods_info['suggestPrice'] = implode($suggestPrice, '、');
+                                }
                             }
 
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
