@@ -13,6 +13,6 @@ class ShoppingCart extends Model
 
     public function goods()
     {
-        $this->belongsTo('GoodsList','goodId','goodId');
+        return $this->belongsTo('GoodsList','goodId','goodId');
     }
 }
