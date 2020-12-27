@@ -276,11 +276,6 @@ class Common extends Api
                             $goods_info['goodName'] = $val['goodName'];
                             $goods_info['logo'] = $val['logo'];
                             $goods_info['sn'] = $val['sn'];
-                            $goods_info['vipshopPrice'] = $val['sizes']?$val['sizes'][0]['vipshopPrice']:'';
-                            $goods_info['marketPrice'] = $val['sizes']?$val['sizes'][0]['marketPrice']:'';
-                            $goods_info['commission'] = $val['sizes']?$val['sizes'][0]['commission']:'';
-                            $goods_info['suggestAddPrice'] = $val['sizes']?$val['sizes'][0]['suggestAddPrice']:'';
-                            $goods_info['suggestPrice'] = $val['sizes']?$val['sizes'][0]['suggestPrice']:'';
                             $goods_info['isMp'] = $val['isMp']?1:0;
                             $goods_info['color'] = $val['color'];
                             $goods_info['material'] = $val['material'];
@@ -294,14 +289,24 @@ class Common extends Api
                                 foreach ($val['sizes'] as $keys => $vals) {
                                     if ($vals['sizeName'] && !empty($vals['sizeName'])) {
                                         $arr[$keys] = $vals['sizeName'];
-                                        $arr2[$keys] = $vals['sizeId'];
-                                        $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
-                                        $goods_info['sizeIds'] = implode($arr, '、');
+                                        $arrSizeIds[$keys] = $vals['sizeId'];
+                                        $vipshopPrice[$keys] = $vals['vipshopPrice'];
+                                        $marketPrice[$keys] = $vals['marketPrice'];
+                                        $commission[$keys] = $vals['commission'];
+                                        $suggestAddPrice[$keys] = $vals['suggestAddPrice'];
+                                        $suggestPrice[$keys] = $vals['suggestPrice'];
                                     }
                                     else{
                                         $goods_info['sizes_text'] = '有货尺码：';
                                     }
                                 }
+                                $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
+                                $goods_info['sizeIds'] = implode($arrSizeIds, '、');
+                                $goods_info['vipshopPrice'] = implode($vipshopPrice, '、');
+                                $goods_info['marketPrice'] = implode($marketPrice, '、');
+                                $goods_info['commission'] = implode($commission, '、');
+                                $goods_info['suggestAddPrice'] = implode($suggestAddPrice, '、');
+                                $goods_info['suggestPrice'] = implode($suggestPrice, '、');
                             }
 
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
