@@ -261,8 +261,11 @@ class Store extends Api
         if($check){
             $this->error('该品牌已下架！');
         }
+        //结束天数
+        $time = BrandList::where('adId',$adId)->value('sellTimeTo');
+        $data['time'] = ceil((time()-strtotime($time))/86400);
         //获取对该品牌下的商品并进行改价
-        $goodsList = GoodsList::where('adId',$adId)
+        $data['list'] = GoodsList::where('adId',$adId)
             ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice){
                 if($catNameTwo && $catNameTwo){
                     $query->where('catNameOne',$catNameOne);
@@ -278,10 +281,10 @@ class Store extends Api
             ->order($orderFiled,$orderRule)
             ->paginate($limit,false,[ 'query' => request()->param()]);
         $PriceChange = new PriceChange();
-        $goodsList=$PriceChange->changePriceArray($store_id,$goodsList);
-        if(!$goodsList){
+        $data['list']=$PriceChange->changePriceArray($store_id,$data['list']);
+        if(!$data){
             $this->error('服务器繁忙！');
         }
-        $this->success('请求成功！',$goodsList);
+        $this->success('请求成功！',$data);
     }
 }
