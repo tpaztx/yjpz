@@ -263,7 +263,7 @@ class Store extends Api
         }
         //结束天数
         $time = BrandList::where('adId',$adId)->value('sellTimeTo');
-        $data['time'] = ceil((time()-strtotime($time))/86400);
+        $data['time'] = ceil((strtotime($time)-time())/86400);
         //获取对该品牌下的商品并进行改价
         $data['list'] = GoodsList::where('adId',$adId)
             ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice){
