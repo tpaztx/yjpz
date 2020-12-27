@@ -287,7 +287,7 @@ class Common extends Api
                             //尺码文字
                             if (!empty($val['sizes'])) {
                                 foreach ($val['sizes'] as $keys => $vals) {
-                                    if ($vals['sizeName'] && !empty($vals['sizeName'])) {
+                                    if ($vals['sizeName'] && !empty($vals['sizeName']) && !empty($vals['sizeId']) && !empty($vals['vipshopPrice']) && !empty($vals['marketPrice']) && !empty($vals['commission']) && !empty($vals['suggestAddPrice'])&& !empty($vals['suggestPrice'])) {
                                         $arr[$keys] = $vals['sizeName'];
                                         $arrSizeIds[$keys] = $vals['sizeId'];
                                         $vipshopPrice[$keys] = $vals['vipshopPrice'];

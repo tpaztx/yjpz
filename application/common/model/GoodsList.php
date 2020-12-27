@@ -26,7 +26,14 @@ class GoodsList Extends Model
     public function getSizesTextAttr($value)
     {
         if (!empty($value)) {
-            return $this->strArray($value,":");
+            return $this->strArray($value);
+        }
+        return $value;
+    }
+    public function getSizeIdsAttr($value)
+    {
+        if (!empty($value)) {
+            return explode("、",$value);
         }
         return $value;
     }
@@ -61,10 +68,10 @@ class GoodsList Extends Model
     /**
      * 截取指定字符串后的内容并转为数组
      */
-    public function strArray($str,$needle)
+    public function strArray($str)
     {
         if($str != null){
-            $newString = strstr($str,$needle);
+            $newString = strstr($str,"：");
             $length = strlen("：");
             return explode('、',substr($newString, $length));
         }
