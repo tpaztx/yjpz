@@ -282,35 +282,14 @@ class Common extends Api
                             $goods_info['catNameOne'] = $val['catNameOne'];
                             $goods_info['catNameTwo'] = $val['catNameTwo'];
                             $goods_info['catNameThree'] = $val['catNameThree'];
+                            $goods_info['catNameThree'] = $val['catNameThree'];
+                            $goods_info['catNameThree'] = $val['catNameThree'];
                             //商品主图
                             $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
                             //尺码文字
                             if (!empty($val['sizes'])) {
-                                foreach ($val['sizes'] as $keys => $vals) {
-                                    if ($vals['sizeName'] && !empty($vals['sizeName']) && !empty($vals['sizeId']) && !empty($vals['vipshopPrice']) && !empty($vals['marketPrice']) && !empty($vals['commission']) && !empty($vals['suggestAddPrice'])&& !empty($vals['suggestPrice'])) {
-                                        $arr[$keys] = $vals['sizeName'];
-                                        $arrSizeIds[$keys] = $vals['sizeId'];
-                                        $vipshopPrice[$keys] = $vals['vipshopPrice'];
-                                        $marketPrice[$keys] = $vals['marketPrice'];
-                                        $commission[$keys] = $vals['commission'];
-                                        $suggestAddPrice[$keys] = $vals['suggestAddPrice'];
-                                        $suggestPrice[$keys] = $vals['suggestPrice'];
-                                    }
-                                    else{
-                                        $goods_info['sizes_text'] = '有货尺码：';
-                                    }
-                                }
-                                if ($vals['sizeName'] && !empty($vals['sizeName']) && !empty($vals['sizeId']) && !empty($vals['vipshopPrice']) && !empty($vals['marketPrice']) && !empty($vals['commission']) && !empty($vals['suggestAddPrice'])&& !empty($vals['suggestPrice'])) {
-                                    $goods_info['sizes_text'] = '有货尺码：'.implode($arr, '、');
-                                    $goods_info['sizeIds'] = implode($arrSizeIds, '、');
-                                    $goods_info['vipshopPrice'] = implode($vipshopPrice, '、');
-                                    $goods_info['marketPrice'] = implode($marketPrice, '、');
-                                    $goods_info['commission'] = implode($commission, '、');
-                                    $goods_info['suggestAddPrice'] = implode($suggestAddPrice, '、');
-                                    $goods_info['suggestPrice'] = implode($suggestPrice, '、');
-                                }
+                                $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
                             }
-
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
                                 db('goods_list')->where('id', $isHave)->update($goods_info);
