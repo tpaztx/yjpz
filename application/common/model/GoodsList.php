@@ -26,7 +26,7 @@ class GoodsList Extends Model
     public function getSizesJsonAttr($value)
     {
         if (!empty($value)) {
-            return \GuzzleHttp\json_decode($value);
+            return \GuzzleHttp\json_decode($value,1);
         }
         return $value;
     }

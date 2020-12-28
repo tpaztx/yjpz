@@ -229,13 +229,13 @@ class Goods extends Api
         $param = $this->request->param();
         $validate=$this->validate($param,[
             'goodId'=>'require',
-            'size'=>'require',
+            'sizeId'=>'require',
             'store_id'=>'require',
             'num'=>'require',
             'type'=>'require',
         ],[
             'goodId.require'=>'请选择商品',
-            'size.require'=>'请选择商品规格',
+            'sizeId.require'=>'请选择商品规格',
             'store_id.require'=>'不存在的小店',
             'num.require'=>'请选择数量',
             'type.require'=>'缺少参数',
@@ -246,7 +246,7 @@ class Goods extends Api
         $row = ShoppingCart::where([
             'user_id'=>$user['id'],
             'goodId'=>$param['goodId'],
-            'size'=>$param['size'],
+            'sizeId'=>$param['sizeId'],
             'store_id'=>$param['store_id'],
         ])->find();
         if($row){
@@ -281,6 +281,16 @@ class Goods extends Api
             'user_id'=>$user['id'],
             'store_id'=>$store_id,
         ])->select();
+        if(!empty($rows)){
+            foreach ($rows as &$row){
+                foreach ($row['goods']['sizes_json'] as $item ){
+                    if($row['sizeId'] == $item['sizeId']){
+                        $row['goods']['size'] = $item;
+                    }
+                    unset($row['goods']['sizes_json']);
+                }
+            }
+        }
         if(empty($rows)){
             $this->error('购物车无数据！');
         }
