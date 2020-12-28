@@ -77,7 +77,7 @@ class Order extends Api
                 ];
                 OrderGood::create($OrderGood);
             }
-            // 提交事务
+//             提交事务
             Db::commit();
             $res = true;
         } catch (\Exception $e) {
@@ -86,7 +86,7 @@ class Order extends Api
             $res = false;
         }
         if(!$res){
-            $this->error('下单失败！');
+            $this->error($e->getMessage());
         }
         $this->success('下单成功！请尽快支付！');
     }
