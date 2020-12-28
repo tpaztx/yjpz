@@ -64,7 +64,7 @@ class Order extends Api
         // 启动事务
         Db::startTrans();
         try{
-            $order = OrderM::create($OrderData);
+            $order=OrderM::create($OrderData);
             foreach ($param['good'] as $item){
                 $OrderGood = [
                     'order_id'=>$order['id'],
@@ -77,8 +77,13 @@ class Order extends Api
                     'sizeId'=>$item['sizeId'],
                 ];
                 OrderGood::create($OrderGood);
-                $sizeId[$item['sizeId']] = $item['good_num'];
+                $sizeInfo[$item['sizeId']] = $item['good_num'];
             }
+            $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
+            $wph = new Wph();
+            $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
+            $order->wph_order_no = $wphOrderNo;
+            $order->save();
 //             提交事务
             Db::commit();
             $res = true;

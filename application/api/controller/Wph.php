@@ -4,11 +4,13 @@ namespace app\api\controller;
 
 use app\admin\model\StoreDown;
 use app\common\controller\Api;
+use app\common\model\Address;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
 use app\common\model\BrandList;
 use app\common\model\GoodsList;
+use think\Exception;
 
 /**
  * 唯品会类目
@@ -131,8 +133,44 @@ class Wph extends Api
                 return $list;
             }
             // var_dump($service->getGoodsList($request1));
-        } catch(\Osp\Exception\OspException $e){
-            $this->error('请求失败，请联系管理员！');
+        } catch(\Osp\Exception\OspException $ospException){
+            $this->error($ospException->getReturnMessage());
+        }
+    }
+    /**
+     * 创建唯品会订单
+     */
+    public function orderWphCreate($orderNo,$orderId,$addressId,$sizeInfo)
+    {
+        $address = Address::get($addressId);
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderCreateRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->sizeInfo = $sizeInfo;
+            $request1->provinceName = $address['province'];
+            $request1->cityName = $address['city'];
+            $request1->areaName = $address['area'];
+            $request1->address = $address['address'];
+            $request1->consignee = $address['name'];
+            $request1->mobile = $address['mobile'];
+            $request1->traceId =$orderId;
+            $request1->clientIp = getClientIp();
+            $request1->channelOrderSn = $orderNo;
+            $list = $service->orderCreate($request1);
+            $list=object_to_array($list);
+            if ($list) {
+              return $list['orders'][0]['orderSn'];
+            }
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
         }
     }
 
