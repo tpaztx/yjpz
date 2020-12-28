@@ -140,12 +140,13 @@ class User extends Api
         //     $this->error(__('Email is incorrect'));
         // }
         //验证邀请码
-        $user = UserM::getByTradeCode($trade_code);
-        if (!$user) {
-            $this->error('未查询到上级邀请信息，请重新确认！');
-        }
         if (!$trade_code || empty($trade_code)) {
             $this->error('请填写邀请码！');
+        }
+        $user = UserM::getByTradeCode($trade_code);
+        echo UserM::getLastSQL();die;
+        if (!$user) {
+            $this->error('未查询到上级邀请信息，请重新确认！');
         }
         if ($mobile && !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error(__('Mobile is incorrect'));
