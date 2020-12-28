@@ -151,9 +151,10 @@ class Auth
             'password' => $password,
             'email'    => $email,
             'mobile'   => $mobile,
-            'level'    => 2,
+            'level'    => 0,
             'score'    => 0,
             'avatar'   => '',
+            'group_id' => 2,
         ];
         $params = array_merge($data, [
             'nickname'  => preg_match("/^1[3-9]{1}\d{9}$/",$username) ? substr_replace($username,'****',3,4) : $username,
