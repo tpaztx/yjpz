@@ -2,7 +2,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
     var Controller = {
         index: function () {
-            // 初始化表格参数配置
+            // 初始化表格参数配置00
             Table.api.init({
                 extend: {
                     index_url: 'user/user/index',
