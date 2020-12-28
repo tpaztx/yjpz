@@ -17,6 +17,7 @@ use think\db;
 use app\common\model\BrandList;
 use think\Cache;
 use think\Log;
+use app\common\model\User;
 
 /**
  * 公共接口
@@ -375,5 +376,26 @@ class Common extends Api
     {
         $result['server_phone'] = Configs::where('name', 'in', 'server_phone')->value('value');
         $this->success('请求成功！', $result);
+    }
+
+    /**
+     * 每月1号凌晨一点检测平台用户的等级信息
+     */
+    public function userGroup()
+    {
+        $start = strtotime(date('Y-m-1',strtotime('last month')));
+        $end = strtotime(date('Y-m-d',strtotime(date('Y-m-1').'-1 day')));
+        $user = User::where('status', 'normal')->field('id')->select();
+        dump($start);die;
+        if ($user) {
+            foreach ($user as $k => $v) {
+                $real_price = \app\common\model\Order::where('user_id', $v['id'])->where("createtime >=".$start)
+                                                                            ->where("createtime <=".$end)
+                                                                            ->count('real_price');
+                if ($real_price) {
+                    dump($real_price);die;
+                }
+            }
+        }
     }
 }
