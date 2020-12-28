@@ -283,11 +283,13 @@ class Goods extends Api
         ])->select();
         if(!empty($rows)){
             foreach ($rows as &$row){
-                foreach ($row['goods']['sizes_json'] as $item ){
-                    if($row['sizeId'] == $item['sizeId']){
-                        $row['goods']['size'] = $item;
+                if(!empty($row['goods']['sizes_json'])){
+                    foreach ($row['goods']['sizes_json'] as $item ){
+                        if($row['sizeId'] == $item['sizeId']){
+                            $row['goods']['size'] = $item;
+                        }
+                        unset($row['goods']['sizes_json']);
                     }
-                    unset($row['goods']['sizes_json']);
                 }
             }
         }
