@@ -144,7 +144,6 @@ class User extends Api
             $this->error('请填写邀请码！');
         }
         $user = UserM::getByTradeCode($trade_code);
-        echo UserM::getLastSQL();die;
         if (!$user) {
             $this->error('未查询到上级邀请信息，请重新确认！');
         }
