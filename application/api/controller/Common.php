@@ -18,6 +18,7 @@ use app\common\model\BrandList;
 use think\Cache;
 use think\Log;
 use app\common\model\User;
+use app\common\model\UserGroup;
 
 /**
  * 公共接口
@@ -381,21 +382,33 @@ class Common extends Api
     /**
      * 每月1号凌晨一点检测平台用户的等级信息
      */
-    public function userGroup()
+    public function userGroupID()
     {
         $start = strtotime(date('Y-m-1',strtotime('last month')));
         $end = strtotime(date('Y-m-d',strtotime(date('Y-m-1').'-1 day')));
         $user = User::where('status', 'normal')->field('id')->select();
+        $group = UserGroup::where(['status'=>'normal'])->where('id>1')->select();
+        $result = false;
         if ($user) {
             foreach ($user as $k => $v) {
                 $real_price = \app\common\model\Order::where('user_id', $v['id'])->where("createtime >=".$start)
                                                                             ->where("createtime <=".$end)
                                                                             ->count('real_price');
                                                                             dump($real_price);die;
-                if ($real_price) {
-                    
+                if ($real_price && $real_price>0) {
+                    foreach ($group as $key => $val) {
+                        if ($real_price >= $val['month']) {
+                            User::where('id', $v['id'])->update('group_id', $val['id']);
+                            $result = true;
+                        }
+                    }
                 }
             }
+        }
+        if ($result) {
+            echo "执行成功！";
+        }else{
+            echo "执行失败！";
         }
     }
 }
