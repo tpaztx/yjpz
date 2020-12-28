@@ -386,14 +386,14 @@ class Common extends Api
         $start = strtotime(date('Y-m-1',strtotime('last month')));
         $end = strtotime(date('Y-m-d',strtotime(date('Y-m-1').'-1 day')));
         $user = User::where('status', 'normal')->field('id')->select();
-        dump($start);die;
         if ($user) {
             foreach ($user as $k => $v) {
                 $real_price = \app\common\model\Order::where('user_id', $v['id'])->where("createtime >=".$start)
                                                                             ->where("createtime <=".$end)
                                                                             ->count('real_price');
+                                                                            dump($real_price);die;
                 if ($real_price) {
-                    dump($real_price);die;
+                    
                 }
             }
         }
