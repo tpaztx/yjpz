@@ -256,9 +256,6 @@ class Order extends Api
         $user = $this->auth->getUser();
         $steoM = new \app\admin\model\Store();
         $store_id = $steoM->getStore($user['id']);
-        dump($user);
-        dump($store_id);
-        exit;
         $status = $this->request->param('status');
         $after_sales = $this->request->param('after_sales');
         $orders = OrderM::with('goods')
