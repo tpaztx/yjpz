@@ -402,6 +402,6 @@ class Common extends Api
                 }
             }
         }
-        echo "执行失败！";
+        echo "执行成功！";
     }
 }
