@@ -74,8 +74,10 @@ class Order extends Api
                     'good_size'=>$item['good_size'],
                     'good_image'=>$item['good_image'],
                     'goodId'=>$item['goodId'],
+                    'sizeId'=>$item['sizeId'],
                 ];
                 OrderGood::create($OrderGood);
+                $sizeId[$item['sizeId']] = $item['good_num'];
             }
 //             提交事务
             Db::commit();
