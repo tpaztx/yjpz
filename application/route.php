@@ -139,5 +139,5 @@ Route::post([
 
 Route::get([
 	//检测平台用户的等级信息
-    'api/userGroup'=>'api/common/userGroup',
+    'api/userGroup'=>'api/common/userGroup', 
 ]);
