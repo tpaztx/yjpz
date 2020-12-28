@@ -151,7 +151,7 @@ class Auth
             'password' => $password,
             'email'    => $email,
             'mobile'   => $mobile,
-            'level'    => 1,
+            'level'    => 2,
             'score'    => 0,
             'avatar'   => '',
         ];
