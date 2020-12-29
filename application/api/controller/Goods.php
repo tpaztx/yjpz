@@ -57,6 +57,8 @@ class Goods extends Api
     {
         $page = $this->request->request('page')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
+        $price = $this->request->request('price')?:0;
+        $total = $this->request->request('total')?:1;
         $adId = $this->request->request('adId')?:0;
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
 
@@ -71,7 +73,12 @@ class Goods extends Api
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
+                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v['goodId'])->count('id');
                 }
+                if ($total==1) {
+                    $goods = multi_array_sort($goods, 'total', SORT_DESC);
+                }
+                
                 $brand_result[$key]['goods'] = $goods;
             }
             $this->success('请求成功！', $brand_result);
