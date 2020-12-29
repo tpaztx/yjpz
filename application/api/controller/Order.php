@@ -10,6 +10,7 @@ use app\common\model\OrderGood;
 use think\Db;
 use  app\common\model\Order as OrderM;
 use think\Exception;
+use think\Request;
 
 class Order extends Api
 {
@@ -19,8 +20,9 @@ class Order extends Api
     protected $noNeedRight = ['*'];
     protected $wph;
 
-    public function _construct()
+    public function __construct(Request $request)
     {
+        $this->request = is_null($request) ? Request::instance() : $request;
         $this->wph = new Wph();
     }
     /**
