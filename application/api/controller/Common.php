@@ -17,13 +17,15 @@ use think\db;
 use app\common\model\BrandList;
 use think\Cache;
 use think\Log;
+use app\common\model\User;
+use app\common\model\UserGroup;
 
 /**
  * 公共接口
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig'];
     protected $noNeedRight = '*';
 
     /**
@@ -374,6 +376,34 @@ class Common extends Api
     public function getConfig()
     {
         $result['server_phone'] = Configs::where('name', 'in', 'server_phone')->value('value');
+        $result['download_Android'] = Configs::where('name', 'in', 'download_Android')->value('value');
+        $result['download_iOS'] = Configs::where('name', 'in', 'download_iOS')->value('value');
         $this->success('请求成功！', $result);
+    }
+
+    /**
+     * 每月1号凌晨一点检测平台用户的等级信息
+     */
+    public function userGroupID()
+    {
+        $start = strtotime(date('Y-m-1',strtotime('last month')));
+        $end = strtotime(date('Y-m-d',strtotime(date('Y-m-1').'-1 day')));
+        $user = User::where('status', 'normal')->field('id')->select();
+        $group = UserGroup::where(['status'=>'normal'])->where('id>1')->select();
+        if ($user) {
+            foreach ($user as $k => $v) {
+                $real_price = \app\common\model\Order::where('user_id', $v['id'])->where("createtime >=".$start)
+                                                                            ->where("createtime <=".$end)
+                                                                            ->count('real_price');
+                if ($real_price && $real_price>0) {
+                    foreach ($group as $key => $val) {
+                        if ($real_price >= $val['month']) {
+                            User::where('id', $v['id'])->update('group_id', $val['id']);
+                        }
+                    }
+                }
+            }
+        }
+        echo "执行成功！";
     }
 }

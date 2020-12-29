@@ -136,3 +136,8 @@ Route::post([
     //删除订单
     'api/delOrder'=>'api/order/delOrder',
 ]);
+
+Route::get([
+	//检测平台用户的等级信息
+    'api/userGroupID' => 'api/common/userGroupID', 
+]);
