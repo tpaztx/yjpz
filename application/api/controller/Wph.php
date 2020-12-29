@@ -12,6 +12,7 @@ use think\Config;
 use app\common\model\BrandList;
 use app\common\model\GoodsList;
 use think\Exception;
+use think\Model;
 
 /**
  * 唯品会类目
@@ -225,6 +226,28 @@ class Wph extends Api
             $request1->sizeInfo = $sizeInfo;
             $service->orderReturnCreate($request1);
             // var_dump($service->getGoodsList($request1));
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+    /**
+     * 取消退货申请
+     */
+    public function cancelReturnOrder($wphOrderNo)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $wphOrderNo;
+            $service->cancelReturnedOrder($request1);
         } catch(\Osp\Exception\OspException $ospException){
             throw new Exception($ospException->getReturnMessage());
         }

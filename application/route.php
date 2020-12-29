@@ -127,7 +127,9 @@ Route::post([
     'api/return_good'=>'api/order/return_good',
     //取消退货
     'api/cancelReturnOrder'=>'api/order/cancelReturnOrder',
-    //退货无聊
+    //退货承运商
+    'api/carrierList'=>'api/order/cancelReturnOrder',
+    //退货物流
     'api/returnLogistics'=>'api/order/returnLogistics',
     //订单列表
     'api/orderList'=>'api/order/orderList',

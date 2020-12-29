@@ -4,7 +4,6 @@
 namespace app\api\controller;
 
 
-use app\admin\library\Auth;
 use app\common\controller\Api;
 use app\common\model\Address;
 use app\common\model\OrderGood;
