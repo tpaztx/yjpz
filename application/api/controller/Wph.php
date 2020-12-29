@@ -313,12 +313,39 @@ class Wph extends Api
             $ctx->setAppSecret(Config::get('wph.AppSecret'));
             $ctx->setAppURL("https://gw.vipapis.com/");
             $ctx->setLanguage("zh");
-            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnUpdateTransportNoRequest();
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnRequest();
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
             $request1->orderSn = $wphOrderNo;
             $row = $service->getOrderReturnDetail($request1);
+            $row = object_to_array($row);
+            return $row;
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+    /**
+     * 订单状态信息
+     */
+    public function orderStatus($wphOrderNo)
+    {
+        if(!empty($wphOrderNo)){
+
+        }
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderInfoRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $wphOrderNo;
+            $row = $service->getOrderInfoList($request1);
             $row = object_to_array($row);
             return $row;
         } catch(\Osp\Exception\OspException $ospException){

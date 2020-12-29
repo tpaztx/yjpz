@@ -168,6 +168,7 @@ class Order extends Api
             foreach ($goods as $k=>$good){
                 $size[$k]['size'] = $good['good_size'];
                 $size[$k]['num'] = $good['good_num'];
+                $size[$k]['sizeId'] = $good['sizeId'];
                 $size[$k]['is_select'] = 0;
             }
             $item['good_size'] = $size;
@@ -187,10 +188,6 @@ class Order extends Api
         if(!$order || $order['status'] != 2){
             $this->error('无效的订单！');
         }
-        if(!$param['reason']){
-            $this->error('请选择退货原因！');
-        }
-
 // 启动事务
         Db::startTrans();
         try{
@@ -206,6 +203,7 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
+                    $good->reason = $item['reason'];
                     $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
                     $sizeInfo[$item['sizeId']] = $item['return_num'];
@@ -214,7 +212,6 @@ class Order extends Api
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
             $order->after_sales = 1;
             $order->return_price = $return_price;
-            $order->reason = $param['reason'];
             $order->save();
             $wph=new Wph();
             $wph->orderRrturn($order['wph_order_no'],$sizeInfo);
