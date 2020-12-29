@@ -123,6 +123,8 @@ Route::post([
     'api/cancelOrder'=>'api/order/cancelOrder',
     //申请退货页面数据
     'api/return_good_data'=>'api/order/return_good_data',
+    //退货预览
+    'api/returnPreview'=>'api/order/returnPreview',
     //申请退货
     'api/return_good'=>'api/order/return_good',
     //取消退货
