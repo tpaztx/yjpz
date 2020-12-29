@@ -162,6 +162,7 @@ class Order extends Api
         }
         $orderGoods = OrderGood::where('order_id',$order_id)->group('goodId')->select();
         foreach ($orderGoods as &$item){
+            $item['is_select'] = 0;
             $goods = OrderGood::where(['goodId'=>$item['goodId'],'order_id'=>$order_id])->select();
             $size = array();
             foreach ($goods as $k=>$good){
