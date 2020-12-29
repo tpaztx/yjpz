@@ -118,7 +118,6 @@ class Goods extends Api
             if($adId){
                 $query->where('adId',$adId);
             }
-            $query->whereNotIn('adId',$downArray);
         })
             ->field('id,adId,catNameOne')
             ->group('catNameOne')
@@ -128,7 +127,6 @@ class Goods extends Api
                 if($adId){
                     $query->where('adId',$adId);
                 }
-                $query->whereNotIn('adId',$downArray);
                 $query->where('catNameOne',$item['catNameOne']);
             })
                 ->field('id,adId,catNameOne,catNameTwo')

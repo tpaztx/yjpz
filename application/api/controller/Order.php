@@ -10,7 +10,11 @@ use app\common\model\OrderGood;
 use think\Db;
 use app\common\model\Order as OrderM;
 use think\Exception;
+<<<<<<< HEAD
 use app\common\model\UserGroup;
+=======
+use think\Request;
+>>>>>>> bff7602554e2c506f19c17e1788de6ee04a9571b
 
 class Order extends Api
 {
@@ -18,6 +22,13 @@ class Order extends Api
     protected $noNeedLogin = '';
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['*'];
+    protected $wph;
+
+    public function __construct(Request $request)
+    {
+        $this->request = is_null($request) ? Request::instance() : $request;
+        $this->wph = new Wph();
+    }
     /**
      * 用户下单
      */
@@ -100,8 +111,7 @@ class Order extends Api
                 $sizeInfo[$item['sizeId']] = $item['good_num'];
             }
             $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
-            $wph = new Wph();
-            $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
+            $wphOrderNo = $this->wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
             $order->wph_order_no = $wphOrderNo;
             $order->save();
             // 提交事务
@@ -130,10 +140,22 @@ class Order extends Api
         if($order['status'] != 0 && $order['status'] != 1){
             $this->error('该订单无法取消！');
         }
-        $order['status'] = -1;
-        $res = $order->save();
+        // 启动事务
+        Db::startTrans();
+        try{
+            $order['status'] = -1;
+            $order->save();
+            $this->wph->cancelOrder($order['wph_order_no']);
+            // 提交事务
+            Db::commit();
+            $res = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $res = false;
+        }
         if(!$res){
-            $this->error('取消订单失败！');
+            $this->error($e->getMessage());
         }
         $this->success('取消订单成功！');
     }
@@ -149,7 +171,7 @@ class Order extends Api
         }
         $orderGoods = OrderGood::where('order_id',$order_id)->group('goodId')->select();
         foreach ($orderGoods as &$item){
-            $goods = OrderGood::where('goodId',$item['goodId'])->select();
+            $goods = OrderGood::where(['goodId'=>$item['goodId'],'order_id'=>$order_id])->select();
             $size = array();
             foreach ($goods as $k=>$good){
                 $size[$k]['size'] = $good['good_size'];
@@ -182,7 +204,7 @@ class Order extends Api
             if(!empty($param['goods'])){
                 $return_price = 0;
                 foreach ($param['goods'] as $item){
-                    $good = OrderGood::where(['goodId'=>$item['goodId'],'good_size'=>$item['size']])->find();
+                    $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
                     if(!$good){
                         throw new Exception('存在无效的商品！');
                     }
@@ -193,12 +215,15 @@ class Order extends Api
                     $good->good_num -= $item['return_num'];
                     $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
+                    $sizeInfo[$item['sizeId']] = $item['return_num'];
                 }
             }
+            $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
             $order->after_sales = 1;
             $order->return_price = $return_price;
             $order->reason = $param['reason'];
             $order->save();
+            $this->wph->orderRrturn($order['wph_order_no'],$sizeInfo);
             // 提交事务
             Db::commit();
             $res = true;
@@ -223,9 +248,15 @@ class Order extends Api
         Db::startTrans();
         try{
             OrderGood::where('order_id',$order_id)->update(['return_num'=>0]);
-            OrderM::where('id',$order_id)->update(['return_price'=>0,'reason'=>0,'after_sales'=>0]);
+            $order = OrderM::where('id',$order_id)->find();
+            $order->return_price=0;
+            $order->reason=0;
+            $order->after_sales=0;
+            $order->save();
+            $this->wph->cancelReturnOrder($order['wph_order_no']);
             // 提交事务
             Db::commit();
+
             $res = true;
         } catch (\Exception $e) {
             // 回滚事务
@@ -236,6 +267,17 @@ class Order extends Api
             $this->error($e->getMessage());
         }
         $this->success('取消退货成功！');
+    }
+    /*
+     * 获取承运商
+     */
+    public function carrierList()
+    {
+        $list = $this->wph->carrierList();
+        if(!$list){
+            $this->error('请求失败！');
+        }
+        $this->success('请求成功！',$list);
     }
     /**
      * 退货物流
