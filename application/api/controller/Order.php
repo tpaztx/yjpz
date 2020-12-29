@@ -11,11 +11,8 @@ use app\common\model\OrderGood;
 use think\Db;
 use app\common\model\Order as OrderM;
 use think\Exception;
-<<<<<<< HEAD
 use app\common\model\UserGroup;
-=======
-use think\Request;
->>>>>>> bff7602554e2c506f19c17e1788de6ee04a9571b
+
 
 class Order extends Api
 {
@@ -85,7 +82,6 @@ class Order extends Api
             'commission1' => round($commission1, 2),
             'commission2' => round($commission2, 2),
         ];
-        dump($OrderData);die;
         // 启动事务
         Db::startTrans();
         try{
