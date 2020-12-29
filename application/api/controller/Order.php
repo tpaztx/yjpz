@@ -59,6 +59,7 @@ class Order extends Api
             }
             $proportion = $param['real_price'] * $pro_fee * 0.01;
         }
+        dump($proportion);die;
         //分销佣金
         $commission1 = $commission2 = 0;
         $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
