@@ -167,6 +167,7 @@ class Order extends Api
             foreach ($goods as $k=>$good){
                 $size[$k]['size'] = $good['good_size'];
                 $size[$k]['num'] = $good['good_num'];
+                $size[$k]['is_select'] = 0;
             }
             $item['good_size'] = $size;
         }
