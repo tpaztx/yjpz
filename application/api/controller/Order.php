@@ -9,9 +9,13 @@ use app\common\controller\Api;
 use app\common\model\Address;
 use app\common\model\OrderGood;
 use think\Db;
-use  app\common\model\Order as OrderM;
+use app\common\model\Order as OrderM;
 use think\Exception;
+<<<<<<< HEAD
+use app\common\model\UserGroup;
+=======
 use think\Request;
+>>>>>>> bff7602554e2c506f19c17e1788de6ee04a9571b
 
 class Order extends Api
 {
@@ -27,7 +31,7 @@ class Order extends Api
         $order_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
         $user = $this->auth->getUser();
         $param = $this->request->param();
-        $validate=$this->validate($param,[
+        $validate = $this->validate($param,[
             'store_id'=>'require',
             'total_price'=>'require',
             'real_price'=>'require',
@@ -50,6 +54,21 @@ class Order extends Api
         if(!$address){
             $this->error('无效的地址！');
         }
+        //自购佣金
+        $proportion = 0;
+        if ($param['type'] == 'APP') {
+            $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
+            if (!$pro_fee) {
+                $this->error('未获取到平台的自购佣金比例！');
+            }
+            $proportion = $param['real_price'] * $pro_fee * 0.01;
+        }
+        //分销佣金
+        $commission1 = $commission2 = 0;
+        $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
+        $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
+        $commission1 = $param['real_price'] * $com_fee1 * 0.01;
+        $commission2 = $param['real_price'] * $com_fee2 * 0.01;
         $OrderData = [
             'user_id'=>$user['id'],
             'order_no'=>$order_no,
@@ -62,7 +81,11 @@ class Order extends Api
             'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
             'time'=>$address['is_time'],
             'type'=>$param['type'],
+            'proportion' => round($proportion, 2),
+            'commission1' => round($commission1, 2),
+            'commission2' => round($commission2, 2),
         ];
+        dump($OrderData);die;
         // 启动事务
         Db::startTrans();
         try{
@@ -86,7 +109,7 @@ class Order extends Api
             $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
             $order->wph_order_no = $wphOrderNo;
             $order->save();
-//             提交事务
+            // 提交事务
             Db::commit();
             $res = true;
         } catch (\Exception $e) {
