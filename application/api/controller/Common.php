@@ -311,7 +311,40 @@ class Common extends Api
             $this->inputGoodsList();
         }
     }
-
+    /**
+     * 查询待发货/已返货订单是否发货/签收
+     */
+    public function orderStatus()
+    {
+        $page = Cache::get('page') ?? 1;
+        $orders = \app\common\model\Order::whereIn('status',[1,2])->paginate(20,false,[ 'query' => request()->param()]);
+        if(!empty($orders)){
+            Cache::set('page',$page+1);
+            $OrderNoArray = [];
+            foreach ($orders as $item){
+                $OrderNoArray[] = $item['wph_order_no'];
+            }
+            $OrderNoStr = implode(',',$OrderNoArray);
+            $wph = new Wph();
+            $list = $wph->orderStatus("$OrderNoStr");
+            if(!empty($list)){
+                foreach ($list as $value){
+                    //将已发货订单变为已发货状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 3){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2]);
+                    }
+                    //将已签收订单变为已完成状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 7){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3]);
+                    }
+                }
+            }
+            Log::write('【查询条数】：'.count($orders));
+        }else{
+            Cache::set('page',1);
+            Log::write('【无可查询订单】');
+        }
+    }
     /**
      * 返回品牌对应的商品的数据
      */
