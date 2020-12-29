@@ -330,9 +330,6 @@ class Wph extends Api
      */
     public function orderStatus($wphOrderNo)
     {
-        if(!empty($wphOrderNo)){
-
-        }
         try {
             $service = WpcVopOspServiceClient::getService();
             $ctx = InvocationContextFactory::getInstance();
@@ -344,10 +341,12 @@ class Wph extends Api
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
-            $request1->orderSn = $wphOrderNo;
-            $row = $service->getOrderInfoList($request1);
-            $row = object_to_array($row);
-            return $row;
+            $request1->orderSnList = $wphOrderNo;
+            $request1->page = 1;
+            $request1->pageSize = 20;
+            $list = $service->getOrderInfoList($request1);
+            $list = object_to_array($list);
+            return $list;
         } catch(\Osp\Exception\OspException $ospException){
             throw new Exception($ospException->getReturnMessage());
         }
