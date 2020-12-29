@@ -510,4 +510,31 @@ class Wph extends Api
         ksort($arr); //ksort函数对数组进行排序(保留原键值key) sort为不保留key值
         return $arr; 
     }
+    /**
+     * 查询商品上下架
+     */
+    public function goodsOnline($goodFullIds)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOnlineGoodsRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->goodFullIds = $goodFullIds;
+            // var_dump($service->getGoodsDetail($request1));
+            $list = $service->getGoodsOnline($request1);
+            if ($list) {
+                $list = object_to_array($list);
+                return $list;
+            }
+        } catch(\Osp\Exception\OspException $ospException){
+            $this->error($ospException->getMessage());
+        }
+    }
 }

@@ -346,6 +346,50 @@ class Common extends Api
         }
     }
     /**
+     * 查询退货订单状态
+     */
+    public function returnOrderStatus()
+    {
+        $orders = \app\common\model\Order::whereIn('after_sales',[1,3])->select();
+        if(!empty($orders)){
+            $wph = new Wph();
+            $status = 1;
+            // 启动事务
+            Db::startTrans();
+            try{
+                foreach ($orders as $item){
+                    $row = $wph->returnOrderDetail($item['wph_order_no']);
+                    if($row){
+                        switch ($row['returnStatus']){
+                            case '退货已审核':
+                                $status = 3;
+                                break;
+                            case '审核不通过':
+                                $status = 2;
+                                break;
+                            case '已退款':
+                                $status = 4;
+                                break;
+                        }
+                        \app\common\model\Order::where('wph_order_no',$row['orderSn'])->update(['status'=>$status]);
+                    }
+                }
+                // 提交事务
+                Db::commit();
+                $res = true;
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                $res = false;
+            }
+            if($res){
+                $this->success('共查询退货订单:'.count($orders));
+            }
+            $this->error('服务器繁忙！');
+        }
+        $this->success('无可查询订单！');
+    }
+    /**
      * 返回品牌对应的商品的数据
      */
     public function goodsListWph($areaId = '101101', $page = 1, $pageSize = 20, $adId = '')
