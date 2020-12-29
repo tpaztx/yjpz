@@ -186,10 +186,6 @@ class Order extends Api
         if(!$order || $order['status'] != 2){
             $this->error('无效的订单！');
         }
-        if(!$param['reason']){
-            $this->error('请选择退货原因！');
-        }
-
 // 启动事务
         Db::startTrans();
         try{
@@ -205,6 +201,7 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
+                    $good->reason -= $item['reason'];
                     $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
                     $sizeInfo[$item['sizeId']] = $item['return_num'];
