@@ -25,7 +25,7 @@ use app\common\model\UserGroup;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus'];
     protected $noNeedRight = '*';
 
     /**
@@ -317,7 +317,84 @@ class Common extends Api
             $this->inputGoodsList();
         }
     }
-
+    /**
+     * 查询待发货/已返货订单是否发货/签收
+     */
+    public function orderStatus()
+    {
+        $page = Cache::get('page') ?? 1;
+        $orders = \app\common\model\Order::whereIn('status',[1,2])->paginate(20,false,[ 'query' => request()->param()]);
+        if(!empty($orders)){
+            Cache::set('page',$page+1);
+            $OrderNoArray = [];
+            foreach ($orders as $item){
+                $OrderNoArray[] = $item['wph_order_no'];
+            }
+            $OrderNoStr = implode(',',$OrderNoArray);
+            $wph = new Wph();
+            $list = $wph->orderStatus("$OrderNoStr");
+            if(!empty($list)){
+                foreach ($list as $value){
+                    //将已发货订单变为已发货状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 3){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2]);
+                    }
+                    //将已签收订单变为已完成状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 7){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3]);
+                    }
+                }
+            }
+            Log::write('【查询条数】：'.count($orders));
+        }else{
+            Cache::set('page',1);
+            Log::write('【无可查询订单】');
+        }
+    }
+    /**
+     * 查询退货订单状态
+     */
+    public function returnOrderStatus()
+    {
+        $orders = \app\common\model\Order::whereIn('after_sales',[1,3])->select();
+        if(!empty($orders)){
+            $wph = new Wph();
+            $status = 1;
+            // 启动事务
+            Db::startTrans();
+            try{
+                foreach ($orders as $item){
+                    $row = $wph->returnOrderDetail($item['wph_order_no']);
+                    if($row){
+                        switch ($row['returnStatus']){
+                            case '退货已审核':
+                                $status = 3;
+                                break;
+                            case '审核不通过':
+                                $status = 2;
+                                break;
+                            case '已退款':
+                                $status = 4;
+                                break;
+                        }
+                        \app\common\model\Order::where('wph_order_no',$row['orderSn'])->update(['status'=>$status]);
+                    }
+                }
+                // 提交事务
+                Db::commit();
+                $res = true;
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                $res = false;
+            }
+            if($res){
+                $this->success('共查询退货订单:'.count($orders));
+            }
+            $this->error('服务器繁忙！');
+        }
+        $this->success('无可查询订单！');
+    }
     /**
      * 返回品牌对应的商品的数据
      */

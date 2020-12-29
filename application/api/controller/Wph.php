@@ -207,9 +207,35 @@ class Wph extends Api
         }
     }
     /**
+     * 退货预览
+     */
+    public function orderReturnPreview($wphOrderNo,$sizeInfo)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnPreviewRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $wphOrderNo;
+            $request1->sizeInfo = $sizeInfo;
+            $list = $service->getOrderReturnPreview($request1);
+            $list = object_to_array($list);
+            return $list;
+            // var_dump($service->getGoodsList($request1));
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+    /**
      * 申请退货单
      */
-    public function orderRrturn($wphOrderNo,$sizeInfo)
+    public function orderReturn($wphOrderNo,$sizeInfo)
     {
         try {
             $service = WpcVopOspServiceClient::getService();
@@ -330,9 +356,6 @@ class Wph extends Api
      */
     public function orderStatus($wphOrderNo)
     {
-        if(!empty($wphOrderNo)){
-
-        }
         try {
             $service = WpcVopOspServiceClient::getService();
             $ctx = InvocationContextFactory::getInstance();
@@ -344,10 +367,12 @@ class Wph extends Api
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
-            $request1->orderSn = $wphOrderNo;
-            $row = $service->getOrderInfoList($request1);
-            $row = object_to_array($row);
-            return $row;
+            $request1->orderSnList = $wphOrderNo;
+            $request1->page = 1;
+            $request1->pageSize = 20;
+            $list = $service->getOrderInfoList($request1);
+            $list = object_to_array($list);
+            return $list;
         } catch(\Osp\Exception\OspException $ospException){
             throw new Exception($ospException->getReturnMessage());
         }
@@ -510,5 +535,32 @@ class Wph extends Api
         }
         ksort($arr); //ksort函数对数组进行排序(保留原键值key) sort为不保留key值
         return $arr; 
+    }
+    /**
+     * 查询商品上下架
+     */
+    public function goodsOnline($goodFullIds)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOnlineGoodsRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->goodFullIds = $goodFullIds;
+            // var_dump($service->getGoodsDetail($request1));
+            $list = $service->getGoodsOnline($request1);
+            if ($list) {
+                $list = object_to_array($list);
+                return $list;
+            }
+        } catch(\Osp\Exception\OspException $ospException){
+            $this->error($ospException->getMessage());
+        }
     }
 }
