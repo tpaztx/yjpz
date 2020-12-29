@@ -202,7 +202,7 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
-                    $good->reason -= $item['reason'];
+                    $good->reason = $item['reason'];
                     $good->save();
                     $return_price += $good['good_price']*$item['return_num'];
                     $sizeInfo[$item['sizeId']] = $item['return_num'];
@@ -211,7 +211,6 @@ class Order extends Api
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
             $order->after_sales = 1;
             $order->return_price = $return_price;
-            $order->reason = $param['reason'];
             $order->save();
             $wph=new Wph();
             $wph->orderRrturn($order['wph_order_no'],$sizeInfo);
