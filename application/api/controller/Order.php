@@ -282,10 +282,12 @@ class Order extends Api
         $param = $this->request->param();
         $validate=$this->validate($param,[
             'return_company'=>'require',
+            'carriersCode'=>'require',
             'return_no'=>'require',
             'order_id'=>'require',
         ],[
             'return_company.require'=>'请选择物流公司',
+            'carriersCode.require'=>'请选择物流公司',
             'return_no.require'=>'请填写物流单号',
             'order_id.require'=>'请选择退货订单',
         ]);
@@ -299,7 +301,20 @@ class Order extends Api
         $order->return_company = $param['return_company'];
         $order->return_no= $param['return_no'];
         $order->return_desc= $param['return_desc'];
-        $res = $order->save();
+        $order->carriersCode= $param['carriersCode'];
+        // 启动事务
+        Db::startTrans();
+        try{
+            $res = $order->save();
+            $wph = new Wph();
+            $wph->returnTransportNo("{$order['wph_order_no']}","{$param['carriersCode']}","{$param['return_no']}","{$param['return_desc']}");
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+        }
+
         if(!$res){
             $this->error('服务器繁忙！');
         }
