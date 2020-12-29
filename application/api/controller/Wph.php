@@ -207,9 +207,35 @@ class Wph extends Api
         }
     }
     /**
+     * 退货预览
+     */
+    public function orderReturnPreview($wphOrderNo,$sizeInfo)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnPreviewRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $wphOrderNo;
+            $request1->sizeInfo = $sizeInfo;
+            $list = $service->getOrderReturnPreview($request1);
+            $list = object_to_array($list);
+            return $list;
+            // var_dump($service->getGoodsList($request1));
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+    /**
      * 申请退货单
      */
-    public function orderRrturn($wphOrderNo,$sizeInfo)
+    public function orderReturn($wphOrderNo,$sizeInfo)
     {
         try {
             $service = WpcVopOspServiceClient::getService();

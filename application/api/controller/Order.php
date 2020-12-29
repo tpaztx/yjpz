@@ -178,6 +178,35 @@ class Order extends Api
         $this->success('请求成功！',$orderGoods);
     }
     /**
+     * 退货预览
+     */
+    public function returnPreview()
+    {
+        $param = $this->request->param();
+        $order = OrderM::get($param['order_id']);
+        if(!$order || $order['status'] != 2){
+            $this->error('无效的订单！');
+        }
+        if(!empty($param['goods'])){
+            foreach ($param['goods'] as $item){
+                $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
+                if(!$good){
+                    throw new Exception('存在无效的商品！');
+                }
+                if($item['return_num'] > $good['good_num']){
+                    throw new Exception('退货数量不得大于购买数量！');
+                }
+                $sizeInfo[$item['sizeId']] = $item['return_num'];
+            }
+            $wph=new Wph();
+            $list = $wph->orderReturnPreview($order['wph_order_no'],$sizeInfo);
+            if($list){
+                $this->success('请求成功！',$list);
+            }
+            $this->error('请求失败！',$list);
+        }
+    }
+    /**
      * 申请退货
      */
     public function return_good()
@@ -191,7 +220,6 @@ class Order extends Api
         Db::startTrans();
         try{
             if(!empty($param['goods'])){
-                $return_price = 0;
                 foreach ($param['goods'] as $item){
                     $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
                     if(!$good){
@@ -204,16 +232,15 @@ class Order extends Api
                     $good->good_num -= $item['return_num'];
                     $good->reason = $item['reason'];
                     $good->save();
-                    $return_price += $good['good_price']*$item['return_num'];
                     $sizeInfo[$item['sizeId']] = $item['return_num'];
                 }
             }
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
             $order->after_sales = 1;
-            $order->return_price = $return_price;
+            $order->return_price = $param['return_price'];
             $order->save();
             $wph=new Wph();
-            $wph->orderRrturn($order['wph_order_no'],$sizeInfo);
+            $wph->orderReturn($order['wph_order_no'],$sizeInfo);
             // 提交事务
             Db::commit();
             $res = true;
