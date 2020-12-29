@@ -4,6 +4,7 @@
 namespace app\api\controller;
 
 
+use app\admin\library\Auth;
 use app\common\controller\Api;
 use app\common\model\Address;
 use app\common\model\OrderGood;
@@ -18,13 +19,6 @@ class Order extends Api
     protected $noNeedLogin = '';
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['*'];
-    protected $wph;
-
-    public function __construct(Request $request)
-    {
-        $this->request = is_null($request) ? Request::instance() : $request;
-        $this->wph = new Wph();
-    }
     /**
      * 用户下单
      */
@@ -88,7 +82,8 @@ class Order extends Api
                 $sizeInfo[$item['sizeId']] = $item['good_num'];
             }
             $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
-            $wphOrderNo = $this->wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
+            $wph=new Wph();
+            $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
             $order->wph_order_no = $wphOrderNo;
             $order->save();
 //             提交事务
@@ -122,7 +117,8 @@ class Order extends Api
         try{
             $order['status'] = -1;
             $order->save();
-            $this->wph->cancelOrder($order['wph_order_no']);
+            $wph=new Wph();
+            $wph->cancelOrder($order['wph_order_no']);
             // 提交事务
             Db::commit();
             $res = true;
@@ -200,7 +196,8 @@ class Order extends Api
             $order->return_price = $return_price;
             $order->reason = $param['reason'];
             $order->save();
-            $this->wph->orderRrturn($order['wph_order_no'],$sizeInfo);
+            $wph=new Wph();
+            $wph->orderRrturn($order['wph_order_no'],$sizeInfo);
             // 提交事务
             Db::commit();
             $res = true;
@@ -230,7 +227,8 @@ class Order extends Api
             $order->reason=0;
             $order->after_sales=0;
             $order->save();
-            $this->wph->cancelReturnOrder($order['wph_order_no']);
+            $wph=new Wph();
+            $wph->cancelReturnOrder($order['wph_order_no']);
             // 提交事务
             Db::commit();
 
@@ -250,7 +248,8 @@ class Order extends Api
      */
     public function carrierList()
     {
-        $list = $this->wph->carrierList();
+        $wph=new Wph();
+        $list = $wph->carrierList();
         if(!$list){
             $this->error('请求失败！');
         }
