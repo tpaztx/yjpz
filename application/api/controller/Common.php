@@ -291,6 +291,11 @@ class Common extends Api
                             //尺码文字
                             if (!empty($val['sizes'])) {
                                 $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
+                                $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
+                                $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                                $goods_info['commission'] = $val['sizes'][0]['commission'];
+                                $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
+                                $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
                             }
                             $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
                             if ($isHave>0) {
@@ -298,6 +303,7 @@ class Common extends Api
                             }else{
                                 db('goods_list')->insert($goods_info);
                             }
+
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
                     } while (Cache::get('goods_index') <= 10);
