@@ -203,7 +203,6 @@ class Goods extends Api
         $list = $wph->goodsDetailWph('101101', $goodFullId);
         if ($list) {
             foreach ($list as $key => $val) {
-                // $result['adId'] = $val->adId?:'';
                 $result['goodName'] = $val->goodName?:'';
                 $result['color'] = $val->color?:'';
                 $result['material'] = $val->material?:'';
@@ -371,7 +370,9 @@ class Goods extends Api
      */
     public function addShopcart()
     {
+        $shopCarts = \app\common\model\ShoppingCarts();
         $goodFullId = $this->request->request('goodFullId');
+        
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
@@ -379,9 +380,25 @@ class Goods extends Api
         if (!$sizes || empty($sizes)) {
             $this->error('缺少请求参数商品ID！');
         }
+        //查询是否存在数据
+        $rew = $shopCarts->where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
+        if ($rew) {
+            $sizes = collection($sizes)->toArray();
+            $rew->sizes = serialize($sizes);
+            $result = $rew->save();
+        }
         $sizes = collection($sizes)->toArray();
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
-
+        $data['goodName'] = $this->request->request('goodName');
+        $data['color'] = $this->request->request('color')?:'';
+        $data['material'] = $this->request->request('material')?:'';
+        $data['goodImage'] = $this->request->request('goodImage');
+        $data['createtime'] = time();
+        $result = $shopCarts->insert($data);
+        if(!$result){
+            $this->error('操作失败');
+        }
+        $this->success('操作成功！');
     }
 }
