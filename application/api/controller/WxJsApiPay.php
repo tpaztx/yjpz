@@ -90,6 +90,7 @@ class WxJsApiPay extends Api
             return array('status'=>0, 'msg'=>strval($content['return_msg']));
         }
 
+
         $time = time();
         settype($time, "string");  		//jsapi支付界面,时间戳必须为字符串格式
         $resdata = array(
