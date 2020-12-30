@@ -405,7 +405,6 @@ class User extends Api
             $data ['avatar'] = $result ['headimgurl'];
             $data ['country'] = $result ['country'];
             $data ['trade_code'] = Random::alnum();
-            $data ['token'] = $token;
             $data ['type'] = $type;
             $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
             if ($row) {
@@ -413,7 +412,6 @@ class User extends Api
             }
             if ($type == 'APP' && !empty($mobile)) {
                 $user = \app\admin\model\User::where('mobile', $mobile)->find();
-
                 if ($user) {
                     $user ['openid'] = $result ['openid'];
                     $user ['nickname'] = $result ['nickname'];
@@ -425,20 +423,29 @@ class User extends Api
                     $user ['jointime'] = time();
                     $user ['type'] = $type;
                     $user ['trade_code'] = Random::alnum();
-                    $user ['token'] = $token;
                     $res = $user->save();
                     if (!$res) {
                         $user->delete();
                         $this->error('授权失败！');
                     }
-
                     Token::set($token, $user['id']);
                     $this->success('授权APP成功！', $user);
                 }
             }
-            $user = \app\admin\model\User::create($data);
-            if ($user) {
-                $this->success('授权H5成功！', $user);
+            $this->auth->register('', '', '', '', [
+                'openid' => $result ['openid'],
+                'nickname' => $result ['nickname'],
+                'gender' => $result ['gender'],
+                'city' => $result ['city'],
+                'province' => $result ['province'],
+                'avatar' => $result ['avatar'],
+                'country' => $result ['country'],
+                'trade_code' => Random::alnum(),
+                'type' => $type,
+            ]);
+            $data = ['userinfo' => $this->auth->getUserinfo()];
+            if ($data) {
+                $this->success('授权H5成功！', $data);
             }
             $this->error('服务器繁忙！');
         }
