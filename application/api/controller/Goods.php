@@ -74,8 +74,8 @@ class Goods extends Api
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                     $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                    echo \app\common\model\OrderGood::getLastSQL();die;
+                    // $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
+                    $goods[$k]['total'] = rand(0, 100);
                 }
                 if ($total==1) {
                     $goods = collection($goods)->toArray();
