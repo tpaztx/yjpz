@@ -83,7 +83,7 @@ class Goods extends Api
                 }
                 if ($price) {
                     $goods = collection($goods)->toArray();
-                    $goods = multi_array_sort($goods, 'price', ($price==1?SORT_DESC:SORT_ASC));
+                    $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
                 }
                 
                 $brand_result[$key]['goods'] = $goods;
