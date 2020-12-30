@@ -408,13 +408,11 @@ class User extends Api
             $data ['type'] = $type;
             $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
             if ($row) {
-                $token = Random::uuid();
-                Token::set($token, $row['id']);
-                $row['token'] = $token;
                 $this->success('登录成功！', $row);
             }
             if ($type == 'APP' && !empty($mobile)) {
                 $user = \app\admin\model\User::where('mobile', $mobile)->find();
+                $token = Random::uuid();
                 if ($user) {
                     $user ['openid'] = $result ['openid'];
                     $user ['nickname'] = $result ['nickname'];
@@ -426,12 +424,13 @@ class User extends Api
                     $user ['jointime'] = time();
                     $user ['type'] = $type;
                     $user ['trade_code'] = Random::alnum();
+                    $user ['token'] = $token;
                     $res = $user->save();
                     if (!$res) {
                         $user->delete();
                         $this->error('授权失败！');
                     }
-                    $token = Random::uuid();
+
                     Token::set($token, $user['id']);
                     $user['token'] = $token;
                     $this->success('授权成功！', $user);
