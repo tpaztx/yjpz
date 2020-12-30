@@ -292,8 +292,6 @@ class Store extends Api
      */
     public function shareStore()
     {
-        $pay = new WxJsApiPay(['appid'=>123456,'mck_id'=>123456,'pay_apikey'=>123456]);
-        $pay->wxJsApiPay('1','1','1','1');
         $storeId = $this->request->param('storeId');
         $url = 'www.baidu.com?store_id='.$storeId;
         $data['qrcode'] = $this->qrcode($url);
