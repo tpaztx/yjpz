@@ -457,11 +457,44 @@ class User extends Api
         $addressID = $this->request->request('addressID');
         $result;
         if ($addressID) {
-            $result = Address::where('id', $addressID)->select();
+            $result = Address::where(['id'=>$addressID, 'user_id'=>$this->auth->id])->select();
         }else{
             $result = Address::where('user_id', $this->auth->id)->select();
         }
         $this->success('请求成功！', $result);
+    }
+
+    /**
+     * 修改用户地址
+     */
+    public function updateUserAddress()
+    {
+        $addressID = $this->request->request('addressID');
+        $params = $this->request->request();
+        if (!$addressID) $this->error('缺少请求参数！');
+        if ($params && !empty($params))
+        {
+            if ($params['default'] == 1) {
+                $id = Address::where(['user_id'=>$this->auth->id, 'default'=>'1'])->value('id');
+                Address::where(['user_id'=>$this->auth->id, 'id'=>$id])->update(['default'=>'0']);
+            }
+            try {
+                $data['user_id'] = $this->auth->id;
+                $data['province'] = $params['province']?:'';
+                $data['city'] = $params['city']?:'';
+                $data['area'] = $params['area']?:'';
+                $data['address'] = $params['address']?:'';
+                $data['default'] = $params['default']?:'0';
+                $data['name'] = $params['name']?:'';
+                $data['mobile'] = $params['mobile']?:'';
+                $data['is_time'] = $params['is_time']?:0;
+                $data['time_log'] = time();
+                $result = Address::where(['addressID'=>$addressID, 'user_id'=>$this->auth->id])update($data);
+            } catch (Exception $e) {
+                $this->error('请求失败！', $e->getMessage);
+            }
+            $this->success('请求成功！');
+        }
     }
 
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
