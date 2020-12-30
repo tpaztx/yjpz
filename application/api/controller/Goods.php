@@ -203,6 +203,7 @@ class Goods extends Api
         $list = $wph->goodsDetailWph('101101', $goodFullId);
         if ($list) {
             foreach ($list as $key => $val) {
+                $result['adId'] = $val->adId?:'';
                 $result['goodName'] = $val->goodName?:'';
                 $result['color'] = $val->color?:'';
                 $result['material'] = $val->material?:'';
@@ -251,6 +252,7 @@ class Goods extends Api
             $this->success('请求成功！');
         }
     }
+
     /**
      * 添加购物车
      */
@@ -301,6 +303,7 @@ class Goods extends Api
         }
         $this->success('操作成功！');
     }
+
     /**
      * 购物车列表
      */
@@ -333,6 +336,7 @@ class Goods extends Api
         }
         $this->success('请求成功！',$rows);
     }
+
     /**
      * 删除购物车商品
      */
@@ -360,5 +364,24 @@ class Goods extends Api
             }
             $this->error($e->getMessage());
         }
+    }
+
+    /**
+     * app添加进货单
+     */
+    public function addShopcart()
+    {
+        $goodFullId = $this->request->request('goodFullId');
+        if (!$goodFullId) {
+            $this->error('缺少请求参数商品ID！');
+        }
+        $sizes = $this->request->request('sizes');
+        if (!$sizes || empty($sizes)) {
+            $this->error('缺少请求参数商品ID！');
+        }
+        $sizes = collection($sizes)->toArray();
+        $data['sizes'] = serialize($sizes);
+        $data['user_id'] = $this->auth->id;
+
     }
 }
