@@ -200,7 +200,6 @@ class Order extends Api
                 $sizeInfo[$k]['num'] = $item['return_num'];
             }
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
-            dump($sizeInfo);exit;
             $wph=new Wph();
             $list = $wph->orderReturnPreview($order['wph_order_no'],$sizeInfo);
             if($list){
