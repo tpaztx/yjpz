@@ -428,4 +428,22 @@ class Goods extends Api
         }
         $this->error($e->getMessage());
     }
+
+    /**
+     * 获取进货单列表
+     */
+    public function getShopcart()
+    {
+        //获取进货单的品牌
+        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->select();
+        $result = '';
+        if ($brands) {
+            foreach ($brands as $k => $v) {
+                //查询对应商品list
+                $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
+                $result[$k]['sizes'] = ShoppingCarts::where('adId', $v->adId)->select();
+            }
+        }
+        $this->success('请求成功！', $result);
+    }
 }
