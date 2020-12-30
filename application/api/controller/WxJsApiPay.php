@@ -55,7 +55,6 @@ class WxJsApiPay extends Api
      */
     public function wxJsApiPay($total_fee,$body,$order_sn,$openid){
         $config = $this->config;
-        dump($config);exit;
         //统一下单参数构造
         $unifiedorder = array(
             'appid'			=> $config['appid'],
