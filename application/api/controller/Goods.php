@@ -412,7 +412,7 @@ class Goods extends Api
         // 启动事务
         Db::startTrans();
         try{
-            ShoppingCarts::where('goodFullId', 'in', $ids)->destroy();
+            ShoppingCarts::where('goodFullId', 'in', $ids)->delete();
             // 提交事务
             Db::commit();
             $res = true;
