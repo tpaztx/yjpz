@@ -383,12 +383,9 @@ class Goods extends Api
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
         if ($rew) {
-            $sizes = collection($sizes)->toArray();
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
         }
-        dump(serialize($sizes));die;
-        $sizes = collection($sizes)->toArray();
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
         $data['goodName'] = $this->request->request('goodName');
