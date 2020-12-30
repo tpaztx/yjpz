@@ -145,7 +145,7 @@ class Auth
 
         $ip = request()->ip();
         $time = time();
-
+        $this->_token = Random::uuid();
         $data = [
             'username' => $username,
             'password' => $password,
@@ -155,6 +155,7 @@ class Auth
             'score'    => 0,
             'avatar'   => '',
             'group_id' => 2,
+            'token' => $this->_token,
         ];
         $params = array_merge($data, [
             'nickname'  => preg_match("/^1[3-9]{1}\d{9}$/",$username) ? substr_replace($username,'****',3,4) : $username,
@@ -178,7 +179,6 @@ class Auth
             $this->_user = User::get($user->id);
 
             //设置Token
-            $this->_token = Random::uuid();
             Token::set($this->_token, $user->id, $this->keeptime);
 
             //设置登录状态
