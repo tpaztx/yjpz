@@ -78,7 +78,7 @@ class Goods extends Api
                 }
                 if ($total==1) {
                     $goods = collection($goods)->toArray();
-                    dump($goods);die;
+                    // dump($goods);die;
                     $goods = multi_array_sort($goods, 'total', SORT_DESC);
                 }
                 
