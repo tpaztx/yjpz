@@ -87,6 +87,8 @@ Route::post([
 	'api/priceRange' => 'api/goods/priceRange',
 	//更新用户地址
 	'api/updateUserAddress' => 'api/user/updateUserAddress',
+	//添加进货单
+	'api/addShopcart' => 'api/goods/addShopcart',
 
   
     //小店-店铺设置
