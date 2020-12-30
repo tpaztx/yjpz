@@ -58,7 +58,7 @@ class Goods extends Api
         $page = $this->request->request('page')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $price = $this->request->request('price')?:0;
-        $total = $this->request->request('total')?:1;
+        $total = $this->request->request('total');
         $adId = $this->request->request('adId')?:0;
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
 
@@ -77,9 +77,8 @@ class Goods extends Api
                     // $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
                     $goods[$k]['total'] = rand(0, 100);
                 }
-                if ($total==1) {
+                if ($total) {
                     $goods = collection($goods)->toArray();
-                    // dump($goods);die;
                     $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
                 }
                 
