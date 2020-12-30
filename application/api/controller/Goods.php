@@ -440,7 +440,7 @@ class Goods extends Api
         if ($brands) {
             foreach ($brands as $k => $v) {
                 //查询对应商品list000
-                BrandList::where('adId', $v->adId)->value('brandName');
+                BrandList::where('adId', $v['adId'])->value('brandName');
                 echo BrandList::getLastSQL();die;
                 $result[$k]['brandName'] = 0000;
                 $result[$k]['sizes'] = ShoppingCarts::where('adId', $v->adId)->select();
