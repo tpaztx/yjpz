@@ -287,4 +287,17 @@ class Store extends Api
         }
         $this->success('请求成功！',$data);
     }
+    /**
+     * 分享店铺
+     */
+    public function shareStore()
+    {
+        $storeId = $this->request->param('storeId');
+        $url = 'www.baidu.com?store_id='.$storeId;
+        $data['qrcode'] = $this->qrcode($url);
+        if($data){
+            $this->success('请求成功！',$data);
+        }
+        $this->error('服务器繁忙！',$data);
+    }
 }
