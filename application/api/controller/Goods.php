@@ -436,7 +436,7 @@ class Goods extends Api
     {
         //获取进货单的品牌
         $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->select();
-        $result = '';
+        $result = [];
         if ($brands) {
             foreach ($brands as $k => $v) {
                 //查询对应商品list000
