@@ -435,7 +435,7 @@ class Goods extends Api
     public function getShopcart()
     {
         //获取进货单的品牌
-        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->select();
+        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId,brandName')->select();
         $result = '';
         if ($brands) {
             foreach ($brands as $k => $v) {
