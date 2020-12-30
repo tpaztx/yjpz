@@ -493,7 +493,7 @@ class User extends Api
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
             }
-            $this->success('请求成功！');
+            $this->success('请求成功！');  
         }
     }
 
