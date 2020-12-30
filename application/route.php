@@ -113,6 +113,8 @@ Route::post([
     'api/addCart'=>'api/goods/addCart',
     //购物车列表
     'api/shoppingCart'=>'api/goods/shoppingCart',
+    //删除购物车
+    'api/delShoppingCart'=>'api/goods/delShoppingCart',
 
 
     /*

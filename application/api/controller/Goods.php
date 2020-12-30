@@ -13,6 +13,8 @@ use app\common\model\ShoppingCart;
 use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\Config;
+use think\Db;
+use function Complex\rho;
 
 /**
  * 商品相关
@@ -314,5 +316,32 @@ class Goods extends Api
         }
         $this->success('请求成功！',$rows);
     }
-    
+    /**
+     * 删除购物车商品
+     */
+    public function delShoppingCart()
+    {
+        $cartIds = $this->request->param('cartIds');
+        $ids = explode(',',$cartIds);
+        if(!empty($ids)){
+            // 启动事务
+            Db::startTrans();
+            try{
+                foreach ($ids as $id){
+                    ShoppingCart::destroy($id);
+                }
+                // 提交事务
+                Db::commit();
+                $res = true;
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                $res = false;
+            }
+            if($res){
+                $this->success('删除成功！');
+            }
+            $this->error($e->getMessage());
+        }
+    }
 }
