@@ -15,6 +15,7 @@ use Osp\Context\InvocationContextFactory;
 use think\Config;
 use think\Db;
 use function Complex\rho;
+use app\common\model\ShoppingCarts;
 
 /**
  * 商品相关
@@ -370,7 +371,6 @@ class Goods extends Api
      */
     public function addShopcart()
     {
-        $shopCarts = \app\common\model\ShoppingCarts();
         $goodFullId = $this->request->request('goodFullId');
         
         if (!$goodFullId) {
@@ -381,7 +381,7 @@ class Goods extends Api
             $this->error('缺少请求参数商品ID！');
         }
         //查询是否存在数据
-        $rew = $shopCarts->where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
+        $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
         if ($rew) {
             $sizes = collection($sizes)->toArray();
             $rew->sizes = serialize($sizes);
@@ -395,7 +395,7 @@ class Goods extends Api
         $data['material'] = $this->request->request('material')?:'';
         $data['goodImage'] = $this->request->request('goodImage');
         $data['createtime'] = time();
-        $result = $shopCarts->insert($data);
+        $result = ShoppingCarts::insert($data);
         if(!$result){
             $this->error('操作失败');
         }
