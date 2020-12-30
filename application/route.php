@@ -76,7 +76,7 @@ Route::post([
 	//删除收货地址
 	'api/delAddress' => 'api/index/delAddress',
 	//获取用户的收藏地址
-	'api/updateUserAddress' => 'api/user/getUserAddress',
+	'api/getUserAddress' => 'api/user/getUserAddress',
 	//添加收藏商品
 	'api/insertFavorites' => 'api/goods/insertFavorites',
 	//删除收藏商品
