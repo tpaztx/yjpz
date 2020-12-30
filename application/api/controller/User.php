@@ -412,6 +412,7 @@ class User extends Api
             }
             if ($type == 'APP' && !empty($mobile)) {
                 $user = \app\admin\model\User::where('mobile', $mobile)->find();
+
                 if ($user) {
                     $user ['openid'] = $result ['openid'];
                     $user ['nickname'] = $result ['nickname'];
@@ -428,24 +429,15 @@ class User extends Api
                         $user->delete();
                         $this->error('授权失败！');
                     }
+
                     Token::set($token, $user['id']);
                     $this->success('授权APP成功！', $user);
                 }
             }
-            $this->auth->register('', '', '', '', [
-                'openid' => $result ['openid'],
-                'nickname' => $result ['nickname'],
-                'gender' => $result ['gender'],
-                'city' => $result ['city'],
-                'province' => $result ['province'],
-                'avatar' => $result ['avatar'],
-                'country' => $result ['country'],
-                'trade_code' => Random::alnum(),
-                'type' => $type,
-            ]);
-            $data = ['userinfo' => $this->auth->getUserinfo()];
-            if ($data) {
-                $this->success('授权H5成功！', $data);
+            $this->auth->register('', '', '', '', $data);
+            $userInfo = ['userinfo' => $this->auth->getUserinfo()];
+            if ($userInfo) {
+                $this->success('授权H5成功！', $userInfo);
             }
             $this->error('服务器繁忙！');
         }
