@@ -7,8 +7,6 @@ namespace app\api\controller;
 use app\common\controller\Api;
 use app\common\model\Address;
 use app\common\model\OrderGood;
-use app\common\model\WxJsApiPay;
-use app\common\model\WxJsApiPayPay;
 use think\Db;
 use app\common\model\Order as OrderM;
 use think\Exception;
@@ -125,9 +123,10 @@ class Order extends Api
     public function orderPay($orderId)
     {
         $orderId = $this->request->param('order_id') ?? $orderId;
+        $user = $this->auth->getUser();
         $order = OrderM::get($orderId);
         $pay = new WxJsApiPay();
-        $json=$pay->wxpay("{$order['real_price']}","购买商品","{$order['order_no']}");
+        $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
         if($json){
             $this->success('调用成功！',$json);
         }

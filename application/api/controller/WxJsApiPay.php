@@ -1,9 +1,9 @@
 <?php
 namespace app\common\model;
 
+namespace app\api\controller;
 use app\common\controller\Api;
 use think\Db;
-use think\Model;
 
 class WxJsApiPay extends Api
 {
@@ -52,12 +52,9 @@ class WxJsApiPay extends Api
      * @param string $body 		商品简单描述
      * @param string $order_sn  订单编号
      * @param string $total_fee 金额
-     * @return  json的数据
      */
-    public function wxpay($total_fee,$body,$order_sn){
+    public function wxJsApiPay($total_fee,$body,$order_sn,$openid){
         $config = $this->config;
-        $user = $this->auth->getUser();
-
         //统一下单参数构造
         $unifiedorder = array(
             'appid'			=> $config['appid'],
@@ -69,7 +66,7 @@ class WxJsApiPay extends Api
             'spbill_create_ip'	=> self::getip(),
             'notify_url'	=> "http://{$_SERVER['HTTP_HOST']}/api/wx_js_api_pay/notify",
             'trade_type'	=> 'JSAPI',
-            'openid'		=> $user['openid']
+            'openid'		=> $openid
         );
         $unifiedorder['sign'] = self::makeSign($unifiedorder);
 
@@ -104,7 +101,7 @@ class WxJsApiPay extends Api
         );
         $resdata['paySign'] = self::makeSign($resdata);
 
-        return json_encode($resdata);
+        return $resdata;
     }
 
     public function notify()
@@ -112,7 +109,106 @@ class WxJsApiPay extends Api
         $xml = file_get_contents("php://input");		//获取微信支付服务器返回的数据
 
 //        测试返回数据
-        file_put_contents('log.txt',$xml,FILE_APPEND);
+        file_put_contents('jsapi_pay.txt',$xml,FILE_APPEND);
+
+
+        //将服务器返回的XML数据转化为数组
+        $data = $this->xml2array($xml);
+        // 保存微信服务器返回的签名sign
+        $data_sign = $data['sign'];
+        // sign不参与签名算法
+        unset($data['sign']);
+        $sign = $this->makeSign($data);
+        // 判断签名是否正确  判断支付状态
+        if ( ($sign===$data_sign) && ($data['return_code']=='SUCCESS') && ($data['result_code']=='SUCCESS') ) {
+            $result = $data;
+
+            //获取服务器返回的数据
+            $order_sn = $data['out_trade_no'];			//订单单号
+            $openid = $data['openid'];					//付款人openID
+            $total_fee = $data['total_fee']/100;			//付款金额
+            $transaction_id = $data['transaction_id']; 	//微信支付流水号
+            // 启动事务
+            Db::startTrans();
+            try{
+
+                // 提交事务
+                Db::commit();
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+            }
+        }else{
+            $result = false;
+        }
+        // 返回状态给微信服务器
+        if ($result) {
+            $str='<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }else{
+            $str='<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名失败]]></return_msg></xml>';
+        }
+        echo $str;
+        return $result;
+    }
+
+    public function wxAppPay($total_fee,$body,$order_sn){
+        $config = $this->config;
+        //统一下单参数构造
+        $unifiedorder = array(
+            'appid'			=> $config['appid'],
+            'mch_id'		=> $config['mch_id'],
+            'nonce_str'		=> self::getNonceStr(),
+            'body'			=> $body,
+            'out_trade_no'	=> $order_sn,
+            'total_fee'		=> $total_fee * 100,
+            'spbill_create_ip'	=> self::getip(),
+            'notify_url'	=> "http://{$_SERVER['HTTP_HOST']}/api/wx_js_api_pay/App_notify",
+            'trade_type'	=> 'APP',
+        );
+        $unifiedorder['sign'] = self::makeSign($unifiedorder);
+
+        //return $unifiedorder;
+
+        //请求数据,统一下单
+        $xmldata = self::array2xml($unifiedorder);
+        $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+        $res = self::curl_post_ssl($url, $xmldata);
+        if(!$res){
+            return array('status'=>0, 'msg'=>"Can't connect the server" );
+        }
+        // 这句file_put_contents是用来查看服务器返回的结果 测试完可以删除了
+        //file_put_contents('./log.txt',$res,FILE_APPEND);
+
+        $content = self::xml2array($res);
+        if(strval($content['result_code']) == 'FAIL'){
+            return array('status'=>0, 'msg'=>strval($content['err_code']).':'.strval($content['err_code_des']));
+        }
+        if(strval($content['return_code']) == 'FAIL'){
+            return array('status'=>0, 'msg'=>strval($content['return_msg']));
+        }
+
+        $time = time();
+        settype($time, "string");  		//jsapi支付界面,时间戳必须为字符串格式
+        $resdata = array(
+            'appId'      	=> strval($content['appid']),
+            'partnerid'      	=> strval($content['mch_id']),
+            'prepayid'      	=> strval($content['prepay_id']),
+            'nonceStr'      => strval($content['nonce_str']),
+            'package'       => 'prepay_id='.strval($content['prepay_id']),
+            'signType'		=> 'MD5',
+            'timeStamp'		=> $time
+        );
+        $resdata['paySign'] = self::makeSign($resdata);
+
+        return $resdata;
+    }
+
+    public function App_notify()
+    {
+        $xml = file_get_contents("php://input");		//获取微信支付服务器返回的数据
+
+//        测试返回数据
+        file_put_contents('log_app_pay.txt',$xml,FILE_APPEND);
 
 
         //将服务器返回的XML数据转化为数组
@@ -132,17 +228,11 @@ class WxJsApiPay extends Api
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
 
-            file_put_contents('log1.txt',$xml,FILE_APPEND);
 
             // 启动事务
             Db::startTrans();
             try{
-                Db::name('recharge_order')->where('order_no',$order_sn)->update(['status'=>1]);
-                $user = \app\store\model\User::where('open_id',$openid)->find();
-                $user->balance = $user->balance+$total_fee;
-                $user->save();
-                $BalanceLog = new BalanceLog();
-                $BalanceLog->balanceLog("$user->user_id]","0","3","+","$total_fee");
+
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {
