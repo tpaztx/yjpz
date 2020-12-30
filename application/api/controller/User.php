@@ -395,7 +395,7 @@ class User extends Api
             $list = $this->http($url, 'GET');
             $list = $list [1];
             $result = \GuzzleHttp\json_decode($list, true);
-
+            $token = Random::uuid();
             //保存用户信息
             $data ['openid'] = $result ['openid'];
             $data ['nickname'] = $result ['nickname'];
@@ -405,6 +405,7 @@ class User extends Api
             $data ['avatar'] = $result ['headimgurl'];
             $data ['country'] = $result ['country'];
             $data ['trade_code'] = Random::alnum();
+            $data ['token'] = $token;
             $data ['type'] = $type;
             $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
             if ($row) {
@@ -412,7 +413,7 @@ class User extends Api
             }
             if ($type == 'APP' && !empty($mobile)) {
                 $user = \app\admin\model\User::where('mobile', $mobile)->find();
-                $token = Random::uuid();
+
                 if ($user) {
                     $user ['openid'] = $result ['openid'];
                     $user ['nickname'] = $result ['nickname'];
@@ -432,16 +433,12 @@ class User extends Api
                     }
 
                     Token::set($token, $user['id']);
-                    $user['token'] = $token;
-                    $this->success('授权成功！', $user);
+                    $this->success('授权APP成功！', $user);
                 }
             }
             $user = \app\admin\model\User::create($data);
             if ($user) {
-                $token = Random::uuid();
-                Token::set($token, $user['id']);
-                $user['token'] = $token;
-                $this->success('授权成功！', $user);
+                $this->success('授权H5成功！', $user);
             }
             $this->error('服务器繁忙！');
         }
