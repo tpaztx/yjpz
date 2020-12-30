@@ -68,7 +68,6 @@ class WxJsApiPay extends Api
             'trade_type'	=> 'JSAPI',
             'openid'		=> $openid
         );
-        dump($unifiedorder);exit;
         $unifiedorder['sign'] = self::makeSign($unifiedorder);
 
         //return $unifiedorder;
