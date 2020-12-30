@@ -76,10 +76,11 @@ class Goods extends Api
                     $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                     $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v['goodId'])->count('id');
                 }
-                // if ($total==1) {
-                //     // dump($goods);die;
-                //     $goods = multi_array_sort($goods, 'total', SORT_DESC);
-                // }
+                if ($total==1) {
+                    $goods = collection($goods)->toArray();
+                    dump($goods);die;
+                    $goods = multi_array_sort($goods, 'total', SORT_DESC);
+                }
                 
                 $brand_result[$key]['goods'] = $goods;
             }
