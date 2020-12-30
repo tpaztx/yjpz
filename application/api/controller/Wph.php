@@ -378,6 +378,32 @@ class Wph extends Api
         }
     }
     /**
+     * 申请代扣接口
+     */
+    public function applyPayment($orderSn)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderInfoRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $orderSn;
+            $request1->clientIp = getClientIp();
+            $list = $service->getOrderInfoList($request1);
+            $list = object_to_array($list);
+            return $list;
+
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+    /**
      * 获取用户定位
      */
     public function getSelectAddress()

@@ -118,7 +118,7 @@ Route::post([
     //删除购物车
     'api/delShoppingCart'=>'api/goods/delShoppingCart',
     //小店 分享店铺
-    'api/shareStore'=>'api/goods/shareStore',
+    'api/shareStore'=>'api/store/shareStore',
 
 
     /*
