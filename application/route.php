@@ -76,7 +76,7 @@ Route::post([
 	//删除收货地址
 	'api/delAddress' => 'api/index/delAddress',
 	//获取用户的收藏地址
-	'api/getUserAddress' => 'api/user/getUserAddress',
+	'api/updateUserAddress' => 'api/user/getUserAddress',
 	//添加收藏商品
 	'api/insertFavorites' => 'api/goods/insertFavorites',
 	//删除收藏商品
@@ -85,6 +85,8 @@ Route::post([
 	'api/poster' => 'api/index/poster',
 	//品牌详情价格区间查询
 	'api/priceRange' => 'api/goods/priceRange',
+	//更新用户地址
+	'api/updateUserAddress' => 'api/user/updateUserAddress',
 
   
     //小店-店铺设置
