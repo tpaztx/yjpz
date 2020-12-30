@@ -91,6 +91,8 @@ Route::post([
 	'api/addShopcart' => 'api/goods/addShopcart',
 	//删除进货单
 	'api/delShopcart' => 'api/goods/delShopcart',
+	//获取进货单列表
+	'api/getShopcart' => 'api/goods/getShopcart',
 
   
     //小店-店铺设置
