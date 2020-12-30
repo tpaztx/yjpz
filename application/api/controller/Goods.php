@@ -388,7 +388,7 @@ class Goods extends Api
         }
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
-        $data['goodFullId'] = $$goodFullId;
+        $data['goodFullId'] = $goodFullId;
         $data['goodName'] = $this->request->request('goodName');
         $data['color'] = $this->request->request('color')?:'';
         $data['material'] = $this->request->request('material')?:'';
