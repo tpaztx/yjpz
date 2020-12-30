@@ -372,12 +372,13 @@ class Goods extends Api
     public function addShopcart()
     {
         $goodFullId = $this->request->request('goodFullId');
+        $adId = $this->request->request('adId');
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
         $sizes = $this->request->request('sizes');
         if (!$sizes || empty($sizes)) {
-            $this->error('缺少请求参数商品ID！');
+            $this->error('缺少请求参数商品信息！');
         }
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
@@ -388,6 +389,7 @@ class Goods extends Api
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
         $data['goodFullId'] = $goodFullId;
+        $data['adId'] = $adId;
         $data['goodName'] = $this->request->request('goodName');
         $data['color'] = $this->request->request('color')?:'';
         $data['material'] = $this->request->request('material')?:'';
