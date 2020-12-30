@@ -196,7 +196,8 @@ class Order extends Api
                 if($item['return_num'] > $good['good_num']){
                     throw new Exception('退货数量不得大于购买数量！');
                 }
-                $sizeInfo[$item['sizeId']] = $item['return_num'];
+                $sizeInfo['sizeId'] = $item['sizeId'];
+                $sizeInfo['num'] = $item['return_num'];
             }
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
             dump($sizeInfo);exit;
