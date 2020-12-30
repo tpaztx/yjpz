@@ -202,7 +202,6 @@ class Goods extends Api
         $result;
         $list = $wph->goodsDetailWph('101101', $goodFullId);
         if ($list) {
-            dump($list);die;
             foreach ($list as $key => $val) {
                 // $result['adId'] = $val->adId?:'';
                 $result['goodName'] = $val->goodName?:'';
