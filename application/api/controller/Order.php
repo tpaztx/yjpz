@@ -128,7 +128,7 @@ class Order extends Api
         $pay = new WxJsApiPay();
         $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
         if($json){
-            $this->success('调用成功！',$json);
+            $this->success('调用成功！',$json['data']);
         }
         $this->error('支付失败！',$json);
     }
