@@ -454,7 +454,13 @@ class User extends Api
      */
     public function getUserAddress()
     {
-        $result = Address::where('user_id', $this->auth->id)->select();
+        $addressID = $this->request->request('addressID');
+        $result;
+        if ($addressID) {
+            $result = Address::where('id', $addressID)->select();
+        }else{
+            $result = Address::where('user_id', $this->auth->id)->select();
+        }
         $this->success('请求成功！', $result);
     }
 
