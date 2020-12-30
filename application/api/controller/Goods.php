@@ -66,6 +66,7 @@ class Goods extends Api
         $price_min = $this->request->request('price_min');
         $price_max = $this->request->request('price_max');
         $catNameOne = $this->request->request('catNameOne');
+        $keyword = $this->request->request('keyword');
         
         $where = "1=1";
         if ($price_min && $price_max) {
@@ -73,6 +74,9 @@ class Goods extends Api
         }
         if ($catNameOne) {
             $where .= " and catNameOne='".$catNameOne."'";
+        }
+        if ($keyword) {
+            $where .= " and goodName like '%".$keyword."%'";
         }
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
