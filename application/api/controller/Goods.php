@@ -63,21 +63,36 @@ class Goods extends Api
         $total = $this->request->request('total');
         $adId = $this->request->request('adId')?:0;
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
-
+        $price_min = $this->request->request('price_min');
+        $price_max = $this->request->request('price_max');
+        $catNameOne = $this->request->request('catNameOne');
+        $keyword = $this->request->request('keyword');
+        
+        $where = "1=1";
+        if ($price_min && $price_max) {
+            $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
+        }
+        if ($catNameOne) {
+            $where .= " and catNameOne='".$catNameOne."'";
+        }
+        if ($keyword) {
+            $where .= " and goodName like '%".$keyword."%'";
+        }
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
                                     ->select();
         if ($brand_result && !empty($brand_result)) {
             foreach ($brand_result as $key => $val)
             {
+                $where .= " and adId=".$val['adId'];
                 $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
-                $goods = GoodsList::where('adId', $val['adId'])->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                     $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                    // $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                    $goods[$k]['total'] = rand(0, 100);
+                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
+                    // $goods[$k]['total'] = rand(0, 100);
                 }
                 if ($total) {
                     $goods = collection($goods)->toArray();
@@ -94,6 +109,7 @@ class Goods extends Api
         }
         $this->error('请求失败！');
     }
+
 
     /**
      * 商品详情

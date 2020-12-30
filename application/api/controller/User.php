@@ -489,7 +489,7 @@ class User extends Api
                 $data['mobile'] = $params['mobile']?:'';
                 $data['is_time'] = $params['is_time']?:0;
                 $data['time_log'] = time();
-                $result = Address::where(['addressID'=>$addressID, 'user_id'=>$this->auth->id])->update($data);
+                $result = Address::where(['addressID'=>$addressID, 'user_id'=>$this->auth->id])->save($data);
             } catch (Exception $e) {
                 $this->error('请求失败！', $e->getMessage);
             }
