@@ -188,7 +188,7 @@ class Order extends Api
             $this->error('无效的订单！');
         }
         if(!empty($param['goods'])){
-            foreach ($param['goods'] as $item){
+            foreach ($param['goods'] as $k=>$item){
                 $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
                 if(!$good){
                     throw new Exception('存在无效的商品！');
@@ -196,10 +196,10 @@ class Order extends Api
                 if($item['return_num'] > $good['good_num']){
                     throw new Exception('退货数量不得大于购买数量！');
                 }
-                $sizeInfo[$item['sizeId']] = $item['return_num'];
+                $sizeInfo[$k]['sizeId'] = $item['sizeId'];
+                $sizeInfo[$k]['num'] = $item['return_num'];
             }
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
-            dump($sizeInfo);exit;
             $wph=new Wph();
             $list = $wph->orderReturnPreview($order['wph_order_no'],$sizeInfo);
             if($list){
