@@ -54,10 +54,8 @@ class WxJsApiPay extends Api
      * @param string $total_fee 金额
      * @return  json的数据
      */
-    public function wxJsApiPay($total_fee,$body,$order_sn){
+    public function wxJsApiPay($total_fee,$body,$order_sn,$openid){
         $config = $this->config;
-        $user = $this->auth->getUser();
-
         //统一下单参数构造
         $unifiedorder = array(
             'appid'			=> $config['appid'],
@@ -69,7 +67,7 @@ class WxJsApiPay extends Api
             'spbill_create_ip'	=> self::getip(),
             'notify_url'	=> "http://{$_SERVER['HTTP_HOST']}/api/wx_js_api_pay/notify",
             'trade_type'	=> 'JSAPI',
-            'openid'		=> $user['openid']
+            'openid'		=> $openid
         );
         $unifiedorder['sign'] = self::makeSign($unifiedorder);
 
