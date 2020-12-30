@@ -1,9 +1,9 @@
 <?php
 namespace app\common\model;
 
+namespace app\api\controller;
 use app\common\controller\Api;
 use think\Db;
-use think\Model;
 
 class WxJsApiPay extends Api
 {
@@ -54,7 +54,7 @@ class WxJsApiPay extends Api
      * @param string $total_fee 金额
      * @return  json的数据
      */
-    public function wxpay($total_fee,$body,$order_sn){
+    public function wxJsApiPay($total_fee,$body,$order_sn){
         $config = $this->config;
         $user = $this->auth->getUser();
 
