@@ -406,7 +406,7 @@ class Goods extends Api
     public function delShopcart()
     {
         $ids = $this->request->request('ids');
-        if (!$goodFullId) {
+        if (!$ids) {
             $this->error('缺少请求参数商品ID！');
         }
         // 启动事务
