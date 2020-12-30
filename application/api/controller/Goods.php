@@ -443,7 +443,11 @@ class Goods extends Api
                 BrandList::where('adId', $v['adId'])->value('brandName');
                 // echo BrandList::getLastSQL();die;
                 $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
-                $result[$k]['sizes'] = ShoppingCarts::where('adId', $v->adId)->select();
+                $goods = ShoppingCarts::where('adId', $v->adId)->select();;
+                foreach ($goods as $key => $val) {
+                    $val->sizes = unserialize($val->sizes);
+                }
+                $result[$k]['goods'] = $goods;
             }
         }
         $this->success('请求成功！', $result);
