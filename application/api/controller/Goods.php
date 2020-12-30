@@ -372,7 +372,6 @@ class Goods extends Api
     public function addShopcart()
     {
         $goodFullId = $this->request->request('goodFullId');
-        
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
@@ -399,5 +398,32 @@ class Goods extends Api
             $this->error('操作失败');
         }
         $this->success('操作成功！');
+    }
+
+    /**
+     * 删除进货单中商品
+     */
+    public function delShopcart()
+    {
+        $ids = $this->request->request('ids');
+        if (!$ids) {
+            $this->error('缺少请求参数商品ID！');
+        }
+        // 启动事务
+        Db::startTrans();
+        try{
+            ShoppingCarts::where('goodFullId', 'in', $ids)->delete();
+            // 提交事务
+            Db::commit();
+            $res = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $res = false;
+        }
+        if($res){
+            $this->success('删除成功！');
+        }
+        $this->error($e->getMessage());
     }
 }
