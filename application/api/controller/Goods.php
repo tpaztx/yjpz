@@ -372,12 +372,13 @@ class Goods extends Api
     public function addShopcart()
     {
         $goodFullId = $this->request->request('goodFullId');
+        $adId = $this->request->request('adId');
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
         $sizes = $this->request->request('sizes');
         if (!$sizes || empty($sizes)) {
-            $this->error('缺少请求参数商品ID！');
+            $this->error('缺少请求参数商品信息！');
         }
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
@@ -388,6 +389,7 @@ class Goods extends Api
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
         $data['goodFullId'] = $goodFullId;
+        $data['adId'] = $adId;
         $data['goodName'] = $this->request->request('goodName');
         $data['color'] = $this->request->request('color')?:'';
         $data['material'] = $this->request->request('material')?:'';
@@ -425,5 +427,23 @@ class Goods extends Api
             $this->success('删除成功！');
         }
         $this->error($e->getMessage());
+    }
+
+    /**
+     * 获取进货单列表
+     */
+    public function getShopcart()
+    {
+        //获取进货单的品牌
+        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->select();
+        $result = '';
+        if ($brands) {
+            foreach ($brands as $k => $v) {
+                //查询对应商品list
+                $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->find('brandName');
+                $result[$k]['sizes'] = ShoppingCarts::where('adId', $v->adId)->select();
+            }
+        }
+        $this->success('请求成功！', $result);
     }
 }
