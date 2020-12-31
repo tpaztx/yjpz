@@ -324,7 +324,7 @@ class Common extends Api
     {
         $page = Cache::get('page') ?? 1;
         $orders = \app\common\model\Order::whereIn('status',[0,1,2])->paginate(20,false,[ 'query' => request()->param()]);
-        if(!empty($orders)){
+        if(!empty($orders) && $orders){
             Cache::set('page',$page+1);
             $OrderNoArray = [];
             foreach ($orders as $item){
