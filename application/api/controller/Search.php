@@ -26,7 +26,7 @@ class Search extends Api
      * $star    从第几条数据开始处理分页数据 ++ 之后作为下次分页获取数据的起始点
      * $pageSize    每次返回的数据数量
      * price 0=从低到高1=从高到低
-     * sale 0=从低到高1=从高到低
+     * sale 0=从低到高1=从高到低000
      */
     public function searchs()
     {
