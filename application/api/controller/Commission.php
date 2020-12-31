@@ -30,6 +30,7 @@ class Commission extends Api
         $page = $this->request->request('page')?:1;
         //获取自购佣金
         $proportion = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->count('real_price');
+        dump('this here');die;
         $pro_list = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->field('order_no,proportion')->order('id', 'desc')->paginate(10,false,$page);
         //获取代购的佣金
         $commission = 0;
