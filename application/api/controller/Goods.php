@@ -413,9 +413,9 @@ class Goods extends Api
      */
     public function countDown()
     {
-        $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
-        Cache::dec('cd_'.$this->auth->id);
-        return $result ? true : false;
+        if (!Cache::get('cd_'.$this->auth->id)) {
+            $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
+        }
     }
 
     /**
