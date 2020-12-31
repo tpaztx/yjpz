@@ -350,6 +350,7 @@ class Common extends Api
                 }
             }
             Log::write('【查询条数】：'.count($orders));
+            $this->success('共查询退货订单:'.count($orders));
         }else{
             Cache::set('page',1);
             Log::write('【无可查询订单】');
