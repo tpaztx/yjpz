@@ -168,9 +168,11 @@ class Goods extends Api
                 ->group('catNameTwo')
                 ->select();
             if(!empty($item['children'])){
-                foreach ($item['children'] as &$child){
+                $array = $item['children'];
+                foreach ($array as $child){
                     $child['is_select'] = 0;
                 }
+                $item['children'] = $array;
             }
         }
         if(!$catNameOneArray){
