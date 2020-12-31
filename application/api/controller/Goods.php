@@ -390,26 +390,26 @@ class Goods extends Api
         if ($rew) {
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
-            if(!$result){
-                $this->error('操作失败');
-            }
+        }else{
+            $data['sizes'] = serialize($sizes);
+            $data['user_id'] = $this->auth->id;
+            $data['goodFullId'] = $goodFullId;
+            $data['adId'] = $adId;
+            $data['goodName'] = $this->request->request('goodName');
+            $data['color'] = $this->request->request('color')?:'';
+            $data['material'] = $this->request->request('material')?:'';
+            $data['goodImage'] = $this->request->request('goodImage');
+            $data['createtime'] = time();
+            $result = ShoppingCarts::insert($data);
         }
-        $data['sizes'] = serialize($sizes);
-        $data['user_id'] = $this->auth->id;
-        $data['goodFullId'] = $goodFullId;
-        $data['adId'] = $adId;
-        $data['goodName'] = $this->request->request('goodName');
-        $data['color'] = $this->request->request('color')?:'';
-        $data['material'] = $this->request->request('material')?:'';
-        $data['goodImage'] = $this->request->request('goodImage');
-        $data['createtime'] = time();
-        $result = ShoppingCarts::insert($data);
+        
         if(!$result){
             $this->error('操作失败');
+        }else{
+            //创建购物车倒计时
+            $this->countDown();
+            $this->success('操作成功！');
         }
-        //创建购物车倒计时
-        $this->countDown();
-        $this->success('操作成功！');
     }
 
     /**
@@ -428,7 +428,15 @@ class Goods extends Api
     public function getCountDown()
     {
         $rew = Cache::get('cd_'.$this->auth->id)?:'';
-        $this->success('请求成功！', ['cd_'.$this->auth->id => $rew]);
+        if ($rew) {
+            $count = time() - $rew;
+            if ($count >= 1200) {
+                //失效购物车数据
+                ShoppingCarts::where('user_id', $this->auth->id)->update(['endtime' => time()]);
+            }
+            $this->success('请求成功！', ['cd_'.$this->auth->id => time2string( 1200 - $count)]);
+        }
+        $this->success('请求成功！', ['cd_'.$this->auth->id =>'']);
     }
 
     /**
