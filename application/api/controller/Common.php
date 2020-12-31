@@ -25,7 +25,7 @@ use app\common\model\UserGroup;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus'];
     protected $noNeedRight = '*';
 
     /**
@@ -318,12 +318,12 @@ class Common extends Api
         }
     }
     /**
-     * 查询待发货/已返货订单是否发货/签收
+     * 查询待支付/待发货/已返货订单是否过期/发货/签收
      */
     public function orderStatus()
     {
         $page = Cache::get('page') ?? 1;
-        $orders = \app\common\model\Order::whereIn('status',[1,2])->paginate(20,false,[ 'query' => request()->param()]);
+        $orders = \app\common\model\Order::whereIn('status',[0,1,2])->paginate(20,false,[ 'query' => request()->param()]);
         if(!empty($orders)){
             Cache::set('page',$page+1);
             $OrderNoArray = [];
@@ -334,7 +334,14 @@ class Common extends Api
             $wph = new Wph();
             $list = $wph->orderStatus("$OrderNoStr");
             if(!empty($list)){
+                // 启动事务
+                Db::startTrans();
+                try{
                 foreach ($list as $value){
+                    //将过期订单变为已取消状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 5){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>-1]);
+                    }
                     //将已发货订单变为已发货状态
                     if($value['childOrderSnList'][0]['statusCode'] == 3){
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2]);
@@ -344,8 +351,20 @@ class Common extends Api
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3]);
                     }
                 }
+                    // 提交事务
+                    Db::commit();
+                    $res = true;
+                } catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    $res = false;
+                }
             }
-            Log::write('【查询条数】：'.count($orders));
+            if($res){
+                Log::write('【查询条数】：'.count($orders));
+                $this->success('共查询退货订单:'.count($orders));
+            }
+            $this->error('服务器繁忙！');
         }else{
             Cache::set('page',1);
             Log::write('【无可查询订单】');

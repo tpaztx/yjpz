@@ -29,7 +29,7 @@ class Order extends Model
     }
     public function getAfterSalesTextAttr($value,$data)
     {
-        $after_sales = [0=>'',1=>'审核中',2=>'未通过',3=>"已通过",4=>"已完成"];
+        $after_sales = [0=>'',1=>'审核中',2=>'未通过',3=>"已通过",4=>"已退款"];
         return $after_sales[$data['after_sales']];
     }
     public function getCreatetimeTextAttr($value, $data)
