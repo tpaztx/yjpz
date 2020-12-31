@@ -94,7 +94,7 @@ Route::post([
 	//获取进货单列表
 	'api/getShopcart' => 'api/goods/getShopcart',
 	//获取用户购物车倒计时
-	'api/getCountDown' => 'api/godos/getCountDown',
+	'api/getCountDown' => 'api/goods/getCountDown',
 
   
     //小店-店铺设置
