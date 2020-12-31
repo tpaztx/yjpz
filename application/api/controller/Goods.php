@@ -416,7 +416,6 @@ class Goods extends Api
         if (!Cache::get('cd_'.$this->auth->id)) {
             $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
         }
-        dump(Cache::get('cd_'.$this->auth->id));die;
     }
 
     /**
@@ -425,7 +424,6 @@ class Goods extends Api
     public function getCountDown()
     {
         $rew = Cache::get('cd_'.$this->auth->id)?:'';
-        dump($rew);die;
         if ($rew) {
             $count = time() - $rew;
             $this->success('请求成功！', ['cd_'.$this->auth->id => time2string( 1200 - $count)]);
