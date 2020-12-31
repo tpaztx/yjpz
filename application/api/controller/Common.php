@@ -334,6 +334,9 @@ class Common extends Api
             $wph = new Wph();
             $list = $wph->orderStatus("$OrderNoStr");
             if(!empty($list)){
+                // 启动事务
+                Db::startTrans();
+                try{
                 foreach ($list as $value){
                     //将过期订单变为已取消状态
                     if($value['childOrderSnList'][0]['statusCode'] == 5){
@@ -348,9 +351,20 @@ class Common extends Api
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3]);
                     }
                 }
+                    // 提交事务
+                    Db::commit();
+                    $res = true;
+                } catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    $res = false;
+                }
             }
-            Log::write('【查询条数】：'.count($orders));
-            $this->success('共查询退货订单:'.count($orders));
+            if($res){
+                Log::write('【查询条数】：'.count($orders));
+                $this->success('共查询退货订单:'.count($orders));
+            }
+            $this->error('服务器繁忙！');
         }else{
             Cache::set('page',1);
             Log::write('【无可查询订单】');
