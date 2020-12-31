@@ -413,6 +413,7 @@ class Goods extends Api
      */
     public function countDown()
     {
+        dump('this here');die;
         if (!Cache::get('cd_'.$this->auth->id)) {
             $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
         }
