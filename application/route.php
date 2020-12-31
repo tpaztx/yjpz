@@ -94,7 +94,7 @@ Route::post([
 	//获取用户购物车倒计时
 	'api/getCountDown' => 'api/goods/getCountDown',
 	//用户累计收益和余额
-	'api/getUserIncome' => 'api/goods/getUserIncome',
+	'api/getUserIncome' => 'api/commission/getUserIncome',
 
   
     //小店-店铺设置
