@@ -359,7 +359,7 @@ class Common extends Api
         $orders = \app\common\model\Order::whereIn('after_sales',[1,3])->select();
         if(!empty($orders)){
             $wph = new Wph();
-            $status = 1;
+            $after_sales = 1;
             // 启动事务
             Db::startTrans();
             try{
@@ -368,16 +368,16 @@ class Common extends Api
                     if($row){
                         switch ($row['returnStatus']){
                             case '退货已审核':
-                                $status = 3;
+                                $after_sales = 3;
                                 break;
                             case '审核不通过':
-                                $status = 2;
+                                $after_sales = 2;
                                 break;
                             case '已退款':
-                                $status = 4;
+                                $after_sales = 4;
                                 break;
                         }
-                        \app\common\model\Order::where('wph_order_no',$row['orderSn'])->update(['status'=>$status]);
+                        \app\common\model\Order::where('wph_order_no',$row['orderSn'])->update(['after_sales'=>$after_sales]);
                     }
                 }
                 // 提交事务
