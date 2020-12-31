@@ -16,6 +16,7 @@ use think\Config;
 use think\Db;
 use function Complex\rho;
 use app\common\model\ShoppingCarts;
+use think\Cache;
 
 /**
  * 商品相关
@@ -385,6 +386,9 @@ class Goods extends Api
         if ($rew) {
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
+            if(!$result){
+                $this->error('操作失败');
+            }
         }
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
@@ -399,7 +403,28 @@ class Goods extends Api
         if(!$result){
             $this->error('操作失败');
         }
+        //创建购物车倒计时
+        $this->countDown();
         $this->success('操作成功！');
+    }
+
+    /**
+     * 购物车倒计时
+     */
+    public function countDown()
+    {
+        if (!Cache::get('cd_'.$this->auth->id)) {
+            $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
+        }
+    }
+
+    /**
+     * 获取购物车倒计时时差
+     */
+    public function getCountDown()
+    {
+        $rew = Cache::get('cd_'.$this->auth->id)?:'';
+        $this->success('请求成功！', ['cd_'.$this->auth->id => $rew]);
     }
 
     /**
@@ -435,15 +460,19 @@ class Goods extends Api
     public function getShopcart()
     {
         //获取进货单的品牌
-        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->select();
-        $result = '';
+        $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->group('adId')->select();
+        $result = [];
         if ($brands) {
             foreach ($brands as $k => $v) {
                 //查询对应商品list000
                 BrandList::where('adId', $v['adId'])->value('brandName');
                 // echo BrandList::getLastSQL();die;
-                $result[$k]['brandName'] = BrandList::where('adId', $v['adId'])->value('brandName');
-                $result[$k]['sizes'] = ShoppingCarts::where('adId', $v->adId)->select();
+                $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
+                $goods = ShoppingCarts::where('adId', $v->adId)->select();;
+                foreach ($goods as $key => $val) {
+                    $val->sizes = unserialize($val->sizes);
+                }
+                $result[$k]['goods'] = $goods;
             }
         }
         $this->success('请求成功！', $result);
