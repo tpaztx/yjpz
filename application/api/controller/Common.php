@@ -25,7 +25,7 @@ use app\common\model\UserGroup;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus'];
     protected $noNeedRight = '*';
 
     /**
