@@ -31,7 +31,7 @@ class Commission extends Api
         //获取自购佣金
         $proportion = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->count('real_price');
 
-        $pro_list = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->field('order_no,proportion')->order('id', 'desc')->paginate(10,false,$page);
+        $pro_list = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->field('order_no,proportion')->order('id', 'desc')->paginate(10,false,['page'=>$page]);
         dump('this here1');die;
         //获取代购的佣金
         $commission = 0;
@@ -39,7 +39,7 @@ class Commission extends Api
         $store = Store::where('user_id',$this->auth->id)->find();
         if ($store) {
             $commission = Order::where(['store_id'=>$store['id'], 'status'=>3])->count('real_price');
-            $com_list = Order::where(['store_id'=>$store['id'], 'status'=>3])->field('order_no,proporti')->order('id', 'desc')->paginate(10,false,$page);
+            $com_list = Order::where(['store_id'=>$store['id'], 'status'=>3])->field('order_no,proporti')->order('id', 'desc')->paginate(10,false,['page'=>$page]);
         }
         
         $data = [
