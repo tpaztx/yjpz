@@ -15,10 +15,19 @@ class WxRefund extends Api
     public $key = 'q3NnfANoey3Q9UBdvQxewesVSJ8NuEaT';
     public $SSLCERT_PATH = 'cert/apiclient_cert.pem';
     public $SSLKEY_PATH = 'cert/apiclient_key.pem';
+
+    public function __construct($appid,$mch_id,$key,$SSLCERT_PATH,$SSLKEY_PATH)
+    {
+        $this->appid = $appid ?? $this->appid;
+        $this->mch_id = $mch_id ?? $this->mch_id;
+        $this->key = $key ??  $this->key;
+        $this->SSLCERT_PATH = $SSLCERT_PATH ?? $this->SSLCERT_PATH;
+        $this->SSLKEY_PATH = $SSLKEY_PATH ?? $this->SSLKEY_PATH;
+    }
     //向外暴露的微信退款接口
     public function refund($order_no)
     {
-        $order = \app\admin\model\Order::where('order_no',$order_no)->find();
+        $order = \app\common\model\Order::where('order_no',$order_no)->find();
         $refund_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
         $result = $this->weChatrefund($refund_no,$order['transaction_no'],$order['real_price'],$order['real_price']);
         if($result['return_code'] == 'FAIL'){
@@ -26,10 +35,8 @@ class WxRefund extends Api
         }
     }
 
-    private function weChatrefund($refund_no,$transaction_no,$total_fee,$refund_fee,$mch_id,$key)
+    private function weChatrefund($refund_no,$transaction_no,$total_fee,$refund_fee)
     {
-        $this->mch_id = $mch_id ?? $this->mch_id;
-        $this->key = $key ?? $this->mch_id;
         $param = [
             'appid'=> $this->appid,
             'mch_id'=> $this->mch_id,

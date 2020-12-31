@@ -156,7 +156,8 @@ class Goods extends Api
             ->field('id,adId,catNameOne')
             ->group('catNameOne')
             ->select();
-        foreach ($catNameOneArray as $item){
+        foreach ($catNameOneArray as &$item){
+            $item['is_select'] = 0;
             $item['children'] = GoodsList::where(function($query) use($adId,$downArray,$item){
                 if($adId){
                     $query->where('adId',$adId);
@@ -166,6 +167,13 @@ class Goods extends Api
                 ->field('id,adId,catNameOne,catNameTwo')
                 ->group('catNameTwo')
                 ->select();
+            if(!empty($item['children'])){
+                $array = $item['children'];
+                foreach ($array as $child){
+                    $child['is_select'] = 0;
+                }
+                $item['children'] = $array;
+            }
         }
         if(!$catNameOneArray){
             $this->error('服务器繁忙！');
