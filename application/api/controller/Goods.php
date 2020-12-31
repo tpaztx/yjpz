@@ -16,6 +16,7 @@ use think\Config;
 use think\Db;
 use function Complex\rho;
 use app\common\model\ShoppingCarts;
+use think\Cache;
 
 /**
  * 商品相关
@@ -385,6 +386,9 @@ class Goods extends Api
         if ($rew) {
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
+            if(!$result){
+                $this->error('操作失败');
+            }
         }
         $data['sizes'] = serialize($sizes);
         $data['user_id'] = $this->auth->id;
@@ -399,7 +403,28 @@ class Goods extends Api
         if(!$result){
             $this->error('操作失败');
         }
+        //创建购物车倒计时
+        $this->countDown();
         $this->success('操作成功！');
+    }
+
+    /**
+     * 购物车倒计时
+     */
+    public function countDown()
+    {
+        $result = Cache::set('cd_'.$this->auth->id, time(), 1200);
+        Cache::dec('cd_'.$this->auth->id);
+        return $result ? true : false;
+    }
+
+    /**
+     * 获取购物车倒计时时差
+     */
+    public function getCountDown()
+    {
+        $rew = Cache::get('cd_'.$this->auth->id)?:'';
+        $this->success('请求成功！', ['cd_'.$this->auth->id => $rew]);
     }
 
     /**
