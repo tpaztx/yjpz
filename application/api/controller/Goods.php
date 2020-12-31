@@ -68,6 +68,7 @@ class Goods extends Api
         $price_min = $this->request->request('price_min');
         $price_max = $this->request->request('price_max');
         $catNameOne = $this->request->request('catNameOne');
+        $catNameTwo = $this->request->request('catNameTwo');
         $keyword = $this->request->request('keyword');
         
         $where = "1=1";
@@ -75,7 +76,10 @@ class Goods extends Api
             $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
         }
         if ($catNameOne) {
-            $where .= " and catNameOne='".$catNameOne."'";
+            $where .= " and catNameOne in '".$catNameOne."'";
+        }
+        if ($catNameTwo) {
+            $where .= " and catNameTwo in '".$catNameTwo."'";
         }
         if ($keyword) {
             $where .= " and goodName like '%".$keyword."%'";
@@ -508,4 +512,5 @@ class Goods extends Api
         }
         $this->success('请求成功！', $result);
     }
+
 }

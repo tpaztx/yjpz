@@ -83,8 +83,6 @@ Route::post([
 	'api/delFavorites' => 'api/goods/delFavorites',
 	//APP邀请海报
 	'api/poster' => 'api/index/poster',
-	//品牌详情价格区间查询
-	'api/priceRange' => 'api/goods/priceRange',
 	//更新用户地址
 	'api/updateUserAddress' => 'api/user/updateUserAddress',
 	//添加进货单
