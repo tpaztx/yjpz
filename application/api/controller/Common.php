@@ -318,12 +318,12 @@ class Common extends Api
         }
     }
     /**
-     * 查询待发货/已返货订单是否发货/签收
+     * 查询待支付/待发货/已返货订单是否过期/发货/签收
      */
     public function orderStatus()
     {
         $page = Cache::get('page') ?? 1;
-        $orders = \app\common\model\Order::whereIn('status',[1,2])->paginate(20,false,[ 'query' => request()->param()]);
+        $orders = \app\common\model\Order::whereIn('status',[0,1,2])->paginate(20,false,[ 'query' => request()->param()]);
         if(!empty($orders)){
             Cache::set('page',$page+1);
             $OrderNoArray = [];
@@ -335,6 +335,10 @@ class Common extends Api
             $list = $wph->orderStatus("$OrderNoStr");
             if(!empty($list)){
                 foreach ($list as $value){
+                    //将过期订单变为已取消状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 5){
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>-1]);
+                    }
                     //将已发货订单变为已发货状态
                     if($value['childOrderSnList'][0]['statusCode'] == 3){
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2]);
