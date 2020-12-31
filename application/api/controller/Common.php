@@ -324,12 +324,16 @@ class Common extends Api
     {
         $page = Cache::get('page') ?? 1;
         $orders = \app\common\model\Order::whereIn('status',[0,1,2])->paginate(20,false,[ 'query' => request()->param()]);
-        dump($orders);exit;
-        if(!empty($orders)){
+        if(!empty($orders) && $orders){
             Cache::set('page',$page+1);
             $OrderNoArray = [];
             foreach ($orders as $item){
                 $OrderNoArray[] = $item['wph_order_no'];
+
+            }
+            if(empty($OrderNoArray)){
+                Cache::set('page',1);
+                $this->error('【无可查询订单】');
             }
             $OrderNoStr = implode(',',$OrderNoArray);
             $wph = new Wph();
@@ -362,13 +366,12 @@ class Common extends Api
                 }
             }
             if($res){
-                Log::write('【查询条数】：'.count($orders));
                 $this->success('共查询退货订单:'.count($orders));
             }
             $this->error('服务器繁忙！');
         }else{
             Cache::set('page',1);
-            Log::write('【无可查询订单】');
+            $this->error('【无可查询订单】');
         }
     }
     /**
