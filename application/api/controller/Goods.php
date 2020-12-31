@@ -472,16 +472,24 @@ class Goods extends Api
         $result = [];
         if ($brands) {
             foreach ($brands as $k => $v) {
-                //查询对应商品list000
-                BrandList::where('adId', $v['adId'])->value('brandName');
-                // echo BrandList::getLastSQL();die;
+                //查询对应商品list
                 $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
-                $goods = ShoppingCarts::where('adId', $v->adId)->select();;
-                foreach ($goods as $key => $val) {
-                    $val->sizes = unserialize($val->sizes);
+                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null')->select();
+                if ($goods) {
+                    foreach ($goods as $key => $val) {
+                        $val->sizes = unserialize($val->sizes);
+                    }
                 }
                 $result[$k]['goods'] = $goods;
-            }
+                //过期商品
+                $over = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime>0')->order('endtime desc')->select();
+                if ($over) {
+                    foreach ($over as $key => $val) {
+                        $val->sizes = unserialize($val->sizes);
+                    }
+                }
+                $result[$k]['over'] = $over;
+            }   
         }
         $this->success('请求成功！', $result);
     }
