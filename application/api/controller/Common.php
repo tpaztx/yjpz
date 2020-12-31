@@ -329,6 +329,7 @@ class Common extends Api
             $OrderNoArray = [];
             foreach ($orders as $item){
                 $OrderNoArray[] = $item['wph_order_no'];
+
             }
             $OrderNoStr = implode(',',$OrderNoArray);
             $wph = new Wph();
