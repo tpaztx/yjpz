@@ -386,26 +386,26 @@ class Goods extends Api
         if ($rew) {
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
-            if(!$result){
-                $this->error('操作失败');
-            }
+        }else{
+            $data['sizes'] = serialize($sizes);
+            $data['user_id'] = $this->auth->id;
+            $data['goodFullId'] = $goodFullId;
+            $data['adId'] = $adId;
+            $data['goodName'] = $this->request->request('goodName');
+            $data['color'] = $this->request->request('color')?:'';
+            $data['material'] = $this->request->request('material')?:'';
+            $data['goodImage'] = $this->request->request('goodImage');
+            $data['createtime'] = time();
+            $result = ShoppingCarts::insert($data);
         }
-        $data['sizes'] = serialize($sizes);
-        $data['user_id'] = $this->auth->id;
-        $data['goodFullId'] = $goodFullId;
-        $data['adId'] = $adId;
-        $data['goodName'] = $this->request->request('goodName');
-        $data['color'] = $this->request->request('color')?:'';
-        $data['material'] = $this->request->request('material')?:'';
-        $data['goodImage'] = $this->request->request('goodImage');
-        $data['createtime'] = time();
-        $result = ShoppingCarts::insert($data);
+        
         if(!$result){
             $this->error('操作失败');
+        }else{
+            //创建购物车倒计时
+            $this->countDown();
+            $this->success('操作成功！');
         }
-        //创建购物车倒计时
-        $this->countDown();
-        $this->success('操作成功！');
     }
 
     /**
