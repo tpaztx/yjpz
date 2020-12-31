@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\model;
+namespace app\admin\model;
 
 
 use think\Model;
