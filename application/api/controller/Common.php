@@ -311,7 +311,7 @@ class Common extends Api
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
                 Cache::set('brandNum', Cache::get('brandNum') + 1);
             }
-            echo '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum');
+            echo '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.$brandNum;
         }else{
             Cache::set('brandNum', 0);
             $this->inputGoodsList();
