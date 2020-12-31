@@ -434,6 +434,7 @@ class Goods extends Api
         $rew = Cache::get('cd_'.$this->auth->id)?:'';
         if ($rew) {
             $count = time() - $rew;
+            dump($count);die;
             if ($count >= 1200) {
                 //失效购物车数据
                 ShoppingCarts::where('user_id', $this->auth->id)->update(['endtime' => time()]);
