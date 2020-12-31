@@ -19,7 +19,7 @@ class Commission extends Api
     // 无需登录的接口,*表示全部
     protected $noNeedLogin = [''];
     // 无需鉴权的接口,*表示全部
-    protected $noNeedRight = [''];
+    protected $noNeedRight = ['*'];
 
     /**
      * 用户累计收益和余额
