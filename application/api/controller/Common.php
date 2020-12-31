@@ -332,6 +332,7 @@ class Common extends Api
 
             }
             $OrderNoStr = implode(',',$OrderNoArray);
+            dump($OrderNoStr);exit;
             $wph = new Wph();
             $list = $wph->orderStatus("$OrderNoStr");
             if(!empty($list)){
