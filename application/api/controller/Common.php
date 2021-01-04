@@ -257,6 +257,17 @@ class Common extends Api
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
+                $goods_list = GoodsList::where('goodFullId is not null')->where('adId', $v['adId'])->field('goodFullId,goodId')->select();
+                if ($goods_list) {
+                    foreach ($goods_list as $key => $value) {
+                        $isOnline = $wph->goodsOnline($value['goodFullId']);
+                        if ($isOnline['goodsList'][0]['goodOnline']==0) {
+                            $result += db('goods_list')->where('goodFullId', $value['goodFullId'])->delete();
+                            db('shopping_cart')->where('goodId', $value['goodId'])->delete();
+                            db('shopping_carts')->where('goodFullId', $value['goodFullId'])->delete();
+                        }
+                    }
+                }
                 $brandAdId = $v['adId'];
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 $pageTotal = false;
@@ -312,14 +323,7 @@ class Common extends Api
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
                     } while (Cache::get('goods_index') <= $pageIndex);
                 }
-                $isOnline = $wph->goodsOnline($v['goodFullId']);
-                // $isOnline = $wph->goodsOnline(1343509895047370);
-                // dump($isOnline);die;
-                if ($isOnline['goodsList'][0]['goodOnline']==0) {
-                    $result += db('goods_list')->where('goodFullId', $v['goodFullId'])->delete();
-                    db('shopping_cart')->where('goodId', $v['goodId'])->delete();
-                    db('shopping_carts')->where('goodFullId', $v['goodFullId'])->delete();
-                }
+                
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
                 Cache::set('brandNum', Cache::get('brandNum') + 1);
             }
