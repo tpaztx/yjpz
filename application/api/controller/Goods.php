@@ -398,7 +398,7 @@ class Goods extends Api
             $rew->sizes = serialize($sizes);
             $result = $rew->save();
         }else{
-            $data['sizes'] = serialize($sizes);
+            $data['sizes'] = serialize(json_decode($sizes, true));
             $data['user_id'] = $this->auth->id;
             $data['goodFullId'] = $goodFullId;
             $data['adId'] = $adId;
