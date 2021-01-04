@@ -22,11 +22,11 @@ use app\common\model\User;
 use app\common\model\UserGroup;
 
 /**
- * 公共接口
+ * 公共接口00
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus', 'goodsOnline'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus','goodsOnline'];
     protected $noNeedRight = '*';
 
     /**
