@@ -186,9 +186,9 @@ class WxJsApiPay extends Api
         //file_put_contents('./log.txt',$res,FILE_APPEND);
 
         $content = self::xml2array($res);
-        if(strval($content['return_code']) == 'FAIL'){
-            return array('status'=>0, 'msg'=>strval($content['err_code']).':'.strval($content['err_code_des']));
-        }
+        // if(strval($content['return_code']) == 'FAIL'){
+        //     return array('status'=>0, 'msg'=>strval($content['err_code']).':'.strval($content['err_code_des']));
+        // }
         if(strval($content['return_code']) == 'FAIL'){
             return array('status'=>0, 'msg'=>strval($content['return_msg']));
         }
