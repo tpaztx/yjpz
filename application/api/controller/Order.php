@@ -11,6 +11,7 @@ use think\Db;
 use app\common\model\Order as OrderM;
 use think\Exception;
 use app\common\model\UserGroup;
+use app\common\model\User;
 
 
 class Order extends Api
