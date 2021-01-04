@@ -239,8 +239,6 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        // ignore_user_abort();
-        // set_time_limit(0);
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
@@ -472,9 +470,9 @@ class Common extends Api
     public function delBrand()
     {
         $brandListModel = new BrandList;
-        // $brand_list = $brandListModel->where("sellTimeTo < '".date('Y-m-d H:i:s', time())."'")->field('id,adId')->select();
         $brand_list = $brandListModel->whereTime('sellTimeTo', '<', date('Y-m-d H:i:s', time()))->field('id,adId')->select();
         $goods_list = $brand_lists = 0;
+        db('goods_list')->where('goodFullId is null')->delete();
         foreach ($brand_list as $key => $val) {
             $goods_list = db('goods_list')->where('adId', $val->adId)->delete();
             $brand_lists = db('brand_list')->where('id', $val->id)->delete();
@@ -517,5 +515,22 @@ class Common extends Api
             }
         }
         echo "执行成功！";
+    }
+
+    /**
+     * 定时查询商品状态
+     */
+    public function goodsOnline()
+    {
+        $wph = new Wph;
+        ignore_user_abort(true);
+        set_time_limit(20);
+        $goods_list = GoodsList::where('goodFullId not is null')->field('goodFullId')->select();
+        foreach ($goods_list as $k => $v) {
+            $isOnline = $wph->goodsOnline($v->goodFullId);
+            if ($isOnline['result']['map'][$v->goodFullId] && empty($isOnline['result']['map'][$v->goodFullId])) {
+                db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
+            }
+        }
     }
 }
