@@ -392,10 +392,11 @@ class Goods extends Api
         if (!$sizes || empty($sizes)) {
             $this->error('缺少请求参数商品信息！');
         }
+        dump($sizes);die;
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
         if ($rew) {
-            $rew->sizes = serialize($sizes);
+            $rew->sizes = serialize(json_decode($sizes, true));
             $result = $rew->save();
         }else{
             $data['sizes'] = serialize(json_decode($sizes, true));
