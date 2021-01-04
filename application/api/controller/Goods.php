@@ -67,7 +67,6 @@ class Goods extends Api
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
         $price_min = $this->request->request('price_min');
         $price_max = $this->request->request('price_max');
-        $catNameOne = $this->request->request('catNameOne');
         $catNameTwo = $this->request->request('catNameTwo');
         $keyword = $this->request->request('keyword');
         
@@ -75,11 +74,11 @@ class Goods extends Api
         if ($price_min && $price_max) {
             $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
         }
-        if ($catNameOne) {
-            $where .= " and catNameOne in '".$catNameOne."'";
-        }
         if ($catNameTwo) {
-            $where .= " and catNameTwo in '".$catNameTwo."'";
+            $test = explode($catNameTwo, ",");
+            foreach ($test as $value) {
+                $where .= " and catNameTwo='".$value."'";
+            }
         }
         if ($keyword) {
             $where .= " and goodName like '%".$keyword."%'";
