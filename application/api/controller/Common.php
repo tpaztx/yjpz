@@ -15,6 +15,7 @@ use com\vip\wpc\ospservice\vop\WpcVopOspServiceClient;
 use Osp\Context\InvocationContextFactory;
 use think\db;
 use app\common\model\BrandList;
+use app\common\model\GoodsList;
 use think\Cache;
 use think\Log;
 use app\common\model\User;
