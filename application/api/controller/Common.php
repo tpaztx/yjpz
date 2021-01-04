@@ -261,7 +261,8 @@ class Common extends Api
                     $pageTotal = $page_total['pageTotal'];
                     $pageIndex = round($page_total['totalNum'] / 20);
                 }else{
-                    Cache::set('brandNum', 0);
+                    // Cache::set('brandNum', 0);
+                    Cache::set('brandNum', Cache::get('brandNum') + 1);
                     $this->inputGoodsList();
                 }
                 if ($pageTotal && $pageTotal > 1)
