@@ -526,12 +526,14 @@ class Common extends Api
         $wph = new Wph;
         ignore_user_abort(true);
         set_time_limit(20);
-        $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId')->select();
+        $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId,goodId')->select();
         $result = 0;
         foreach ($goods_list as $k => $v) {
             $isOnline = $wph->goodsOnline($v->goodFullId);
             if ($isOnline['goodsList'][0]['goodOnline']==0) {
                 $result += db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
+                db('shopping_cat')->where('goodId', $v->goodId)->delete();
+                db('shopping_cats')->where('goodFullId', $v->goodFullId)->delete();
             }
         }
         $this->success('请求成功！', $result);
