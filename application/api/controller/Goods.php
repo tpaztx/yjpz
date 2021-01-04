@@ -83,7 +83,6 @@ class Goods extends Api
         if ($keyword) {
             $where .= " and goodName like '%".$keyword."%'";
         }
-        dump($where);die;
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
                                     ->select();
