@@ -65,6 +65,8 @@ class Order extends Api
         $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
         $commission1 = $param['real_price'] * $com_fee1 * 0.01;
         $commission2 = $param['real_price'] * $com_fee2 * 0.01;
+        $commission2_id = $this->auth->pid?:0;
+        $commission1_id = User::where('id', $this->auth->pid)->value('id');
         $OrderData = [
             'user_id'=>$user['id'],
             'order_no'=>$order_no,
@@ -80,6 +82,8 @@ class Order extends Api
             'proportion' => round($proportion, 2),
             'commission1' => round($commission1, 2),
             'commission2' => round($commission2, 2),
+            'commission1_id' => $commission1_id?:0,
+            'commission2_id' => $commission2_id?:0,
         ];
         // 启动事务0
         Db::startTrans();
