@@ -383,8 +383,10 @@ class Goods extends Api
      */
     public function addShopcart()
     {
-        $goodFullId = $this->request->request('goodFullId');
-        $adId = $this->request->request('adId');
+        $param = $this->request->param();
+        dump($param);die;
+        $goodFullId = $this->request->param('goodFullId');
+        $adId = $this->request->param('adId');
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
