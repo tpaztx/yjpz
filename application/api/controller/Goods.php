@@ -384,9 +384,8 @@ class Goods extends Api
     public function addShopcart()
     {
         $param = $this->request->param();
-        dump($param);die;
-        $goodFullId = $this->request->param('goodFullId');
-        $adId = $this->request->param('adId');
+        $goodFullId = $param['goodFullId'];
+        $adId = $param['adId'];
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
@@ -398,10 +397,10 @@ class Goods extends Api
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
         if ($rew) {
-            $rew->sizes = serialize(json_decode($sizes, true));
+            $rew->sizes = serialize($sizes);
             $result = $rew->save();
         }else{
-            $data['sizes'] = serialize(json_decode($sizes, true));
+            $data['sizes'] = serialize($sizes);
             $data['user_id'] = $this->auth->id;
             $data['goodFullId'] = $goodFullId;
             $data['adId'] = $adId;
