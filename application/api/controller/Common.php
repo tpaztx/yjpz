@@ -529,7 +529,9 @@ class Common extends Api
         $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId,goodId')->select();
         $result = 0;
         foreach ($goods_list as $k => $v) {
-            $isOnline = $wph->goodsOnline($v->goodFullId);
+            // $isOnline = $wph->goodsOnline($v->goodFullId);
+            $isOnline = $wph->goodsOnline(1343509895047370);
+            dump($isOnline);die;
             if ($isOnline['goodsList'][0]['goodOnline']==0) {
                 $result += db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
                 db('shopping_cart')->where('goodId', $v->goodId)->delete();
