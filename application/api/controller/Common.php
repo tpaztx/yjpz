@@ -524,8 +524,8 @@ class Common extends Api
     public function goodsOnline()
     {
         $wph = new Wph;
-        ignore_user_abort(true);
-        set_time_limit(20);
+        // ignore_user_abort(true);
+        // set_time_limit(20);
         $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId,goodId')->select();
         $result = 0;
         foreach ($goods_list as $k => $v) {
