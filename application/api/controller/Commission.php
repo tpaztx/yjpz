@@ -43,7 +43,7 @@ class Commission extends Api
         }
         
         $data = [
-            'user_money' => $this->auth_money,
+            'user_money' => $this->auth->money,
             'my'         => $proportion + $commission,
             'commission' => $commission,
             'pro_list'   => $pro_list,
