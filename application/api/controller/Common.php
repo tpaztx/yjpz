@@ -530,6 +530,7 @@ class Common extends Api
         $result = 0;
         foreach ($goods_list as $k => $v) {
             $isOnline = $wph->goodsOnline($v->goodFullId);
+            dump($isOnline);die;
             if ($isOnline['result']['map'][$v->goodFullId] && empty($isOnline['result']['map'][$v->goodFullId])) {
                 $result += db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
             }
