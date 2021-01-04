@@ -526,7 +526,7 @@ class Common extends Api
         $wph = new Wph;
         // ignore_user_abort(true);
         // set_time_limit(20);
-        $goods_list = GoodsList::where('goodFullId not is null')->field('goodFullId')->select();
+        $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId')->select();
         $result = 0;
         foreach ($goods_list as $k => $v) {
             $isOnline = $wph->goodsOnline($v->goodFullId);
