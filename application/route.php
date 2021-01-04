@@ -51,6 +51,8 @@ Route::post([
 	'api/wxSdk' => 'api/User/wxSdk',
 	//获取平台基础配置相关信息
 	'api/getConfig' => 'api/common/getConfig',
+	//定时查询商品状态
+    'api/goodsOnline' => 'api/common/goodsOnline',
 
 	/* 客户端 */
 	//首页-banner轮播
@@ -164,6 +166,5 @@ Route::get([
     'api/userGroupID' => 'api/common/userGroupID', 
     //定时删除失效商品
     'api/delBrand' => 'api/common/delBrand',
-    //定时查询商品状态
-    // 'api/goodsOnline' => 'api/common/goodsOnline',
+
 ]);
