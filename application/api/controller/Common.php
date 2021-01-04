@@ -472,7 +472,8 @@ class Common extends Api
     public function delBrand()
     {
         $brandListModel = new BrandList;
-        $brand_list = $brandListModel->where("sellTimeTo < '".date('Y-m-d H:i:s', time())."'")->field('id,adId')->select();
+        // $brand_list = $brandListModel->where("sellTimeTo < '".date('Y-m-d H:i:s', time())."'")->field('id,adId')->select();
+        $brand_list = $brandListModel->whereTime('sellTimeTo', '<', date('Y-m-d H:i:s', time()))->field('id,adId')->select();
         $goods_list = $brand_lists = 0;
         echo BrandList::getLastSQL();die();
         dump($brand_list);die;
