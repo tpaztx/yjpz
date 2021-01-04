@@ -101,7 +101,8 @@ class Wph extends Api
                 })->limit(($page - 1)*$pageSize, $pageSize)->select();
                 // echo BrandList::getLastSQL();die; 
             }else{
-                $result = BrandList::where('cateId', 'in', $cid)->where('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $result = BrandList::where('cateId', 'in', $cid)->whereTime('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
+                echo BrandList::getLastSQL();die;
             }
             return $result;
         } catch(Exception $e){
