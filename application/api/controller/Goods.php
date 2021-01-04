@@ -77,7 +77,7 @@ class Goods extends Api
         if ($catNameTwo) {
             $test = explode(",", $catNameTwo);
             foreach ($test as $value) {
-                $where .= " and catNameTwo='".$value."'";
+                $where .= " or catNameTwo='".$value."'";
             }
         }
         if ($keyword) {
