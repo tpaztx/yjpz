@@ -239,8 +239,8 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
-        ignore_user_abort();
-        set_time_limit(0);
+        // ignore_user_abort();
+        // set_time_limit(0);
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
