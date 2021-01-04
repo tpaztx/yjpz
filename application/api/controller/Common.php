@@ -240,6 +240,7 @@ class Common extends Api
      */
     public function inputGoodsList()
     {
+        $wph = new Wph;
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
@@ -306,10 +307,17 @@ class Common extends Api
                             }else{
                                 db('goods_list')->insert($goods_info);
                             }
-
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
                     } while (Cache::get('goods_index') <= $pageIndex);
+                }
+                $isOnline = $wph->goodsOnline($v['goodFullId']);
+                // $isOnline = $wph->goodsOnline(1343509895047370);
+                // dump($isOnline);die;
+                if ($isOnline['goodsList'][0]['goodOnline']==0) {
+                    $result += db('goods_list')->where('goodFullId', $v['goodFullId'])->delete();
+                    db('shopping_cart')->where('goodId', $v['goodId'])->delete();
+                    db('shopping_carts')->where('goodFullId', $v['goodFullId'])->delete();
                 }
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
                 Cache::set('brandNum', Cache::get('brandNum') + 1);
@@ -521,22 +529,13 @@ class Common extends Api
     /**
      * 定时查询商品状态
      */
-    public function goodsOnline()
+    public function goodsOnline($goodFullId)
     {
         $wph = new Wph;
-        // ignore_user_abort(true);
-        // set_time_limit(20);
         $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId,goodId')->select();
         $result = 0;
         foreach ($goods_list as $k => $v) {
-            $isOnline = $wph->goodsOnline($v->goodFullId);
-            // $isOnline = $wph->goodsOnline(1343509895047370);
-            // dump($isOnline);die;
-            if ($isOnline['goodsList'][0]['goodOnline']==0) {
-                $result += db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
-                db('shopping_cart')->where('goodId', $v->goodId)->delete();
-                db('shopping_carts')->where('goodFullId', $v->goodFullId)->delete();
-            }
+            
         }
         $this->success('请求成功！', $result);
     }
