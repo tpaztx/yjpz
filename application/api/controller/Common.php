@@ -26,7 +26,7 @@ use app\common\model\UserGroup;
  */
 class Common extends Api
 {
-    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus','goodsOnline'];
+    protected $noNeedLogin = ['init','getStartImage','inputBrandList', 'inputGoodsList', 'protocol', 'delBrand', 'getConfig','orderStatus','returnOrderStatus','goodsOnlines'];
     protected $noNeedRight = '*';
 
     /**
@@ -521,7 +521,7 @@ class Common extends Api
     /**
      * 定时查询商品状态
      */
-    public function goodsOnline()
+    public function goodsOnlines()
     {
         $wph = new Wph;
         ignore_user_abort(true);
