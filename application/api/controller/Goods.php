@@ -389,11 +389,10 @@ class Goods extends Api
         if (!$goodFullId) {
             $this->error('缺少请求参数商品ID！');
         }
-        $sizes = $this->request->request('sizes');
+        $sizes = $param['sizes'];
         if (!$sizes || empty($sizes)) {
             $this->error('缺少请求参数商品信息！');
         }
-        dump($sizes);die;
         //查询是否存在数据
         $rew = ShoppingCarts::where(['goodFullId'=>$goodFullId, 'user_id'=>$this->auth->id])->find();
         if ($rew) {
