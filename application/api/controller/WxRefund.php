@@ -9,14 +9,13 @@ use think\Exception;
 
 class WxRefund extends Api
 {
-
     public $appid = 'wxcebf3e4c3aebac0f';
     public $mch_id = '1605079432';
     public $key = 'q3NnfANoey3Q9UBdvQxewesVSJ8NuEaT';
     public $SSLCERT_PATH = 'cert/apiclient_cert.pem';
     public $SSLKEY_PATH = 'cert/apiclient_key.pem';
     protected $noNeedLogin = ['refund'];
-    public function __construct($appid,$mch_id,$key,$SSLCERT_PATH,$SSLKEY_PATH)
+    public function __construct($appid = null,$mch_id=null,$key=null,$SSLCERT_PATH=null,$SSLKEY_PATH=null)
     {
         $this->appid = $appid ?? $this->appid;
         $this->mch_id = $mch_id ?? $this->mch_id;

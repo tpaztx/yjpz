@@ -120,18 +120,24 @@ class Order extends Api
         if(!$res){
             $this->error($e->getMessage());
         }
-        $this->orderPay($order['id']);
+        $this->orderPay($order['id'],$order['type']);
     }
     /**
      * 支付订单
      */
-    public function orderPay($orderId)
+    public function orderPay($orderId,$type)
     {
         $orderId = $this->request->param('order_id') ?? $orderId;
+        $type = $this->request->param('type') ?? $type;
         $user = $this->auth->getUser();
         $order = OrderM::get($orderId);
         $pay = new WxJsApiPay();
-        $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
+        if($type = 'H5'){
+            $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
+        }
+        if($type = 'APP'){
+            $json=$pay->wxAppPay("{$order['real_price']}","购买商品","{$order['order_no']}");
+        }
         if($json){
             $this->success('调用成功！',$json);
         }
@@ -155,8 +161,17 @@ class Order extends Api
         try{
             $order['status'] = -1;
             $order->save();
+            if($order['status'] == 1){
+                if($order['type'] == 'APP'){
+                    $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
+                    $refund->refund("{$order['order_no']}");
+                }
+                $refund = new WxRefund();
+                $refund->refund("{$order['order_no']}");
+            }
             $wph=new Wph();
             $wph->cancelOrder($order['wph_order_no']);
+
             // 提交事务
             Db::commit();
             $res = true;

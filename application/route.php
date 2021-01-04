@@ -157,6 +157,8 @@ Route::post([
     'api/orderShow'=>'api/order/orderShow',
     //删除订单
     'api/delOrder'=>'api/order/delOrder',
+    //微信支付
+    'api/orderPay'=>'api/order/orderPay',
 ]);
 
 Route::get([
