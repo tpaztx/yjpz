@@ -31,6 +31,8 @@ Route::post([
 	'api/register' => 'api/user/register',
 	//账号密码登录
 	'api/login' => 'api/user/login',
+	//账号密码登录
+	'api/logout' => 'api/user/logout',
 	//发送验证码
 	'api/sendSMS' => 'api/sms/send',
 	//验证码登录
