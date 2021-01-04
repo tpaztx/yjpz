@@ -66,9 +66,9 @@ class Order extends Api
         $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
         $commission1 = $param['real_price'] * $com_fee1 * 0.01;
         $commission2 = $param['real_price'] * $com_fee2 * 0.01;
-        $commission1_id = $this->auth->pid?:0;
-        dump($this->auth->pid);die;
-        $commission2_id = User::where('id', $this->auth->pid)->value('id');
+        $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
+        $pid = User::where('id', $commission2_id)->valu('pid');
+        $commission1_id = User::where('trade_code', $pid)->value('id');
         $OrderData = [
             'user_id'=>$user['id'],
             'order_no'=>$order_no,
