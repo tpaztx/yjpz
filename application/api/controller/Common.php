@@ -532,8 +532,8 @@ class Common extends Api
             $isOnline = $wph->goodsOnline($v->goodFullId);
             if ($isOnline['goodsList'][0]['goodOnline']==0) {
                 $result += db('goods_list')->where('goodFullId', $v->goodFullId)->delete();
-                db('shopping_cat')->where('goodId', $v->goodId)->delete();
-                db('shopping_cats')->where('goodFullId', $v->goodFullId)->delete();
+                db('shopping_cart')->where('goodId', $v->goodId)->delete();
+                db('shopping_carts')->where('goodFullId', $v->goodFullId)->delete();
             }
         }
         $this->success('请求成功！', $result);
