@@ -473,6 +473,7 @@ class Common extends Api
     {
         $brandListModel = new BrandList;
         $brand_list = $brandListModel->where("sellTimeTo < '".date('Y-m-d H:i:s', time())."'")->field('id,adId')->select();
+        $goods_list = $brand_list = 0;
         foreach ($brand_list as $key => $val) {
             $goods_list = db('goods_list')->where('adId', $val->adId)->delete();
             $brand_list = db('brand_list')->where('id', $val->id)->delete();
