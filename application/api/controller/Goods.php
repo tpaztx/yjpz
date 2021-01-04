@@ -75,7 +75,7 @@ class Goods extends Api
             $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
         }
         if ($catNameTwo) {
-            $test = explode($catNameTwo, ",");
+            $test = explode(",", $catNameTwo);
             foreach ($test as $value) {
                 $where .= " and catNameTwo='".$value."'";
             }
