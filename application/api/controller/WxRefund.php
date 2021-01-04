@@ -15,7 +15,7 @@ class WxRefund extends Api
     public $key = 'q3NnfANoey3Q9UBdvQxewesVSJ8NuEaT';
     public $SSLCERT_PATH = 'cert/apiclient_cert.pem';
     public $SSLKEY_PATH = 'cert/apiclient_key.pem';
-
+    protected $noNeedLogin = ['refund'];
     public function __construct($appid,$mch_id,$key,$SSLCERT_PATH,$SSLKEY_PATH)
     {
         $this->appid = $appid ?? $this->appid;

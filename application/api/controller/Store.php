@@ -249,7 +249,7 @@ class Store extends Api
     {
         $limit = $this->request->param('limit') ?? 10;
         $store_id = $this->request->param('store_id');
-            $orderFiled = $this->request->param('orderFiled') ?? 'goodId';
+        $orderFiled = $this->request->param('orderFiled') ?? 'goodId';
         $orderRule = $this->request->param('orderRule') ?? 'asc';
         $catNameOne = $this->request->param('catNameOne');
         $catNameTwo = $this->request->param('catNameTwo');

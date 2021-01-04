@@ -129,10 +129,15 @@ class WxJsApiPay extends Api
             $openid = $data['openid'];					//付款人openID
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
+            $order = \app\admin\model\Order::where('order_no',$order_sn)->find();
             // 启动事务
             Db::startTrans();
             try{
-
+                $wph = new Wph();
+                $wph->applyPayment($order['wph_order_no']);
+                $order->status = 1;
+                $order->transaction_no = $transaction_id;
+                $order->save();
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {
@@ -228,12 +233,15 @@ class WxJsApiPay extends Api
             $openid = $data['openid'];					//付款人openID
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
-
-
+            $order = \app\admin\model\Order::where('order_no',$order_sn)->find();
             // 启动事务
             Db::startTrans();
             try{
-
+                $wph = new Wph();
+                $wph->applyPayment($order['wph_order_no']);
+                $order->status = 1;
+                $order->transaction_no = $transaction_id;
+                $order->save();
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {
