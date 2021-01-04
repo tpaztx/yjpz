@@ -22,7 +22,7 @@ use app\common\model\User;
 use app\common\model\UserGroup;
 
 /**
- * 公共接口00
+ * 公共接口
  */
 class Common extends Api
 {

@@ -165,5 +165,5 @@ Route::get([
     //定时删除失效商品
     'api/delBrand' => 'api/common/delBrand',
     //定时查询商品状态
-    'api/goodsOnline' => 'api/common/goodsOnline',
+    // 'api/goodsOnline' => 'api/common/goodsOnline',
 ]);
