@@ -103,8 +103,8 @@ class Search extends Api
             $where .= " and goodName like '%".$keyword."%'";
         }
         // $brand_result = BrandList::where('adId', 'in', $adId)
-                                    ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
-                                    ->select();
+        //                             ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
+        //                             ->select();
         // if ($brand_result && !empty($brand_result)) {
             // foreach ($brand_result as $key => $val)
             // {
