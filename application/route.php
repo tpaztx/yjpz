@@ -160,4 +160,6 @@ Route::post([
 Route::get([
 	//检测平台用户的等级信息
     'api/userGroupID' => 'api/common/userGroupID', 
+    //定时删除失效商品
+    'api/delBrand' => 'api/common/delBrand',
 ]);
