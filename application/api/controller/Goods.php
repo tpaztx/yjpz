@@ -403,10 +403,10 @@ class Goods extends Api
             $data['user_id'] = $this->auth->id;
             $data['goodFullId'] = $goodFullId;
             $data['adId'] = $adId;
-            $data['goodName'] = $param['goodName']?'';
-            $data['color'] = $param['color']?'';
-            $data['material'] = $param['material']?'';
-            $data['goodImage'] = $param['goodImage']?'';
+            $data['goodName'] = $param['goodName']?:'';
+            $data['color'] = $param['color']?:'';
+            $data['material'] = $param['material']?:'';
+            $data['goodImage'] = $param['goodImage']?:'';
             $data['createtime'] = time();
             $result = ShoppingCarts::insert($data);
         }
