@@ -546,6 +546,7 @@ class Common extends Api
         $order = Order::where('status',3)->whereTime('updatetime', '>=', $time)
                                         ->field('id,order_no,user_id,proportion,commission1,commission2,commission1_id,commission2_id')
                                         ->select();
+                                        echo Order::getLastSQL();die;
         if ($order && !empty($order)) {
             //添加收益记录
             foreach ($order as $key => $val) {
