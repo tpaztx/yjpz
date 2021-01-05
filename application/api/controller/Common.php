@@ -333,6 +333,7 @@ class Common extends Api
             $this->inputGoodsList();
         }
     }
+
     /**
      * 查询待支付/待发货/已返货订单是否过期/发货/签收
      */
@@ -389,6 +390,7 @@ class Common extends Api
             $this->error('【无可查询订单】');
         }
     }
+
     /**
      * 查询退货订单状态
      */
@@ -433,6 +435,7 @@ class Common extends Api
         }
         $this->success('无可查询订单！');
     }
+
     /**
      * 返回品牌对应的商品的数据
      */
@@ -532,16 +535,11 @@ class Common extends Api
     }
 
     /**
-     * 定时查询商品状态
+     * 定时查询订单返佣状态
      */
-    public function goodsOnline($goodFullId)
+    public function orderCommission()
     {
-        $wph = new Wph;
-        $goods_list = GoodsList::where('goodFullId is not null')->field('goodFullId,goodId')->select();
-        $result = 0;
-        foreach ($goods_list as $k => $v) {
-            
-        }
-        $this->success('请求成功！', $result);
+        $time = strtotime(date('Y-m-d H:i:s', time('+7 day')));
+        dump($time);
     }
 }
