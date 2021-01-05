@@ -85,28 +85,27 @@ class Order extends Api
             $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
             $wph=new Wph();
             $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
-            $order->wph_order_no = $wphOrderNo;
-            $order->save();
             $wphOrder = $wph->orderStatus($wphOrderNo);
-            dump($wphOrder);exit;
             //自购佣金
             $proportion = 0;
             if ($param['type'] == 'APP') {
 
-                $proportion = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $pro_fee * 0.01;
+                $proportion = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $pro_fee * 0.01;
             }
             //分销佣金
             $commission1 = $commission2 = 0;
             $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
             $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
-            $commission1 = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $com_fee1 * 0.01;
-            $commission2 = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $com_fee2 * 0.01;
+            $commission1 = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $com_fee1 * 0.01;
+            $commission2 = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $com_fee2 * 0.01;
             $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
             $pid = User::where('id', $commission2_id)->value('pid');
             $commission1_id = User::where('trade_code', $pid)->value('id');
+            $order = \app\admin\model\Order::get($order['id']);
             //保存订单数据
-            $order->real_price = $wphOrder['childOrderSnList'][0]['RealPayTotal'];
-            $order->yunfei_price = $wphOrder['childOrderSnList'][0]['ShippingFee'];
+            $order->wph_order_no = $wphOrderNo;
+            $order->real_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
+            $order->yunfei_price = $wphOrder[0]['childOrderSnList'][0]['ShippingFee'];
             $order->proportion = round($proportion, 2);
             $order->commission1 =round($commission1, 2);
             $order->commission2 = round($commission2, 2);
@@ -114,6 +113,7 @@ class Order extends Api
             $order->commission2_id = $commission2_id?:0;
             $order->save();
             // 提交事务
+
             Db::commit();
             $res = true;
         } catch (\Exception $e) {
