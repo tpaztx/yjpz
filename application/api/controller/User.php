@@ -544,6 +544,7 @@ class User extends Api
                 $where .= " or trade_code='".$val."'";
             }            
             $teamList = $memberModel->where($where)->column('id');
+            echo $memberModel->getLastSQL();die;
         }
 
         $level = $le;
