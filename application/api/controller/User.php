@@ -520,10 +520,13 @@ class User extends Api
         $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
         //今日团队销售
         $user = $this->auth->getUser();
-        $teamId1 = $user->where('pid', $this->auth->trade_code)->column('id');
+        $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
         $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
-        // $teamId = array_merge($teamId1, $teamId2['data']);000
-        dump($teamId2);die;
+        if ($teamId2) {
+            $teamId = array_merge($teamId, $teamId2['data']);
+        }
+        
+        dump($teamId);die;
     }
 
     /**
