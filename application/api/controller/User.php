@@ -431,13 +431,12 @@ class User extends Api
                         $user->delete();
                         $this->error('授权失败！');
                     }
-
                     Token::set($token, $user['id']);
                     $this->success('授权APP成功！', $user);
                 }
             }
             $this->auth->register('', '', '', '', $data);
-            $userInfo = $this->auth->getUserinfo();
+            $userInfo = UserM::where('openid',$data['openid'])->find();
             if ($userInfo) {
                 $this->success('授权H5成功！', $userInfo);
             }
