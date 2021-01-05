@@ -6,6 +6,7 @@ use app\common\controller\Api;
 use app\common\exception\UploadException;
 use app\common\library\Upload;
 use app\common\model\Area;
+use app\common\model\OrderGood;
 use app\common\model\Version;
 use fast\Random;
 use think\Config;
@@ -370,9 +371,18 @@ class Common extends Api
                     if($value['childOrderSnList'][0]['statusCode'] == 3){
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2, 'updatetime'=>time()]);
                     }
-                    //将已签收订单变为已完成状态
+                    //将已签收订单变为已完成状态 增加销量
                     if($value['childOrderSnList'][0]['statusCode'] == 7){
                         \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3, 'updatetime'=>time()]);
+                        $order_id = \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->value('id');
+                        $orderGoods = OrderGood::where('order_id',$order_id)->select();
+                        if(!empty($orderGoods)){
+                            foreach ($orderGoods as $good){
+                                $goods = GoodsList::where('goodId',$good['goodId'])->find();
+                                $goods->sales += $good['good_num'];
+                                $goods->save();
+                            }
+                        }
                     }
                 }
                     // 提交事务

@@ -256,6 +256,7 @@ class Store extends Api
         $minPrice = $this->request->param('minPrice');
         $maxPrice = $this->request->param('maxPrice');
         $adId = $this->request->param('adId');
+        $search = $this->request->param('search');
         //验证该品牌是否下架
         $check = StoreDown::where('store_id',$store_id)->whereIn('ad_id',$adId)->find();
         if($check){
@@ -266,7 +267,7 @@ class Store extends Api
         $data['time'] = ceil((strtotime($time)-time())/86400);
         //获取对该品牌下的商品并进行改价
         $data['list'] = GoodsList::where('adId',$adId)
-            ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice){
+            ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice,$search){
                 if($catNameTwo && $catNameTwo){
                     $query->where('catNameOne',$catNameOne);
                     $query->where('catNameTwo',$catNameTwo);
@@ -276,6 +277,9 @@ class Store extends Api
                 }
                 if($maxPrice){
                     $query->where('suggestPrice','<',$maxPrice);
+                }
+                if($search && !empty($search)){
+                    $query->where('goodName','like','%'.$search.'%');
                 }
             })
             ->order($orderFiled,$orderRule)
