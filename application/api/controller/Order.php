@@ -113,6 +113,7 @@ class Order extends Api
             $order->commission2_id = $commission2_id?:0;
             $order->save();
             // 提交事务
+
             Db::commit();
             $res = true;
         } catch (\Exception $e) {
