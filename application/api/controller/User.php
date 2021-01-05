@@ -499,7 +499,7 @@ class User extends Api
     {
         $page = $this->request->request('page')?:1;
         $data['money'] = $this->auth->money?:0;
-        $list = \app\common\MoneyLog::where('user_id', $this->auth->id)->order('id desc')->paginate(10, false, ['page'=>$page]);
+        $list = \app\common\model\MoneyLog::where('user_id', $this->auth->id)->order('id desc')->paginate(10, false, ['page'=>$page]);
         foreach ($list as $key => $val) {
             $list[$key]['money'] = $val->money>0?'+'.$val->money:'-'.$val->money;
         }
