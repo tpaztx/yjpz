@@ -520,10 +520,16 @@ class User extends Api
         $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
         //今日团队销售
         $user = $this->auth->getUser();
-        $teamId1 = $user->where('pid', $this->auth->trade_code)->column('id');
-        $teamId2 = $this->getTeamLevel($this->auth->trade_code, 2, [], 0);
-        // $teamId = array_merge($teamId1, $teamId2);
-        dump($teamId2);die;
+        $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
+        $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
+        if ($teamId2) {
+            $teamId = array_merge($teamId, $teamId2['data']);
+        }
+        $today_sale_price = Order::where(['status'=>3])->where('user_id', 'in', $teamId)->whereTime('createtime', 'today')->sum('real_price');
+        $this->success('请求成功！', [
+            'today' => $today,
+            'today_sale_price' => $today_sale_price,
+        ]);
     }
 
     /**
@@ -537,11 +543,11 @@ class User extends Api
     {
         $memberModel = $this->auth->getUser();
         if (empty($uidArr)) {
-            $teamList = $memberModel->where(['pid' => $uid])->column('id');
+            $teamList = $memberModel->where(['pid' => $uid])->column('trade_code');
         }else{
-            $where = "1=1";
+            $where = "0";
             foreach ($uidArr as $key => $val) {
-                $where .= " or pid='".$val."'";
+                $where .= " or trade_code='".$val."'";
             }            
             $teamList = $memberModel->where($where)->column('id');
         }

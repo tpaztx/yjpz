@@ -220,6 +220,7 @@ class Goods extends Api
                 $result['color'] = $val->color?:'';
                 $result['material'] = $val->material?:'';
                 $result['goodImage'] = $val->goodImage?:'';
+                $result['goodId'] = $val->goodId?:'';
                 foreach ($val->sizes as $k => $v) {
                     $result['sizes'][$k] = [
                         'sizeName' => $v->sizeName,
@@ -408,6 +409,7 @@ class Goods extends Api
             $data['material'] = $param['material']?:'';
             $data['goodImage'] = $param['goodImage']?:'';
             $data['createtime'] = time();
+            $data['goodId'] = $param['goodId'];
             $result = ShoppingCarts::insert($data);
         }
         
