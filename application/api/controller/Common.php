@@ -20,6 +20,7 @@ use think\Cache;
 use think\Log;
 use app\common\model\User;
 use app\common\model\UserGroup;
+use app\common\model\MoneyLog;
 
 /**
  * 公共接口
@@ -361,15 +362,15 @@ class Common extends Api
                 foreach ($list as $value){
                     //将过期订单变为已取消状态
                     if($value['childOrderSnList'][0]['statusCode'] == 5){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>-1]);
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>-1, 'updatetime'=>time()]);
                     }
                     //将已发货订单变为已发货状态
                     if($value['childOrderSnList'][0]['statusCode'] == 3){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2]);
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2, 'updatetime'=>time()]);
                     }
                     //将已签收订单变为已完成状态
                     if($value['childOrderSnList'][0]['statusCode'] == 7){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3]);
+                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3, 'updatetime'=>time()]);
                     }
                 }
                     // 提交事务
@@ -539,7 +540,82 @@ class Common extends Api
      */
     public function orderCommission()
     {
-        $time = strtotime(date('Y-m-d H:i:s', time(+7 day)));
-        dump($time);
+        $time = strtotime('+7 day');
+        $log = [];
+        $order = Order::where('status',3)->whereTime('updatetime', '>=', $time)
+                                        ->field('id,order_no,user_id,proportion,commission1,commission2,commission1_id,commission2_id')
+                                        ->select();
+        if ($order && !empty($order)) {
+            //添加收益记录
+            foreach ($order as $key => $val) {
+                //自购
+                if ($val->proportion > 0) {
+                    $this->addProportion($val);
+                }
+                //代购
+                $this->addCommission($val);
+                //增加用户余额
+            }
+        }
+        $this->success('请求成功！');                                    
     }
+
+    //自购佣金记录
+    public function addProportion($data)
+    {
+        
+        try {
+            $user = User::get($data->user_id);
+            $log = [
+                'user_id'    => $data->user_id,
+                'money'      => $data->proportion,
+                'before'     => $user?$user['money']:0,
+                'after'      => ($user?$user['money']:0) + $data->proportion,
+                'memo'       => '购买商品返利',
+                'createtime' => time(),
+            ];
+            $add_log = MoneyLog::insert($log);
+        } catch (Exception $e) {
+            Log::write($e->getMessage);
+        }
+    }
+    //代购佣金记录
+    public function addCommission($data)
+    {
+        //团长
+        if ($data->commission1_id > 0) {
+            try {
+                $user1 = User::get($data->commission1_id);
+                $log = [
+                    'user_id'    => $user1->id,
+                    'money'      => $data->commission1,
+                    'before'     => $user1?$user1['money']:0,
+                    'after'      => ($user1?$user1['money']:0) + $data->commission1,
+                    'memo'       => '购买商品返利',
+                    'createtime' => time(),
+                ];
+                $add_log = MoneyLog::insert($log);
+            } catch (Exception $e) {
+                Log::write($e->getMessage);
+            }
+        }
+        //团员
+        if ($data->commission2_id > 0) {
+            try {
+                $user2 = User::get($data->commission2_id);
+                $log = [
+                    'user_id'    => $user2->id,
+                    'money'      => $data->commission2,
+                    'before'     => $user2?$user2['money']:0,
+                    'after'      => ($user2?$user2['money']:0) + $data->commission2,
+                    'memo'       => '购买商品返利',
+                    'createtime' => time(),
+                ];
+                $add_log = MoneyLog::insert($log);
+            } catch (Exception $e) {
+                Log::write($e->getMessage);
+            }
+        }
+    }
+
 }
