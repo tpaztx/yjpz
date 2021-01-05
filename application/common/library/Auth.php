@@ -170,7 +170,7 @@ class Auth
         ]);
         $params['password'] = $this->getEncryptPassword($password, $params['salt']);
         $params = array_merge($params, $extend);
-
+        dump(1111);exit;
         //账号注册时需要开启事务,避免出现垃圾数据
         Db::startTrans();
         try {
