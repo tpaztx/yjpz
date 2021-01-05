@@ -56,8 +56,6 @@ class Order extends Api
             'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
             'time'=>$address['is_time'],
             'type'=>$param['type'],
-            'status'=>0,
-            'after_sales'=>0,
         ];
         if ($param['type'] == 'APP') {
             $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
@@ -87,8 +85,6 @@ class Order extends Api
             $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
             $wph=new Wph();
             $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
-            $order->wph_order_no = $wphOrderNo;
-            $order->save();
             $wphOrder = $wph->orderStatus($wphOrderNo);
             //自购佣金
             $proportion = 0;
@@ -106,6 +102,7 @@ class Order extends Api
             $pid = User::where('id', $commission2_id)->value('pid');
             $commission1_id = User::where('trade_code', $pid)->value('id');
             //保存订单数据
+            $order->wph_order_no = $wphOrderNo;
             $order->real_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
             $order->yunfei_price = $wphOrder[0]['childOrderSnList'][0]['ShippingFee'];
             $order->proportion = round($proportion, 2);
