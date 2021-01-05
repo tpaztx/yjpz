@@ -21,6 +21,7 @@ use think\Log;
 use app\common\model\User;
 use app\common\model\UserGroup;
 use app\common\model\MoneyLog;
+use app\common\model\Order;
 
 /**
  * 公共接口
