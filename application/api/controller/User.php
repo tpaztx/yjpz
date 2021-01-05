@@ -435,9 +435,8 @@ class User extends Api
                     $this->success('授权APP成功！', $user);
                 }
             }
-            $res = $this->auth->register('', '', '', '', $data);
-            dump($res);exit;
-
+            $this->auth->register('', '', '', '', $data);
+            $userInfo = $this->auth->getUserinfo();
             if ($userInfo) {
                 $this->success('授权H5成功！', $userInfo);
             }

@@ -126,22 +126,22 @@ class Auth
     public function register($username, $password, $email = '', $mobile = '', $extend = [])
     {
         // 检测用户名、昵称、邮箱、手机号是否存在
-        if (User::getByUsername($username)) {
-            $this->setError('Username already exist');
-            return false;
-        }
-        if (User::getByNickname($username)) {
-            $this->setError('Nickname already exist');
-            return false;
-        }
-        if ($email && User::getByEmail($email)) {
-            $this->setError('Email already exist');
-            return false;
-        }
-        if ($mobile && User::getByMobile($mobile)) {
-            $this->setError('Mobile already exist');
-            return false;
-        }
+//        if (User::getByUsername($username)) {
+//            $this->setError('Username already exist');
+//            return false;
+//        }
+//        if (User::getByNickname($username)) {
+//            $this->setError('Nickname already exist');
+//            return false;
+//        }
+//        if ($email && User::getByEmail($email)) {
+//            $this->setError('Email already exist');
+//            return false;
+//        }
+//        if ($mobile && User::getByMobile($mobile)) {
+//            $this->setError('Mobile already exist');
+//            return false;
+//        }
 
         $ip = request()->ip();
         $time = time();
@@ -170,7 +170,6 @@ class Auth
         ]);
         $params['password'] = $this->getEncryptPassword($password, $params['salt']);
         $params = array_merge($params, $extend);
-        dump(11112);exit;
         //账号注册时需要开启事务,避免出现垃圾数据
         Db::startTrans();
         try {
