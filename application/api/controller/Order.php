@@ -89,7 +89,6 @@ class Order extends Api
             //自购佣金
             $proportion = 0;
             if ($param['type'] == 'APP') {
-
                 $proportion = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $pro_fee * 0.01;
             }
             //分销佣金
