@@ -97,6 +97,8 @@ Route::post([
 	'api/getCountDown' => 'api/goods/getCountDown',
 	//用户累计收益和余额
 	'api/getUserIncome' => 'api/commission/getUserIncome',
+	//我的零钱
+	'api/myMoneyInfo' => 'api/user/myMoneyInfo',
 
   
     //小店-店铺设置
