@@ -526,6 +526,9 @@ class User extends Api
             $teamId = array_merge($teamId, $teamId2['data']);
         }
         $today_sale_price = Order::where(['status'=>3])->where('user_id', 'in', $teamId)->whereTime('createtime', 'today')->sum('real_price');
+        //本月平台奖励
+        $month = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'month')->sum('proportion');
+        echo Order::getLastSQL();die;
         $this->success('请求成功！', [
             'today' => $today,
             'today_sale_price' => $today_sale_price,
