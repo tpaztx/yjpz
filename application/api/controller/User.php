@@ -16,6 +16,7 @@ use app\common\model\User as UserM;
 use function Qiniu\json_decode;
 use function Symfony\Component\String\s;
 use function Symfony\Component\String\u;
+use app\common\model\Order;
 
 /**
  * 会员接口
@@ -505,6 +506,20 @@ class User extends Api
         }
         $data['list'] = $list;
         $this->success('请求成功！', $data);
+    }
+
+    /**
+     * 我的团队数据
+     */
+    public function getMyTeam()
+    {
+        //今日平台奖励
+        $today = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('proportion');
+        $today += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission1');
+        $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
+        //今日团队销售
+        $team1 = self::where(['pid'=>$this->auth->trade_code])->column('id');
+        dump($team1);die;
     }
 
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {

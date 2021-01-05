@@ -99,7 +99,8 @@ Route::post([
 	'api/getUserIncome' => 'api/commission/getUserIncome',
 	//我的零钱
 	'api/myMoneyInfo' => 'api/user/myMoneyInfo',
-
+	//我的团队数据
+	'api/getMyTeam' => 'api/user/getMyTeam',
   
     //小店-店铺设置
     'api/storeSet'=>'api/store/storeSet',
