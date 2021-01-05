@@ -12,6 +12,7 @@ use app\common\model\Address;
 use fast\Random;
 use think\Db;
 use think\Validate;
+use think\Cache;
 use app\common\model\User as UserM;
 use function Qiniu\json_decode;
 use function Symfony\Component\String\s;
@@ -519,10 +520,45 @@ class User extends Api
         $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
         //今日团队销售
         $user = $this->auth->getUser();
-        $team1 = $user->where(['pid'=>$this->auth->trade_code])->column('id');
-        $team2 = $user->where('id', 'in', $team1)->column('id');
-        $teams = array_merge($team1, $team2);
-        dump($teams);die;
+        $teamId = $this->getTeamLevel($this->auth->trade_code,)
+    }
+
+    /**
+     * 获取指定层级的团队集合
+     * uid       string 上下级查询字段
+     * level_num int    直推层级
+     * uidArr    array  层级用户id集合
+     * le        int    从0开始获取比对数据
+     */
+    public function getTeamLevel($uid, $level_num = 1, $uidArr = array(), $le = 0)
+    {
+        $memberModel = $this->auth->getUser();
+        if (empty($uidArr)) {
+            $teamList = $memberModel->where(['pid' => $uid])->column('id');
+        }else{
+            $where = "1=1";
+            foreach ($uidArr as $key => $val) {
+                $where .= " or pid='".$val."'";
+            }            
+            $teamList = $memberModel->where($where)->column('id');
+        }
+
+        $level = 0;
+        if ($teamList)
+        {
+            $level++;
+            $Cache::set($uid.'_ids', $teamList);
+            if ($level == $level_num) {
+                return ['level' => $level, 'data' => Cache::get($uid.'_ids')];
+            }else{
+                $data = $this->getTeamLevel($uid, $level_num, $teamList, $level);
+                if($data['num'] == $level_num){
+                    return $data;
+                }
+            }
+        }else{
+            return 0;
+        }
     }
 
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
