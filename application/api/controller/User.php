@@ -520,7 +520,9 @@ class User extends Api
         //今日团队销售
         $user = $this->auth->getUser();
         $team1 = $user->where(['pid'=>$this->auth->trade_code])->column('id');
-        dump($team1);die;
+        $team2 = $user->where('id', 'in', $team1)->column('id');
+        $teams = array_merge($team1, $team2);
+        dump($teams);die;
     }
 
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
