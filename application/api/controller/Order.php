@@ -30,17 +30,11 @@ class Order extends Api
         $param = $this->request->param();
         $validate = $this->validate($param,[
             'store_id'=>'require',
-            'total_price'=>'require',
-            'real_price'=>'require',
-            'yunfei_price'=>'require',
             'address_id'=>'require',
             'type'=>'require',
             'good'=>'require',
         ],[
             'store_id.require'=>'无效的小店！',
-            'total_price.require'=>'缺少总金额！',
-            'real_price.require'=>'缺少实际支付金额！',
-            'yunfei_price.require'=>'缺少运费！',
             'address_id.require'=>'请选择收获地址！',
             'good.require'=>'请选择商品！',
         ]);
@@ -111,6 +105,10 @@ class Order extends Api
             $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
             $order->wph_order_no = $wphOrderNo;
             $order->save();
+            $wphOrder = $wph->orderStatus($wphOrderNo);
+            $order->real_price = $wphOrder['childOrderSnList'][0]['RealPayTotal'];
+            $order->yunfei_price = $wphOrder['childOrderSnList'][0]['ShippingFee'];
+            $order->save();
             // 提交事务
             Db::commit();
             $res = true;
@@ -122,7 +120,7 @@ class Order extends Api
         if(!$res){
             $this->error($e->getMessage());
         }
-        $this->orderPay($order['id'],$order['type']);
+        $this->success('创建订单成功！',$order);
     }
     /**
      * 支付订单
