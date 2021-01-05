@@ -332,7 +332,7 @@ class Goods extends Api
             foreach ($rows as &$row){
                 if(!empty($row['goods']['sizes_json'])){
                     foreach ($row['goods']['sizes_json'] as $item ){
-                        if((int)$row['sizeId'] == (int)$item['sizeId']){
+                        if($row['sizeId'] == $item['sizeId']){
                             $row['goods']['size'] = $item;
                         }
                         unset($row['goods']['sizes_json']);
