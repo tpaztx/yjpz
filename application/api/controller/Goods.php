@@ -339,7 +339,6 @@ class Goods extends Api
                     }
                 }
             }
-            exit;
         }
         if(empty($rows)){
             $this->error('购物车无数据！');
