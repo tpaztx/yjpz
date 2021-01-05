@@ -577,6 +577,8 @@ class Common extends Api
                 'createtime' => time(),
             ];
             $add_log = MoneyLog::insert($log);
+            $user->money = $log['after'];
+            $user->save();
         } catch (Exception $e) {
             Log::write($e->getMessage);
         }
@@ -597,6 +599,8 @@ class Common extends Api
                     'createtime' => time(),
                 ];
                 $add_log = MoneyLog::insert($log);
+                $user1->money = $log['after'];
+                $user1->save();
             } catch (Exception $e) {
                 Log::write($e->getMessage);
             }
@@ -614,6 +618,8 @@ class Common extends Api
                     'createtime' => time(),
                 ];
                 $add_log = MoneyLog::insert($log);
+                $user2->money = $log['after'];
+                $user2->save();
             } catch (Exception $e) {
                 Log::write($e->getMessage);
             }
