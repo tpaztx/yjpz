@@ -431,7 +431,6 @@ class User extends Api
                         $user->delete();
                         $this->error('授权失败！');
                     }
-
                     Token::set($token, $user['id']);
                     $this->success('授权APP成功！', $user);
                 }
