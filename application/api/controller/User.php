@@ -523,7 +523,7 @@ class User extends Api
         $teamId1 = $user->where('pid', $this->auth->trade_code)->column('id');
         $teamId2 = $this->getTeamLevel($this->auth->trade_code, 2, [], 0);
         $teamId = array_merge($teamId1, $teamId2['data']);
-        dump($teamId);die;
+        dump($teamId2);die;
     }
 
     /**
