@@ -334,10 +334,10 @@ class Goods extends Api
                     foreach ($row['goods']['sizes_json'] as $item ){
                         dump( $row['goods']['size']);
                         dump( $item);
-                        if($row['sizeId'] == $item['sizeId']){
-                            $row['goods']['size'] = $item;
-                        }
-                        unset($row['goods']['sizes_json']);
+//                        if($row['sizeId'] == $item['sizeId']){
+//                            $row['goods']['size'] = $item;
+//                        }
+//                        unset($row['goods']['sizes_json']);
                     }
                 }
             }
