@@ -539,7 +539,7 @@ class User extends Api
         if (empty($uidArr)) {
             $teamList = $memberModel->where(['pid' => $uid])->column('trade_code');
         }else{
-            $where = "1=1";
+            $where = " ";
             foreach ($uidArr as $key => $val) {
                 $where .= " or trade_code='".$val."'";
             }            
