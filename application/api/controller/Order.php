@@ -127,17 +127,18 @@ class Order extends Api
     /**
      * 支付订单
      */
-    public function orderPay($orderId,$type)
+    public function orderPay($orderId=null,$type=null)
     {
+
         $orderId = $this->request->param('order_id') ?? $orderId;
         $type = $this->request->param('type') ?? $type;
         $user = $this->auth->getUser();
         $order = OrderM::get($orderId);
         $pay = new WxJsApiPay();
-        if($type = 'H5'){
+        if($type == 'H5'){
             $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
         }
-        if($type = 'APP'){
+        if($type == 'APP'){
             $json=$pay->wxAppPay("{$order['real_price']}","购买商品","{$order['order_no']}");
         }
         if($json){
