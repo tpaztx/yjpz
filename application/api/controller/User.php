@@ -518,7 +518,7 @@ class User extends Api
         $today += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission1');
         $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
         //今日团队销售
-        $team1 = self::where(['pid'=>$this->auth->trade_code])->column('id');
+        $team1 = User::where(['pid'=>$this->auth->trade_code])->column('id');
         dump($team1);die;
     }
 
