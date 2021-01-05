@@ -555,7 +555,7 @@ class User extends Api
                 return ['level' => $level, 'data' => Cache::get($uid.'_ids')];
             }else{
                 $data = $this->getTeamLevel($uid, $level_num, $teamList, $level);
-                if($data['num'] == $level_num){
+                if($data['level'] == $level_num){
                     return $data;
                 }
             }
