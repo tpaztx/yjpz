@@ -510,7 +510,7 @@ class User extends Api
     }
 
     /**
-     * 我的团队数据
+     * 我的团队数据000
      */
     public function getMyTeam()
     {
