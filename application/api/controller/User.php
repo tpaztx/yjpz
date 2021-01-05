@@ -537,11 +537,11 @@ class User extends Api
     {
         $memberModel = $this->auth->getUser();
         if (empty($uidArr)) {
-            $teamList = $memberModel->where(['pid' => $uid])->column('id');
+            $teamList = $memberModel->where(['pid' => $uid])->column('trade_code');
         }else{
             $where = "1=1";
             foreach ($uidArr as $key => $val) {
-                $where .= " or pid='".$val."'";
+                $where .= " or trade_code='".$val."'";
             }            
             $teamList = $memberModel->where($where)->column('id');
         }
