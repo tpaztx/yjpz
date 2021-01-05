@@ -525,8 +525,11 @@ class User extends Api
         if ($teamId2) {
             $teamId = array_merge($teamId, $teamId2['data']);
         }
-        
-        dump($teamId);die;
+        $today_sale_price = Order::where(['status'=>3])->where('user_id', 'in', $teamId)->whereTime('updatetime', 'today')->sum('real_price');
+        $this->success('请求成功！', [
+            'today' => $today,
+            'today_sale_price' => $today_sale_price,
+        ]);
     }
 
     /**
