@@ -88,6 +88,7 @@ class Order extends Api
             $order->wph_order_no = $wphOrderNo;
             $order->save();
             $wphOrder = $wph->orderStatus($wphOrderNo);
+            dump($wphOrder);exit;
             //自购佣金
             $proportion = 0;
             if ($param['type'] == 'APP') {
