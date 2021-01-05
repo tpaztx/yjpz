@@ -513,24 +513,39 @@ class User extends Api
      */
     public function getMyTeam()
     {
-        //今日平台奖励
-        $today = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('proportion');
-        $today += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission1');
-        $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
-        //今日团队销售
         $user = $this->auth->getUser();
         $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
         $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
         if ($teamId2) {
             $teamId = array_merge($teamId, $teamId2['data']);
         }
+        //今日平台奖励
+        $today = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('proportion');
+        $today += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission1');
+        $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
+        //今日团队销售
         $today_sale_price = Order::where(['status'=>3])->where('user_id', 'in', $teamId)->whereTime('createtime', 'today')->sum('real_price');
         //本月平台奖励
         $month = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'month')->sum('proportion');
-        echo Order::getLastSQL();die;
+        $month += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'month')->sum('commission1');
+        $month += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'month')->sum('commission2');
+        //本月团队销售
+        $month_sale_price = Order::where(['status'=>3])->where('user_id', 'in', $teamId)->whereTime('createtime', 'month')->sum('real_price');
+        //个人累计奖励
+        $my = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->sum('proportion');
+        $my += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->sum('commission1');
+        $my += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->sum('commission2');
+        //团队累计奖励
+        $team = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->sum('proportion');
+        $team += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->sum('commission1');
+        $team += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->sum('commission2');
+        // echo Order::getLastSQL();die;
         $this->success('请求成功！', [
             'today' => $today,
             'today_sale_price' => $today_sale_price,
+            'month' => $month,
+            'month_sale_price' => $month_sale_price,
+            'total' => $my + $team,
         ]);
     }
 
