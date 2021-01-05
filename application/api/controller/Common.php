@@ -244,6 +244,8 @@ class Common extends Api
     public function inputGoodsList()
     {
         $wph = new Wph;
+        ignore_user_abort(true);
+        set_time_limit(90);
         $pageIndex = $page_total = $brandNum = $brandAdId = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
@@ -259,17 +261,17 @@ class Common extends Api
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
-                $goods_list = GoodsList::where('goodFullId is not null')->where('adId', $v['adId'])->field('goodFullId,goodId')->select();
-                if ($goods_list) {
-                    foreach ($goods_list as $key => $value) {
-                        $isOnline = $wph->goodsOnline($value['goodFullId']);
-                        if ($isOnline['goodsList'][0]['goodOnline']==0) {
-                            $result += db('goods_list')->where('goodFullId', $value['goodFullId'])->delete();
-                            db('shopping_cart')->where('goodId', $value['goodId'])->delete();
-                            db('shopping_carts')->where('goodFullId', $value['goodFullId'])->delete();
-                        }
-                    }
-                }
+                // $goods_list = GoodsList::where('goodFullId is not null')->where('adId', $v['adId'])->field('goodFullId,goodId')->select();
+                // if ($goods_list) {
+                //     foreach ($goods_list as $key => $value) {
+                //         $isOnline = $wph->goodsOnline($value['goodFullId']);
+                //         if ($isOnline['goodsList'][0]['goodOnline']==0) {
+                //             $result += db('goods_list')->where('goodFullId', $value['goodFullId'])->delete();
+                //             db('shopping_cart')->where('goodId', $value['goodId'])->delete();
+                //             db('shopping_carts')->where('goodFullId', $value['goodFullId'])->delete();
+                //         }
+                //     }
+                // }
                 $brandAdId = $v['adId'];
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 $pageTotal = false;
@@ -325,7 +327,6 @@ class Common extends Api
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
                     } while (Cache::get('goods_index') <= $pageIndex);
                 }
-                
                 Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
                 Cache::set('brandNum', Cache::get('brandNum') + 1);
             }
