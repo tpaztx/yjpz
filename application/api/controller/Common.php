@@ -539,7 +539,7 @@ class Common extends Api
      */
     public function orderCommission()
     {
-        $time = strtotime(date('Y-m-d H:i:s', time('+7 day')));
+        $time = strtotime(date('Y-m-d H:i:s', time(+7 day)));
         dump($time);
     }
 }
