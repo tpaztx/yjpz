@@ -24,13 +24,19 @@ class Order extends Model
     ];
     public function getStatusTextAttr($value,$data)
     {
-        $status = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成"];
-        return $status[$data['status']];
+        if(!empty($value)){
+            $value = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成"];
+            return $value[$data['status']];
+        }
+        return $value;
     }
     public function getAfterSalesTextAttr($value,$data)
     {
-        $after_sales = [0=>'',1=>'审核中',2=>'未通过',3=>"已通过",4=>"已完成"];
-        return $after_sales[$data['after_sales']];
+        if(!empty($value)) {
+            $value = [0 => '', 1 => '审核中', 2 => '未通过', 3 => "已通过", 4 => "已完成"];
+            return $value[$data['after_sales']];
+        }
+        return $value;
     }
     public function getCreatetimeTextAttr($value, $data)
     {
