@@ -951,3 +951,754 @@
 [ info ] [ DB ] INIT mysql
 [ info ] [ RUN ] app\api\controller\Order->return_good[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
 [ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:50+08:00 ] 127.0.0.1 GET yjpz.cc/
+[运行时间：0.038284s] [吞吐率：26.12req/s] [内存消耗：3,213.13kb] [文件加载：137]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000021s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001950s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000317s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001020s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000248s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:50+08:00 ] 127.0.0.1 GET yjpz.cc/admin/index/login
+[运行时间：0.031047s] [吞吐率：32.21req/s] [内存消耗：3,516.30kb] [文件加载：141]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001377s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000211s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000925s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.000188s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ RUN ] app\admin\controller\Index->login[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\view\index\login.html [ array (
+  0 => 'breadcrumb',
+  1 => 'site',
+  2 => 'config',
+  3 => 'auth',
+  4 => 'admin',
+  5 => 'background',
+  6 => 'title',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000116s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:50+08:00 ] 127.0.0.1 GET yjpz.cc/index.php?s=/captcha
+[运行时间：0.032795s] [吞吐率：30.49req/s] [内存消耗：2,203.66kb] [文件加载：119]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001672s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000211s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'method',
+  'method' => 
+  array (
+    0 => '\\think\\captcha\\CaptchaController',
+    1 => 'index',
+  ),
+  'var' => 
+  array (
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'id' => NULL,
+)
+[ info ] [ RUN ] think\captcha\CaptchaController->index[ E:\phpstudy_pro\WWW\yjpz\vendor\topthink\think-captcha\src\CaptchaController.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:51+08:00 ] 127.0.0.1 GET yjpz.cc/admin/ajax/lang?callback=define&controllername=index&lang=zh-cn&v=1608888230&v=1608888230
+[运行时间：0.029642s] [吞吐率：33.74req/s] [内存消耗：3,531.23kb] [文件加载：142]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000017s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001420s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000191s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'ajax',
+    2 => 'lang',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+  'callback' => 'define',
+  'controllername' => 'index',
+  'lang' => 'zh-cn',
+  'v' => '1608888230',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001143s ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \addons\nkeditor\Nkeditor @config_init [ RunTime:0.000148s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/ajax.php
+[ info ] [ RUN ] app\admin\controller\Ajax->lang[ E:\phpstudy_pro\WWW\yjpz\application\admin\controller\Ajax.php ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/admin/lang/zh-cn/index.php
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\AdminLog @app_end [ RunTime:0.000117s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:51+08:00 ] 127.0.0.1 GET yjpz.cc/uploads/20201205/09e32e27aea7cf9f0b57b137e8cea144.jpg
+[运行时间：0.020481s] [吞吐率：48.83req/s] [内存消耗：2,168.74kb] [文件加载：120]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000012s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001349s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000190s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'uploads',
+    1 => '20201205',
+    2 => '09e32e27aea7cf9f0b57b137e8cea144.jpg',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=bnbjffhiecgha0siqa0p2to3vk; think_var=zh-cn',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'yjpz.cc',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:23:59+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.806695s] [吞吐率：1.24req/s] [内存消耗：3,956.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000019s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001809s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000212s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '16295bad-8f1d-4fe4-99d8-507b1db3aa58',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000910s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:24:31+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.751756s] [吞吐率：1.33req/s] [内存消耗：3,956.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001415s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000193s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'b24ebb20-0ad0-4b59-a9d4-d4f909851596',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000882s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:24:43+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.674958s] [吞吐率：1.48req/s] [内存消耗：3,910.67kb] [文件加载：141]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001398s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000190s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '1b0619f0-e9eb-4409-aaa8-b8f64056d7c9',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000889s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:25:06+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.979540s] [吞吐率：1.02req/s] [内存消耗：3,959.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001475s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000206s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'f6be83d0-0a0a-4d6b-8a68-7243d0d23906',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000950s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:25:41+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.939400s] [吞吐率：1.06req/s] [内存消耗：4,011.16kb] [文件加载：150]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001362s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000191s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '0c30cbeb-ea13-4a83-8e7b-db795daf587c',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000961s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组下标: 0[E:\phpstudy_pro\WWW\yjpz\application\common\model\Order.php:33]
+---------------------------------------------------------------
+[ 2020-12-25T17:25:49+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.954912s] [吞吐率：1.05req/s] [内存消耗：4,011.16kb] [文件加载：150]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001434s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000215s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '13481be7-9b31-4702-9177-9d5ab157c878',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001012s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组下标: 0[E:\phpstudy_pro\WWW\yjpz\application\common\model\Order.php:33]
+---------------------------------------------------------------
+[ 2020-12-25T17:26:49+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：1.182248s] [吞吐率：0.85req/s] [内存消耗：4,011.16kb] [文件加载：150]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000014s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001854s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000302s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '7c0d3861-413c-4bef-bf69-b511bb13b7c7',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000962s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组索引: [E:\phpstudy_pro\WWW\yjpz\application\common\model\Order.php:33]
+---------------------------------------------------------------
+[ 2020-12-25T17:27:08+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：1.036322s] [吞吐率：0.96req/s] [内存消耗：4,011.20kb] [文件加载：150]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001570s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000203s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '3fc04476-c90f-4817-9592-8ef5c6624558',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000904s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组索引: [E:\phpstudy_pro\WWW\yjpz\application\common\model\Order.php:33]
+---------------------------------------------------------------
+[ 2020-12-25T17:27:19+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：1.042138s] [吞吐率：0.96req/s] [内存消耗：3,959.86kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001375s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000190s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '8289b73b-b130-4585-8cce-e5e8cad29d33',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000854s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:27:32+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.871479s] [吞吐率：1.15req/s] [内存消耗：3,959.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001528s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000230s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'e77a8883-8c99-4733-9a12-3e1a4342446f',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000875s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:27:54+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.877725s] [吞吐率：1.14req/s] [内存消耗：3,959.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001359s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000192s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'a4fd0c6f-9d9b-4e3f-97e2-b87c05b4c303',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000888s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:30:02+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderList
+[运行时间：0.910441s] [吞吐率：1.10req/s] [内存消耗：3,959.82kb] [文件加载：145]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001859s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000309s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderList',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'd6fd9977-7413-483e-ac55-808b8080a951',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000987s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderList[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:38:30+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderShow?order_id
+[运行时间：0.037951s] [吞吐率：26.35req/s] [内存消耗：2,345.38kb] [文件加载：126]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000016s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.002236s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000302s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'orderShow',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '17bc4771-0743-4628-9951-a6f6b4ea95b6',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.001011s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:38:52+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderShow?order_id
+[运行时间：0.942039s] [吞吐率：1.06req/s] [内存消耗：3,939.20kb] [文件加载：144]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000013s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001402s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000250s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderShow',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => '8505bfb3-abfd-49c8-867f-612e9abd2608',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000882s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderShow[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2020-12-25T17:39:04+08:00 ] 127.0.0.1 POST yjpz.cc/api/orderShow?order_id=6
+[运行时间：0.751998s] [吞吐率：1.33req/s] [内存消耗：3,943.07kb] [文件加载：144]
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.000015s ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run Closure @app_init [ RunTime:0.001443s ]
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\thinkphp\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @app_dispatch [ RunTime:0.000217s ]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'order',
+    2 => 'orderShow',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'close',
+  'accept-encoding' => 'gzip, deflate, br',
+  'host' => 'yjpz.cc',
+  'postman-token' => 'f0c28181-a20d-4475-81d3-3c72e86a3d67',
+  'accept' => '*/*',
+  'user-agent' => 'PostmanRuntime/7.26.8',
+  'token' => '223dc1c7-0d29-4bb7-af35-6842d6d45523',
+)
+[ info ] [ PARAM ] array (
+  'order_id' => '6',
+)
+[ info ] [ LANG ] E:\phpstudy_pro\WWW\yjpz\public/../application/api\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\Common @module_init [ RunTime:0.000872s ]
+[ info ] [ TOKEN ] INIT Mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\Order->orderShow[ E:\phpstudy_pro\WWW\yjpz\application\api\controller\Order.php ]
+[ info ] [ LOG ] INIT File
