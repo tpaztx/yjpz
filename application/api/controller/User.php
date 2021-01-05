@@ -520,7 +520,8 @@ class User extends Api
         $today += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->whereTime('updatetime', 'today')->sum('commission2');
         //今日团队销售
         $user = $this->auth->getUser();
-        $teamId = $this->getTeamLevel($this->auth->trade_code,)
+        $teamId1 = $user->where('pid', $this->auth->trade_code);
+        $teamId2 = $this->getTeamLevel($this->auth->trade_code, 2);
     }
 
     /**
@@ -547,7 +548,7 @@ class User extends Api
         if ($teamList)
         {
             $level++;
-            $Cache::set($uid.'_ids', $teamList);
+            Cache::set($uid.'_ids', $teamList);
             if ($level == $level_num) {
                 return ['level' => $level, 'data' => Cache::get($uid.'_ids')];
             }else{
