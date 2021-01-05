@@ -127,7 +127,7 @@ class Order extends Api
     /**
      * 支付订单
      */
-    public function orderPay($orderId,$type)
+    public function orderPay($orderId=null,$type=null)
     {
         $orderId = $this->request->param('order_id') ?? $orderId;
         $type = $this->request->param('type') ?? $type;
