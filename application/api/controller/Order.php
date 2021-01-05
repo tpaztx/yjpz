@@ -45,43 +45,25 @@ class Order extends Api
         if(!$address){
             $this->error('无效的地址！');
         }
-        //自购佣金
-        $proportion = 0;
-        if ($param['type'] == 'APP') {
-            $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
-            if (!$pro_fee) {
-                $this->error('未获取到平台的自购佣金比例！');
-            }
-            $proportion = $param['real_price'] * $pro_fee * 0.01;
-        }
-        //分销佣金
-        $commission1 = $commission2 = 0;
-        $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
-        $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
-        $commission1 = $param['real_price'] * $com_fee1 * 0.01;
-        $commission2 = $param['real_price'] * $com_fee2 * 0.01;
-        $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
-        $pid = User::where('id', $commission2_id)->value('pid');
-        $commission1_id = User::where('trade_code', $pid)->value('id');
+
         
         $OrderData = [
             'user_id'=>$user['id'],
             'order_no'=>$order_no,
             'store_id'=>$param['store_id'],
-            'total_price'=>$param['total_price'],
-            'real_price'=>$param['real_price'],
-            'yunfei_price'=>$param['yunfei_price'],
             'username'=>$address['name'],
             'phone'=>$address['mobile'],
             'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
             'time'=>$address['is_time'],
             'type'=>$param['type'],
-            'proportion' => round($proportion, 2),
-            'commission1' => round($commission1, 2),
-            'commission2' => round($commission2, 2),
-            'commission1_id' => $commission1_id?:0,
-            'commission2_id' => $commission2_id?:0,
         ];
+        if ($param['type'] == 'APP') {
+            $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
+            if (!$pro_fee) {
+                $this->error('未获取到平台的自购佣金比例！');
+            }
+        }
+
         // 启动事务0
         Db::startTrans();
         try{
@@ -106,8 +88,29 @@ class Order extends Api
             $order->wph_order_no = $wphOrderNo;
             $order->save();
             $wphOrder = $wph->orderStatus($wphOrderNo);
+            //自购佣金
+            $proportion = 0;
+            if ($param['type'] == 'APP') {
+
+                $proportion = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $pro_fee * 0.01;
+            }
+            //分销佣金
+            $commission1 = $commission2 = 0;
+            $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
+            $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
+            $commission1 = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $com_fee1 * 0.01;
+            $commission2 = $wphOrder['childOrderSnList'][0]['RealPayTotal'] * $com_fee2 * 0.01;
+            $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
+            $pid = User::where('id', $commission2_id)->value('pid');
+            $commission1_id = User::where('trade_code', $pid)->value('id');
+            //保存订单数据
             $order->real_price = $wphOrder['childOrderSnList'][0]['RealPayTotal'];
             $order->yunfei_price = $wphOrder['childOrderSnList'][0]['ShippingFee'];
+            $order->proportion = round($proportion, 2);
+            $order->commission1 =round($commission1, 2);
+            $order->commission2 = round($commission2, 2);
+            $order->commission1_id = $commission1_id?:0;
+            $order->commission2_id = $commission2_id?:0;
             $order->save();
             // 提交事务
             Db::commit();
