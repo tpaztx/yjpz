@@ -547,7 +547,7 @@ class User extends Api
             $teamList = $memberModel->where($where)->column('id');
         }
 
-        $level = 0;
+        $level = $le;
         if ($teamList)
         {
             $level++;
