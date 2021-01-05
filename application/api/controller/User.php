@@ -492,6 +492,21 @@ class User extends Api
         }
     }
 
+    /**
+     * 我的零钱
+     */
+    public function myMoneyInfo()
+    {
+        $page = $this->request->request('page')?:1;
+        $data['money'] = $this->auth->money?:0;
+        $list = \app\common\MoneyLog::where('user_id', $this->auth->id)->order('id desc')->paginate(10, false, ['page'=>$page]);
+        foreach ($list as $key => $val) {
+            $list[$key]['money'] = $val->money>0?'+'.$val->money:'-'.$val->money;
+        }
+        $data['list'] = $list;
+        $this->success('请求成功！', $data);
+    }
+
     private function http($url, $method, $postfields = null, $headers = array(), $debug = false) {
         $ci = curl_init ();
         /* Curl settings */
