@@ -56,6 +56,8 @@ class Order extends Api
             'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
             'time'=>$address['is_time'],
             'type'=>$param['type'],
+            'status'=>0,
+            'after_sales'=>0,
         ];
         if ($param['type'] == 'APP') {
             $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
