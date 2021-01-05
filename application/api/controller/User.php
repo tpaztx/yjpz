@@ -521,7 +521,7 @@ class User extends Api
         //今日团队销售
         $user = $this->auth->getUser();
         $teamId1 = $user->where('pid', $this->auth->trade_code)->column('id');
-        $teamId2 = $this->getTeamLevel($this->auth->trade_code, [], 2);
+        $teamId2 = $this->getTeamLevel($this->auth->trade_code, 2, [], 0);
         // $teamId = array_merge($teamId1, $teamId2);
         dump($teamId2);die;
     }
