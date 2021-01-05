@@ -214,6 +214,7 @@ class Goods extends Api
         $wph = new Wph;
         $result;
         $list = $wph->goodsDetailWph('101101', $goodFullId);
+        dump($list);die;
         if ($list) {
             foreach ($list as $key => $val) {
                 $result['goodName'] = $val->goodName?:'';
@@ -408,6 +409,7 @@ class Goods extends Api
             $data['material'] = $param['material']?:'';
             $data['goodImage'] = $param['goodImage']?:'';
             $data['createtime'] = time();
+            $data['goodId'] = $param['goodId'];
             $result = ShoppingCarts::insert($data);
         }
         
