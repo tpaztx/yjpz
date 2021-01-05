@@ -64,7 +64,7 @@ class Order extends Api
             }
         }
 
-        // 启动事务0
+        // 启动事务
         Db::startTrans();
         try{
             $order=OrderM::create($OrderData);
