@@ -134,10 +134,10 @@ class Order extends Api
         $user = $this->auth->getUser();
         $order = OrderM::get($orderId);
         $pay = new WxJsApiPay();
-        if($type = 'H5'){
+        if($type == 'H5'){
             $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
         }
-        if($type = 'APP'){
+        if($type == 'APP'){
             $json=$pay->wxAppPay("{$order['real_price']}","购买商品","{$order['order_no']}");
         }
         if($json){
