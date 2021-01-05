@@ -540,6 +540,7 @@ class User extends Api
             $teamList = $memberModel->where(['pid' => $uid])->column('id');
         }else{
             $where = "1=1";
+            dump($uidArr);die;
             foreach ($uidArr as $key => $val) {
                 $where .= " or pid='".$val."'";
             }            
