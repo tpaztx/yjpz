@@ -40,13 +40,19 @@ class Order extends Model
     }
     public function getCreatetimeTextAttr($value, $data)
     {
-        $value = $value ? $value : $data['createtime']?:"";
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        if(!empty($value)) {
+            $value = $value ? $value : $data['createtime'] ?: "";
+            return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        }
+        return $value;
     }
     public function getUpdatetimeTextAttr($value, $data)
     {
-        $value = $value ? $value : $data['updatetime'];
-        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        if(!empty($value)) {
+            $value = $value ? $value : $data['updatetime'];
+            return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        }
+        return $value;
     }
 
     public function goods()
