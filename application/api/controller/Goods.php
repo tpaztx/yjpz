@@ -397,7 +397,7 @@ class Goods extends Api
         if ($rew) {
 
             $rew->sizes = serialize($sizes);
-            $rew->endTime = '';
+            $rew->endTime = 0;
             $result = $rew->save();
         }else{
             $data['sizes'] = serialize($sizes);
