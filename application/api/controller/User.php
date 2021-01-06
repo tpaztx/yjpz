@@ -562,6 +562,8 @@ class User extends Api
     public function getMyTeamlist()
     {
         $page = $this->request->request('page')?:1;
+        $total = $this->request->request('total')?:false;
+        $time = $this->request->request('time')?:false;
         //团队集合
         $user = $this->auth->getUser();
         $teamId = db('user')->where('pid', $this->auth->trade_code)->column('id');
@@ -569,17 +571,24 @@ class User extends Api
         if ($teamId2) {
             $teamId = array_merge($teamId, $teamId2['data']);
         }
-        $user = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
-        foreach ($user as $key => $val) {
+
+        $data = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
+        foreach ($data as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val['number'])
                                     ->join('order o', 'o.store_id=s.id')
                                     ->field('count(o.id ) as orderTotal, sum(real_price) as real_price')
                                     ->select();
-            $user[$key]['orderTotal'] = $list[0]['orderTotal']?:0;
-            $user[$key]['realPrice']  = $list[0]['real_price']?:0;
-            $user[$key]['moneyTotal'] = $this->getUserMoneyTotal($val['number']);
+            $data[$key]['orderTotal'] = $list[0]['orderTotal']?:0;
+            $data[$key]['realPrice']  = $list[0]['real_price']?:0;
+            $data[$key]['moneyTotal'] = $this->getUserMoneyTotal($val['number']);
         }
-        $this->success('请求成功！', $user);
+        if ($total) {
+            $data = multi_array_sort($data , 'orderTotal', ($total==1?SORT_DESC:SORT_ASC));
+        }
+        if ($time) {
+            $data = multi_array_sort($data , 'orderTotal', ($time==1?SORT_DESC:SORT_ASC));
+        }
+        $this->success('请求成功！', $data);
     }
 
     //获取用户累计奖励
