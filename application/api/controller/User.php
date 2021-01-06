@@ -573,6 +573,7 @@ class User extends Api
         }
 
         $data = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->paginate(10, false, ['page' => $page]);
+        dump($data);die;
         foreach ($data as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val['number'])
                                     ->join('order o', 'o.store_id=s.id')
