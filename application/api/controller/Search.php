@@ -93,7 +93,8 @@ class Search extends Api
             $this->error('请输入搜索内容！');
         }
         //插入用户搜索的历史记录
-        $save_keyWord = SearchKeyword::insertKeyWord($this->auth->id, $keyWord);
+        $searchModel = new SearchKeyword;
+        $save_keyWord = $searchModel->insertKeyWord($this->auth->id, $keyWord);
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
