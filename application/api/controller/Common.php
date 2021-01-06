@@ -647,6 +647,10 @@ class Common extends Api
             
         }
         $result = $this->goodsListWph('', 1, 20, $brandAdId);
-        dump($result);
+        if (!$result) {
+            $brand_lists = db('brand_list')->where('adId', $brandAdId)->delete();
+            $goods_list = db('goods_list')->where('adId', $val->adId)->delete();
+            $this->success('请求成功！删除失效商品：'.$goods_list.'删除失效品牌：'.$brand_lists);
+        }
     }
 }
