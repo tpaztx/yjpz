@@ -223,7 +223,7 @@ class Goods extends Api
                 foreach ($val->sizes as $k => $v) {
                     $result['sizes'][$k] = [
                         'sizeName' => $v->sizeName,
-                        'sizeId' => $v->sizeId,
+                        'sizeId' => (string)$v->sizeId,
                         'vipshopPrice' => (float)$v->vipshopPrice + (float)$v->suggestAddPrice
                     ];
                 }
