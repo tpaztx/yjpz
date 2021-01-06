@@ -40,14 +40,11 @@ class Search extends Api
         if ($price !='') {
             $order = $price==1 ? 'vipshopPrice desc' : 'vipshopPrice';
         }
-        $where = '1=1';
-        if ($adId > 0) {
-            $where = 'adId='.$adId;
-        }
         // if ($sale !='') {
         //     $order = $sale==1 ? ''
         // }
         $keyWord = trim($this->request->request('keyWord'));
+        dump($keyWord);exit;
         if (!$keyWord) $this->error('请输入搜索内容！');
         $searchModel = new SearchKeyword;
         //插入用户搜索的历史记录
@@ -55,8 +52,14 @@ class Search extends Api
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
-        $result = GoodsList::where("goodName like '%".$keyWord."%'")
-                            ->where($where)
+        $result = GoodsList::where(function ($query) use ($keyWord,$adId){
+                                if(isset($keyWord) && !empty($keyWord)){
+                                    $query->where('goodName','like','%'.$keyWord.'%');
+                                }
+                                if(isset($adId) && !empty($adId)){
+                                    $query->where('adId',$adId);
+                                }
+                            })
                             ->field('adId,goodId,goodFullId,goodName,color,material,sn,goodBigImage,vipshopPrice,marketPrice,commission')
                             ->order($order)
                             ->limit(($pageIndex - 1)*$pageSize, $pageSize)
@@ -88,20 +91,22 @@ class Search extends Api
         $catNameOne = $this->request->request('catNameOne');
         $catNameTwo = $this->request->request('catNameTwo');
         $keyword = $this->request->request('keyword');
-        
-        $where = "1=1";
-        if ($price_min && $price_max) {
-            $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
+        if(!isset($keyword) || empty($keyword)){
+            $this->error('请输入搜索内容！');
         }
-        if ($catNameOne) {
-            $where .= " and catNameOne in '".$catNameOne."'";
-        }
-        if ($catNameTwo) {
-            $where .= " and catNameTwo in '".$catNameTwo."'";
-        }
-        if ($keyword) {
-            $where .= " and goodName like '%".$keyword."%'";
-        }
+//        $where = "1=1";
+//        if ($price_min && $price_max) {
+//            $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
+//        }
+//        if ($catNameOne) {
+//            $where .= " and catNameOne in '".$catNameOne."'";
+//        }
+//        if ($catNameTwo) {
+//            $where .= " and catNameTwo in '".$catNameTwo."'";
+//        }
+//        if ($keyword) {
+//            $where .= " and goodName like '%".$keyword."%'";
+//        }
         // $brand_result = BrandList::where('adId', 'in', $adId)
         //                             ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
         //                             ->select();
@@ -110,23 +115,43 @@ class Search extends Api
             // {
                 // $where .= " and adId=".$val['adId'];
                 // $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
-                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
-                foreach ($goods as $k => $v) {
-                    $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
-                    $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                    // $goods[$k]['total'] = rand(0, 100);
+                $goods = GoodsList::where(function ($query) use ($price_min,$price_max,$catNameOne,$catNameTwo,$keyword){
+                    if($keyword){
+                        $query->where('goodName','like',$keyword);
+                    }
+                    if($price_min){
+                        $query->where('vipshopPrice','>',$price_min);
+                    }
+                    if($price_max){
+                        $query->where('vipshopPrice','<',$price_min);
+                    }
+                    if($catNameOne){
+                        $query->where('catNameOne',$catNameOne);
+                    }
+                    if($catNameTwo){
+                        $query->where('catNameTwo',$catNameTwo);
+                    }
+                })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
+                if(!empty($goods)){
+                    foreach ($goods as $k => $v) {
+                        $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
+                        $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
+                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                        $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
+                        // $goods[$k]['total'] = rand(0, 100);
+                    }
+                    if ($total) {
+                        $goods = collection($goods)->toArray();
+                        $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
+                    }
+                    if ($price) {
+                        $goods = collection($goods)->toArray();
+                        $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
+                    }
                 }
-                if ($total) {
-                    $goods = collection($goods)->toArray();
-                    $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
+                if(empty($goods)){
+                    $this->error('未搜索到对应内容！');
                 }
-                if ($price) {
-                    $goods = collection($goods)->toArray();
-                    $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
-                }
-                
                 // $brand_result[$key]['goods'] = $goods;
             // }
             $this->success('请求成功！', $goods);

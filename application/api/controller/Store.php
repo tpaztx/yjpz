@@ -268,7 +268,7 @@ class Store extends Api
         //获取对该品牌下的商品并进行改价
         $data['list'] = GoodsList::where('adId',$adId)
             ->where(function ($query) use ($catNameOne,$catNameTwo,$minPrice,$maxPrice,$search){
-                if($catNameTwo && $catNameTwo){
+                if($catNameOne && $catNameTwo){
                     $query->where('catNameOne',$catNameOne);
                     $query->where('catNameTwo',$catNameTwo);
                 }
