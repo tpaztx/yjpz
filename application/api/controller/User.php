@@ -572,14 +572,13 @@ class User extends Api
             $teamId = array_merge($teamId, $teamId2['data']);
         }
 
-        $data = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->paginate(10, false, ['page' => $page]);
+        $data = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->limit(($page - 1)*10, 10)->select();
 
         foreach ($data as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val['number'])
                                     ->join('order o', 'o.store_id=s.id')
                                     ->field('count(o.id ) as orderTotal, sum(real_price) as real_price')
                                     ->select();
-                                    dump($list);die;
             $data[$key]['orderTotal'] = $list[0]['orderTotal']?:0;
             $data[$key]['realPrice']  = $list[0]['real_price']?:0;
             $data[$key]['moneyTotal'] = $this->getUserMoneyTotal($val['number']);
