@@ -18,6 +18,7 @@ use function Qiniu\json_decode;
 use function Symfony\Component\String\s;
 use function Symfony\Component\String\u;
 use app\common\model\Order;
+use app\common\model\UserGroup;
 
 /**
  * 会员接口
