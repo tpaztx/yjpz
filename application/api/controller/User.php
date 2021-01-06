@@ -539,7 +539,7 @@ class User extends Api
         $team = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->sum('proportion');
         $team += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->sum('commission1');
         $team += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->sum('commission2');
-        // echo Order::getLastSQL();die;000
+        // echo Order::getLastSQL();die;
         $this->success('请求成功！', [
             'today' => $today,
             'today_sale_price' => $today_sale_price,
