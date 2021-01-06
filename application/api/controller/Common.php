@@ -245,9 +245,9 @@ class Common extends Api
     public function inputGoodsList()
     {
         $wph = new Wph;
-        ignore_user_abort(true);
-        set_time_limit(90);
-        $pageIndex = $page_total = $brandNum = $brandAdId = true;
+        // ignore_user_abort(true);
+        // set_time_limit(90);
+        $goodStatus = $brandNum = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
         if(!$brandNum){
@@ -257,28 +257,27 @@ class Common extends Api
                 Cache::set('brandNum', 0);
                 $brandNum = Cache::get('brandNum');
             }
+            $adId = db('brand_list')->field('adId')->limit($brandNum, 1)->select();
+        }else{
+            $adId = db('brand_list')->field('adId')->where('adId', $brandNum)->select();
+            Cache::set('goods_index', 1);
         }
-        $adId = db('brand_list')->field('id,adId,cateId')->limit($brandNum, 1)->select();
+        
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
-                
-                $brandAdId = $v['adId'];
-                $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 $pageTotal = false;
-                if ($page_total) { 
-                    $pageTotal = $page_total['pageTotal'];
-                    $pageIndex = round($page_total['totalNum'] / 20);
+                $goodStatus = $this->goodsListWph('', 1, 20, $v['adId']);
+                if ($goodStatus) { 
+                    $pageTotal = $goodStatus['pageTotal'];//总页数
                 }else{
-                    // Cache::set('brandNum', 0);
                     Cache::set('brandNum', Cache::get('brandNum') + 1);
-                    $this->inputGoodsList();
+                    $this->success('adId不存在，或已下线');
                 }
                 if ($pageTotal && $pageTotal > 1)
                 {
-                    Cache::set('goods_index', 1);
                     do {
-                        $goods = $this->goodsListWph('', Cache::get('goods_index'), 20, $v['adId']);
+                        $goods = $this->goodsListWph('', Cache::get('goods_index')?:1, 20, $v['adId']);
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
@@ -316,15 +315,18 @@ class Common extends Api
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
-                    } while (Cache::get('goods_index') <= $pageIndex);
+                    } while (Cache::get('goods_index') == 10);
                 }
-                Log::write('【执行类目ID】：'.$v['adId'].'======【brandNum】：'.Cache::get('brandNum'));
-                Cache::set('brandNum', Cache::get('brandNum') + 1);
+                Log::write('【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index'));
+                if (Cache::get('goods_index') == $pageTotal) {
+                    Cache::set('brandNum', Cache::get('brandNum') + 1);
+                    Cache::set('goods_index', 1);
+                }
             }
-            echo '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.$brandNum;
+            echo '【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index');
         }else{
             Cache::set('brandNum', 0);
-            $this->success('未获取到adId，即将重新开始首位拉新！');
+            $this->success('未获取到adId，或已下线，即将重新开始首位拉新！');
         }
     }
 
