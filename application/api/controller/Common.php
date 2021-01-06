@@ -324,7 +324,7 @@ class Common extends Api
             echo '【执行类目ID】：'.$v['adId'].'======【brandNum】：'.$brandNum;
         }else{
             Cache::set('brandNum', 0);
-            $this->inputGoodsList();
+            $this->success('未获取到adId，即将重新开始首位拉新！');
         }
     }
 
