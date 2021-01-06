@@ -32,6 +32,7 @@ class GoodsList Extends Model
                     $item['sizeId'] = (string)$item['sizeId'];
                 }
             }
+            $value = $array;
         }
         return $value;
     }
