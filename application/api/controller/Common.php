@@ -262,17 +262,7 @@ class Common extends Api
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
-                // $goods_list = GoodsList::where('goodFullId is not null')->where('adId', $v['adId'])->field('goodFullId,goodId')->select();
-                // if ($goods_list) {
-                //     foreach ($goods_list as $key => $value) {
-                //         $isOnline = $wph->goodsOnline($value['goodFullId']);
-                //         if ($isOnline['goodsList'][0]['goodOnline']==0) {
-                //             $result += db('goods_list')->where('goodFullId', $value['goodFullId'])->delete();
-                //             db('shopping_cart')->where('goodId', $value['goodId'])->delete();
-                //             db('shopping_carts')->where('goodFullId', $value['goodFullId'])->delete();
-                //         }
-                //     }
-                // }
+                
                 $brandAdId = $v['adId'];
                 $page_total = $this->goodsListWph('', 1, 20, $v['adId']);
                 $pageTotal = false;
@@ -637,4 +627,25 @@ class Common extends Api
         }
     }
 
+    /**
+     * 定时检测品牌失效性
+     */
+    public function delBrandStatus()
+    {
+        $wph = new Wph;
+        $pageIndex = $page_total = $brandNum = $brandAdId = true;
+        //设置循环节点
+        $brandAdId = $this->request->param('brandAdId');
+        if(!$brandAdId){
+            if (Cache::get('brandAdId')) {
+                $brandAdId = Cache::get('brandAdId');
+            }else{
+                $adId = BrandList::limit(1)->value('adId');
+                Cache::set('brandAdId', $adId);
+                $brandAdId = Cache::get('brandNum');
+            }
+            $result = $this->goodsListWph('', 1, 20, $brandAdId);
+            dump($result);
+        }
+    }
 }
