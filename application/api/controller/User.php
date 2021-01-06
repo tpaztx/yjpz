@@ -564,14 +564,13 @@ class User extends Api
         $page = $this->request->request('page')?:1;
         //团队集合
         $user = $this->auth->getUser();
-        dump($user);die;
-        $teamId = UserM::where('pid', $this->auth->trade_code)->column('id');
+        $teamId = db('user')->where('pid', $this->auth->trade_code)->column('id');
         $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
         if ($teamId2) {
             $teamId = array_merge($teamId, $teamId2['data']);
         }
         $data = [];
-        $user = UserM::where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
+        $user = db('user')->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
         foreach ($user as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val->number)
                                     ->join('order o', 'o.store_id=s.id')
