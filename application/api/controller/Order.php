@@ -31,11 +31,13 @@ class Order extends Api
         $validate = $this->validate($param,[
             'store_id'=>'require',
             'address_id'=>'require',
+            'real_price'=>'require',
             'type'=>'require',
             'good'=>'require',
         ],[
             'store_id.require'=>'无效的小店！',
             'address_id.require'=>'请选择收获地址！',
+            'real_price.require'=>'请上传支付金额！',
             'good.require'=>'请选择商品！',
         ]);
         if($validate !== true){
@@ -52,6 +54,7 @@ class Order extends Api
             'order_no'=>$order_no,
             'store_id'=>$param['store_id'],
             'username'=>$address['name'],
+            'real_price'=>$param['real_price'],
             'phone'=>$address['mobile'],
             'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
             'time'=>$address['is_time'],
@@ -89,21 +92,21 @@ class Order extends Api
             //自购佣金
             $proportion = 0;
             if ($param['type'] == 'APP') {
-                $proportion = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $pro_fee * 0.01;
+                $proportion = $param['real_price'] * $pro_fee * 0.01;
             }
             //分销佣金
             $commission1 = $commission2 = 0;
             $com_fee1 = UserGroup::where('id', $this->auth->group_id)->value('commission1');
             $com_fee2 = UserGroup::where('id', $this->auth->group_id)->value('commission2');
-            $commission1 = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $com_fee1 * 0.01;
-            $commission2 = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'] * $com_fee2 * 0.01;
+            $commission1 = $param['real_price'] * $com_fee1 * 0.01;
+            $commission2 = $param['real_price'] * $com_fee2 * 0.01;
             $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
             $pid = User::where('id', $commission2_id)->value('pid');
             $commission1_id = User::where('trade_code', $pid)->value('id');
             $order = \app\admin\model\Order::get($order['id']);
             //保存订单数据
             $order->wph_order_no = $wphOrderNo;
-            $order->real_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
+            $order->vip_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
             $order->yunfei_price = $wphOrder[0]['childOrderSnList'][0]['ShippingFee'];
             $order->proportion = round($proportion, 2);
             $order->commission1 =round($commission1, 2);
