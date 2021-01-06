@@ -563,8 +563,8 @@ class User extends Api
     {
         $page = $this->request->request('page')?:1;
         //团队集合
-        $user = $this->auth->getUser();
-        $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
+        // $user = $this->auth->getUser();
+        $teamId = UserM::where('pid', $this->auth->trade_code)->column('id');
         $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
         if ($teamId2) {
             $teamId = array_merge($teamId, $teamId2['data']);
