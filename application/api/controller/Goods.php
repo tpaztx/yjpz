@@ -397,7 +397,7 @@ class Goods extends Api
         if ($rew) {
 
             $rew->sizes = serialize($sizes);
-            $rew->endTime = 0;
+            $rew->endtime = 0;
             $result = $rew->save();
         }else{
             $data['sizes'] = serialize($sizes);
@@ -410,7 +410,6 @@ class Goods extends Api
             $data['goodImage'] = $param['goodImage']?:'';
             $data['createtime'] = time();
             $data['goodId'] = $param['goodId'];
-            dump('this here');die;
             $result = ShoppingCarts::insert($data);
         }
         
