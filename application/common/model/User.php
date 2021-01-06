@@ -26,10 +26,10 @@ class User extends Model
      * @param   array  $data
      * @return string
      */
-    public function getUrlAttr($value, $data)
-    {
-        return "/u/" . $data['id'];
-    }
+    // public function getUrlAttr($value, $data)
+    // {
+    //     return "/u/" . $data['id'];
+    // }
 
     /**
      * 获取头像
