@@ -395,14 +395,14 @@ class Order extends Api
     {
         $user = $this->auth->getUser();
         $steoM = new \app\admin\model\Store();
-        $store_id = $steoM->getStore($user['id']);
+        $store = $steoM->getStore($user['id']);
         $status = $this->request->param('status');
         $after_sales = $this->request->param('after_sales');
         $orders = OrderM::with('goods')
-            ->where(function ($query) use ($store_id,$status,$user,$after_sales){
+            ->where(function ($query) use ($store,$status,$user,$after_sales){
                 //APP小店查看
-                if($store_id && !empty($store_id)){
-                    $query->where('store_id',$store_id);
+                if($store && !empty($store)){
+                    $query->where('store_id',$store['id']);
                 }else{
 //                 H5用户查看
                     $query->where('user_id',$user['id']);
@@ -416,7 +416,7 @@ class Order extends Api
                     $query->where('after_sales','<>',0);
                 }
             })
-            ->field('id,order_no,status,after_sales,createtime,updatetime')
+            ->field('id,order_no,status,after_sales,createtime,updatetime,store_id,user_id')
             ->order('createtime','desc')
             ->select();
         if(empty($orders)){
