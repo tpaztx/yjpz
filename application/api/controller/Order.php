@@ -103,7 +103,7 @@ class Order extends Api
             $commission2_id = User::where('trade_code', $this->auth->pid)->value('id');
             $pid = User::where('id', $commission2_id)->value('pid');
             $commission1_id = User::where('trade_code', $pid)->value('id');
-            $order = \app\admin\model\Order::get($order['id']);
+            $order = \app\admin\model\Order::where('id',$order['id'])->find();
             //保存订单数据
             $order->wph_order_no = $wphOrderNo;
             $order->vip_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
@@ -115,7 +115,6 @@ class Order extends Api
             $order->commission2_id = $commission2_id?:0;
             $order->save();
             // 提交事务
-
             Db::commit();
             $res = true;
         } catch (\Exception $e) {
