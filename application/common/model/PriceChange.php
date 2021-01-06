@@ -29,51 +29,58 @@ class PriceChange extends Model
                 $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id'=>$item['goodId']])->find();
                 $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id'=>$item['adId']])->find();
                 $all = $this->where(['store_id'=>$store_id,'type'=>1])->find();
-                if($goodId){
-                    switch ($goodId['symbol']){
-                        case '+':
-                            $item['suggestPrice'] += $goodId['number'];
-                            break;
-                        case '-':
-                            $item['suggestPrice'] *=$goodId['number'];
-                            break;
-                        case '*':
-                            $item['suggestPrice'] = $item['suggestPrice']+($item['suggestPrice']*$goodId['number']);
-                            break;
-                        default:
-                            break;
+                $goodSizes = $item['sizes_json'];
+
+                if(!empty($goodSizes)){
+                    foreach ($goodSizes as &$size){
+                        if($goodId){
+                            switch ($goodId['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $goodId['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$goodId['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$goodId['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if($adId && !$goodId){
+                            switch ($adId['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $adId['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$adId['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$adId['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if(!$adId && !$goodId){
+                            switch ($all['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $all['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$all['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$all['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
-                if($adId && !$goodId){
-                    switch ($adId['symbol']){
-                        case '+':
-                            $item['suggestPrice'] += $adId['number'];
-                            break;
-                        case '-':
-                            $item['suggestPrice'] *=$adId['number'];
-                            break;
-                        case '*':
-                            $item['suggestPrice'] = $item['suggestPrice']+($item['suggestPrice']*$adId['number']);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                if(!$adId && !$goodId){
-                    switch ($all['symbol']){
-                        case '+':
-                            $item['suggestPrice'] += $all['number'];
-                            break;
-                        case '-':
-                            $item['suggestPrice'] *=$all['number'];
-                            break;
-                        case '*':
-                            $item['suggestPrice'] = $item['suggestPrice']+($item['suggestPrice']*$all['number']);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                $item['sizes_json'] = \GuzzleHttp\json_encode($goodSizes);
             }
         }
         return $goodsList;
@@ -86,51 +93,57 @@ class PriceChange extends Model
                 $goodId = $this->where(['store_id'=>$store_id,'type'=>3,'object_id'=>$goods['goodId']])->find();
                 $adId = $this->where(['store_id'=>$store_id,'type'=>2,'object_id'=>$goods['adId']])->find();
                 $all = $this->where(['store_id'=>$store_id,'type'=>1])->find();
-                if($goodId){
-                    switch ($goodId['symbol']){
-                        case '+':
-                            $goods['suggestPrice'] += $goods['number'];
-                            break;
-                        case '-':
-                            $goods['suggestPrice'] *=$goods['number'];
-                            break;
-                        case '*':
-                            $goods['suggestPrice'] = $goods['suggestPrice']+($goods['suggestPrice']*$goodId['number']);
-                            break;
-                        default:
-                            break;
+                $goodSizes = $goods['sizes_json'];
+                if(!empty($goodSizes)){
+                    foreach ($goodSizes as &$size){
+                        if($goodId){
+                            switch ($goodId['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $goodId['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$goodId['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$goodId['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if($adId && !$goodId){
+                            switch ($adId['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $adId['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$adId['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$adId['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        if(!$adId && !$goodId){
+                            switch ($all['symbol']){
+                                case '+':
+                                    $size['suggestPrice'] += $all['number'];
+                                    break;
+                                case '-':
+                                    $size['suggestPrice'] *=$all['number'];
+                                    break;
+                                case '*':
+                                    $size['suggestPrice'] = $size['suggestPrice']+($size['suggestPrice']*$all['number']);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
-                if($adId && !$goodId){
-                    switch ($adId['symbol']){
-                        case '+':
-                            $goods['suggestPrice'] += $adId['number'];
-                            break;
-                        case '-':
-                            $goods['suggestPrice'] *=$adId['number'];
-                            break;
-                        case '*':
-                            $goods['suggestPrice'] = $goods['suggestPrice']+($goods['suggestPrice']*$adId['number']);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                if(!$adId && !$goodId){
-                    switch ($all['symbol']){
-                        case '+':
-                            $goods['suggestPrice'] += $all['number'];
-                            break;
-                        case '-':
-                            $goods['suggestPrice'] *=$all['number'];
-                            break;
-                        case '*':
-                            $goods['suggestPrice'] = $goods['suggestPrice']+($item['suggestPrice']*$all['number']);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                $goods['sizes_json']=\GuzzleHttp\json_encode($goodSizes);
             }
         return $goods;
     }
