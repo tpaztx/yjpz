@@ -2,7 +2,6 @@
 
 namespace app\api\controller;
 
-use app\admin\model\Store;
 use app\common\controller\Api;
 use app\common\library\Ems;
 use app\common\library\Sms;
@@ -19,6 +18,7 @@ use function Symfony\Component\String\s;
 use function Symfony\Component\String\u;
 use app\common\model\Order;
 use app\common\model\UserGroup;
+use app\admin\model\Store;
 
 /**
  * 会员接口
@@ -561,6 +561,7 @@ class User extends Api
      */
     public function getMyTeamlist()
     {
+        $page = $this->request->request('page')?:1;
         //团队集合
         $user = $this->auth->getUser();
         $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
@@ -569,7 +570,26 @@ class User extends Api
             $teamId = array_merge($teamId, $teamId2['data']);
         }
         $data = [];
-        $user = $user->where('id', 'in', $teamId)->field('nickname,avatar,id as number')->select();
+        $user = $user->->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
+        foreach ($user as $key => $val) {
+            $list = db('store s')->where("s.user_id=".$val->number)
+                                    ->join('order o', 'o.store_id=s.id')
+                                    ->field('o.id ad orderTotal, sum(real_price) as real_price');
+                                    ->select();
+            $user[$key]['orderTotal'] = $list[0]['orderTotal']?:0;
+            $user[$key]['realPrice']  = $list[0]['real_price']?:0;
+            $user[$key]['moneyTotal'] = $this->getUserMoneyTotal($val->number);
+        }
+        $this->success('请求成功！', $user);
+    }
+
+    //获取用户累计奖励
+    private function getUserMoneyTotal($uid)
+    {
+        $my = Order::where(['user_id'=>$uid, 'status'=>3])->sum('proportion');
+        $my += Order::where(['commission1_id'=>$uid, 'status'=>3])->sum('commission1');
+        $my += Order::where(['commission2_id'=>$uid, 'status'=>3])->sum('commission2');
+        return $my;
     }
 
     /**
