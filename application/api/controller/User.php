@@ -59,8 +59,8 @@ class User extends Api
             'nickname'   => $this->auth->nickname,
             'number'     => $this->auth->id,
             'avatar'     => $this->auth->avatar,
-            'level'      => \app\common\Model\UserGroup::where('id', $this->auth->group_id)->value('name'),
-            'commission' => \app\common\Model\UserGroup::where('id', $this->auth->group_id)->value('proportion').'%',
+            'level'      => UserGroup::where('id', $this->auth->group_id)->value('name'),
+            'commission' => UserGroup::where('id', $this->auth->group_id)->value('proportion').'%',
         ]);
     }
 
