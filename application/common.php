@@ -467,7 +467,7 @@ function time2day($second){
     $minute = floor($second/60);
     $second = $second%60;//除去整分钟之后剩余的时间 
     //返回字符串
-    return $day.'天'.$hour.'小时'.$minute.'分';
+    return ($day>0)?$day.'天':'' . $hour>0?$hour.'小时':'' .$minute.'分';
 }
 
 //获取用户真实ip
