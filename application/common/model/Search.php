@@ -21,7 +21,7 @@ class Search Extends Model
     ];
 
     /**
-     * 新增用户的搜索关键词
+     * 新增用户的搜索关键词 
      */
     public function insertKeyWord($uid, $keyWord = '')
     {
