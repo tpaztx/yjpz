@@ -54,7 +54,13 @@ class User extends Api
      */
     public function index()
     {
-        $this->success('', ['welcome' => $this->auth->nickname]);
+        $this->success('请求成功！', [
+            'nickname'   => $this->auth->nickname,
+            'number'     => $this->auth->id,
+            'avatar'     => $this->auth->avatar,
+            'level'      => \app\common\Model\UserGroup::where('id', $this->auth->group_id)->value('name'),
+            'commission' => \app\common\Model\UserGroup::where('id', $this->auth->group_id)->value('proportion').'%',
+        ]);
     }
 
     /**
@@ -509,7 +515,7 @@ class User extends Api
     }
 
     /**
-     * 我的团队数据000
+     * 我的团队数据
      */
     public function getMyTeam()
     {
@@ -550,13 +556,29 @@ class User extends Api
     }
 
     /**
+     * 我的团队数据
+     */
+    public function getMyTeamlist()
+    {
+        //团队集合
+        $user = $this->auth->getUser();
+        $teamId = $user->where('pid', $this->auth->trade_code)->column('id');
+        $teamId2 = $this->getTeamLevel($this->auth->trade_code, 3, [], 0);
+        if ($teamId2) {
+            $teamId = array_merge($teamId, $teamId2['data']);
+        }
+        $data = [];
+        $user = $user->where('id', 'in', $teamId)->field('nickname,avatar,id as number')->select();
+    }
+
+    /**
      * 获取指定层级的团队集合
      * uid       string 上下级查询字段
      * level_num int    直推层级
      * uidArr    array  层级用户id集合
      * le        int    从0开始获取比对数据
      */
-    public function getTeamLevel($uid, $level_num = 1, $uidArr = array(), $le = 0)
+    private function getTeamLevel($uid, $level_num = 1, $uidArr = array(), $le = 0)
     {
         $memberModel = $this->auth->getUser();
         if (empty($uidArr)) {

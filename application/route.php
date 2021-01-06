@@ -51,6 +51,9 @@ Route::post([
 	'api/wxSdk' => 'api/User/wxSdk',
 	//获取平台基础配置相关信息
 	'api/getConfig' => 'api/common/getConfig',
+	//用户基本信息
+	'api/getUser' => 'api/user/index',
+
 
 	/* 客户端 */
 	//首页-banner轮播
@@ -101,7 +104,10 @@ Route::post([
 	'api/myMoneyInfo' => 'api/user/myMoneyInfo',
 	//我的团队数据
 	'api/getMyTeam' => 'api/user/getMyTeam',
-  
+	//我的团队数据
+	'api/getMyTeamlist' => 'api/user/getMyTeamlist',
+
+	/* H5端 */
     //小店-店铺设置
     'api/storeSet'=>'api/store/storeSet',
     //图片上传
