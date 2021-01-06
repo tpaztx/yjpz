@@ -97,7 +97,7 @@ class Goods extends Api
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                     $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                     $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                    $goods[$k]['sizes_json'] = ltrim(rtrim($v->sizes_json, '"'), '"');
+                    $goods[$k]['sizes_json'] = json_encode($v->sizes_json);
                 }
                 if ($total) {
                     $goods = collection($goods)->toArray();
