@@ -574,7 +574,7 @@ class User extends Api
         foreach ($user as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val->number)
                                     ->join('order o', 'o.store_id=s.id')
-                                    ->field('o.id ad orderTotal, sum(real_price) as real_price');
+                                    ->field('o.id ad orderTotal, sum(real_price) as real_price')
                                     ->select();
             $user[$key]['orderTotal'] = $list[0]['orderTotal']?:0;
             $user[$key]['realPrice']  = $list[0]['real_price']?:0;
