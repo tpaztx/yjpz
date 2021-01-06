@@ -485,22 +485,6 @@ class Common extends Api
     }
 
     /**
-     * 定时清除失效品牌
-     */
-    public function delBrand()
-    {
-        $brandListModel = new BrandList;
-        $brand_list = $brandListModel->whereTime('sellTimeTo', '<', date('Y-m-d H:i:s', time()))->field('id,adId')->select();
-        $goods_list = $brand_lists = 0;
-        db('goods_list')->where('goodFullId is null')->delete();
-        foreach ($brand_list as $key => $val) {
-            $goods_list = db('goods_list')->where('adId', $val->adId)->delete();
-            $brand_lists = db('brand_list')->where('id', $val->id)->delete();
-        }
-        $this->success('请求成功！删除失效商品：'.$goods_list.'删除失效品牌：'.$brand_lists);
-    }
-
-    /**
      * 获取平台基础配置相关信息
      */
     public function getConfig()
@@ -650,6 +634,7 @@ class Common extends Api
                 }
             }
             Cache::set('limitNum', Cache::get('limitNum')+1);
+            $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$limitNum.'】');
         }else{
             $result = $this->goodsListWph('', 1, 20, $brandAdId);
             if (!$result) {
@@ -657,7 +642,6 @@ class Common extends Api
                 $goods_list = db('goods_list')->where('adId', $brandAdId)->delete();
             }
         }
-        
-        $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$limitNum.'】');
+        $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$brandAdId.'】');
     }
 }
