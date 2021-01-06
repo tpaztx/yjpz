@@ -84,8 +84,6 @@ class Search extends Api
         $pageSize = $this->request->request('pageSize')?:10;
         $price = $this->request->request('price');
         $total = $this->request->request('total');
-        // $adId = $this->request->request('adId')?:0;
-        // if ($adId == 0) $this->error('缺少请求参数商品ID！');
         $price_min = $this->request->request('price_min');
         $price_max = $this->request->request('price_max');
         $catNameOne = $this->request->request('catNameOne');
@@ -94,28 +92,12 @@ class Search extends Api
         if(!isset($keyword) || empty($keyword)){
             $this->error('请输入搜索内容！');
         }
-//        $where = "1=1";
-//        if ($price_min && $price_max) {
-//            $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
-//        }
-//        if ($catNameOne) {
-//            $where .= " and catNameOne in '".$catNameOne."'";
-//        }
-//        if ($catNameTwo) {
-//            $where .= " and catNameTwo in '".$catNameTwo."'";
-//        }
-//        if ($keyword) {
-//            $where .= " and goodName like '%".$keyword."%'";
-//        }
-        // $brand_result = BrandList::where('adId', 'in', $adId)
-        //                             ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
-        //                             ->select();
-        // if ($brand_result && !empty($brand_result)) {
-            // foreach ($brand_result as $key => $val)
-            // {
-                // $where .= " and adId=".$val['adId'];
-                // $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
-                $goods = GoodsList::where(function ($query) use ($price_min,$price_max,$catNameOne,$catNameTwo,$keyword){
+        //插入用户搜索的历史记录
+        $save_keyWord = $searchModel->insertKeyWord($this->auth->id, $keyWord);
+        if (!$save_keyWord) {
+            $this->error('处理搜索历史记录数据出错，请联系客服！');
+        }
+        $goods = GoodsList::where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
                         $query->where('goodName','like','%'.$keyword.'%');
                     }
@@ -132,31 +114,27 @@ class Search extends Api
                         $query->where('catNameTwo',$catNameTwo);
                     }
                 })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
-                if(!empty($goods)){
-                    foreach ($goods as $k => $v) {
-                        $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
-                        $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                        $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                        // $goods[$k]['total'] = rand(0, 100);
-                    }
-                    if ($total) {
-                        $goods = collection($goods)->toArray();
-                        $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
-                    }
-                    if ($price) {
-                        $goods = collection($goods)->toArray();
-                        $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
-                    }
-                }
-                if(empty($goods)){
-                    $this->error('未搜索到对应内容！');
-                }
-                // $brand_result[$key]['goods'] = $goods;
-            // }
-            $this->success('请求成功！', $goods);
-        // }
-        $this->error('请求失败！');
+        if(!empty($goods)){
+            foreach ($goods as $k => $v) {
+                $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
+                $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
+                $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
+                // $goods[$k]['total'] = rand(0, 100);
+            }
+            if ($total) {
+                $goods = collection($goods)->toArray();
+                $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
+            }
+            if ($price) {
+                $goods = collection($goods)->toArray();
+                $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
+            }
+        }
+        if(empty($goods)){
+            $this->error('未搜索到对应内容！');
+        }
+        $this->success('请求成功！', $goods);
     }
 
     /**
