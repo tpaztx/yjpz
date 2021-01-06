@@ -456,12 +456,12 @@ class Wph extends Api
             $this->error('请求失败，请联系管理员！');
         }
     }
+
     /**
      * 品牌列表 
      */
     public function getBrandList()
     {
-
         $pageIndex = $this->request->request('pageIndex')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
         $id = $this->request->request('cateid')?:0;
@@ -469,7 +469,7 @@ class Wph extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store_id);
-        $result = $this->brandList($pageIndex, $pageSize, $id,$downIdArray);
+        $result = $this->brandList($pageIndex, $pageSize, $id, $downIdArray);
         if ($result) {
             foreach ($result as $k => $v) {
                 $v['goods'] = GoodsList::where('adId', 'in',$v['adId'])->limit(0,5)->select();
