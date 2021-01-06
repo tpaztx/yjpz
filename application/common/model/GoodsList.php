@@ -23,12 +23,12 @@ class GoodsList Extends Model
     {
         return $this->belongsTo('BrandList','adId','adId');
     }
-    public function getSizesJsonAttr($value)
-    {
-        if (!empty($value)) {
-            return \GuzzleHttp\json_decode($value,1);
-        }
-        return $value;
-    }
+    // public function getSizesJsonAttr($value)
+    // {
+    //     if (!empty($value)) {
+    //         return \GuzzleHttp\json_decode($value,1);
+    //     }
+    //     return $value;
+    // }
 
 }
