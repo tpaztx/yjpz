@@ -633,7 +633,7 @@ class Common extends Api
     public function delBrandStatus()
     {
         $brandAdId = $this->request->param('brandAdId');
-        $brand_lists = $goods_list = 0;
+        $brand_lists = $goods_list = $limitNum = 0;
         if(!$brandAdId){
             if (Cache::get('limitNum')) {
                 $limitNum = Cache::get('limitNum');
@@ -658,6 +658,6 @@ class Common extends Api
             }
         }
         
-        $this->success('请求成功！删除失效商品：'.$goods_list.'删除失效品牌：'.$brand_lists);
+        $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$limitNum.'】');
     }
 }
