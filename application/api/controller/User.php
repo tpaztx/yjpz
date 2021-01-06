@@ -570,7 +570,7 @@ class User extends Api
             $teamId = array_merge($teamId, $teamId2['data']);
         }
         $data = [];
-        $user = $user->where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
+        $user = UserM::where('id', 'in', $teamId)->field('nickname,avatar,id as number,createtime')->select();
         foreach ($user as $key => $val) {
             $list = db('store s')->where("s.user_id=".$val->number)
                                     ->join('order o', 'o.store_id=s.id')
