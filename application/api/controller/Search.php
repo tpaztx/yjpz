@@ -117,7 +117,7 @@ class Search extends Api
                 // $brand_result[$key]['endTime'] = time2string(strtotime($val['sellTimeTo']) - time());
                 $goods = GoodsList::where(function ($query) use ($price_min,$price_max,$catNameOne,$catNameTwo,$keyword){
                     if($keyword){
-                        $query->where('goodName','like',$keyword);
+                        $query->where('goodName','like','%'.$keyword.'%');
                     }
                     if($price_min){
                         $query->where('vipshopPrice','>',$price_min);
