@@ -644,8 +644,9 @@ class Common extends Api
                 Cache::set('brandAdId', $adId);
                 $brandAdId = Cache::get('brandNum');
             }
-            $result = $this->goodsListWph('', 1, 20, $brandAdId);
-            dump($result);
+            
         }
+        $result = $this->goodsListWph('', 1, 20, $brandAdId);
+        dump($result);
     }
 }
