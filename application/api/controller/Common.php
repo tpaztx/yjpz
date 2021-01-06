@@ -635,7 +635,13 @@ class Common extends Api
         $brandAdId = $this->request->param('brandAdId');
         $brand_lists = $goods_list = 0;
         if(!$brandAdId){
-            $ids = BrandList::field('id,adId')->select();
+            if (Cache::get('limitNum')) {
+                $limitNum = Cache::get('limitNum');
+            }else{
+                Cache::set('limitNum', 1);
+                $limitNum = Cache::get('limitNum');
+            }
+            $ids = BrandList::field('adId')->paginate(10, false, ['page'=>$limitNum]);
             foreach ($ids as $key => $val) {
                 $result = $this->goodsListWph('', 1, 20, $val->adId);
                 if (!$result) {
@@ -643,12 +649,15 @@ class Common extends Api
                     $goods_list += db('goods_list')->where('adId', $val->adId)->delete();
                 }
             }
+            Cache::set('limitNum', Cache::get('limitNum')+1);
+        }else{
+            $result = $this->goodsListWph('', 1, 20, $brandAdId);
+            if (!$result) {
+                $brand_lists = db('brand_list')->where('adId', $brandAdId)->delete();
+                $goods_list = db('goods_list')->where('adId', $brandAdId)->delete();
+            }
         }
-        $result = $this->goodsListWph('', 1, 20, $brandAdId);
-        if (!$result) {
-            $brand_lists = db('brand_list')->where('adId', $brandAdId)->delete();
-            $goods_list = db('goods_list')->where('adId', $brandAdId)->delete();
-        }
+        
         $this->success('请求成功！删除失效商品：'.$goods_list.'删除失效品牌：'.$brand_lists);
     }
 }
