@@ -36,7 +36,6 @@ class Search Extends Model
         }else{
             $result = self::insert(['user_id' => $uid, 'keyword' => $keyWord, 'createtime' => time()]);
         }
-        echo self::getLastSQL();die;
         if ($result) {
             return true;
         }else{
