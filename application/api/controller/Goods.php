@@ -410,6 +410,7 @@ class Goods extends Api
             $data['goodImage'] = $param['goodImage']?:'';
             $data['createtime'] = time();
             $data['goodId'] = $param['goodId'];
+            dump('this here');die;
             $result = ShoppingCarts::insert($data);
         }
         
