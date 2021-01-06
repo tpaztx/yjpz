@@ -121,7 +121,6 @@ class Search extends Api
                 $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                 $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                 $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-                // $goods[$k]['total'] = rand(0, 100);
             }
             if ($total) {
                 $goods = collection($goods)->toArray();
