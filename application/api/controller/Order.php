@@ -392,15 +392,14 @@ class Order extends Api
     public function orderList()
     {
         $user = $this->auth->getUser();
-        $steoM = new \app\admin\model\Store();
-        $store = $steoM->getStore($user['id']);
         $status = $this->request->param('status');
+        $store_id = $this->request->param('store_id');
         $after_sales = $this->request->param('after_sales');
         $orders = OrderM::with('goods')
-            ->where(function ($query) use ($store,$status,$user,$after_sales){
+            ->where(function ($query) use ($store_id,$status,$user,$after_sales){
                 //APP小店查看
-                if($store && !empty($store)){
-                    $query->where('store_id',$store['id']);
+                if($store_id && !empty($store_id)){
+                    $query->where('store_id',$store_id);
                 }else{
 //                 H5用户查看
                     $query->where('user_id',$user['id']);
