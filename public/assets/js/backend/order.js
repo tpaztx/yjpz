@@ -36,7 +36,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'status', title: __('Status') ,operate: 'LIKE', formatter: Table.api.formatter.status,searchList:{"-1":"已取消","0":"待付款","1":"待发货","2":"已发货","3":"已完成"}},
                         {field: 'after_sales', title: __('After_sales'),formatter: Table.api.formatter.status,searchList:{"0":"无售后","1":"审核中","2":"未通过","3":"已通过","4":"已退款"}},
                         {field: 'wph_order_no', title: __('Wph_order_no'), operate: 'LIKE'},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate,buttons: [
+                                {
+                                    name: 'show',
+                                    text: __('查看详情'),
+                                    title: __('下架'),
+                                    classname: 'btn btn-xs btn-info btn-addtabs',
+                                    url: 'order/show',
+                                    visible: function (row) {
+                                        return true;
+                                        //返回true时按钮显示,返回false隐藏
+                                    },
+                                    success:function (data,ret) {
+                                        $(".btn-refresh").trigger("click");
+                                    }
+                                }
+                            ]}
                     ]
                 ]
             });

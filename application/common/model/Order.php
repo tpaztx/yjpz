@@ -32,11 +32,8 @@ class Order extends Model
     }
     public function getAfterSalesTextAttr($value,$data)
     {
-        if(!empty($value)) {
-            $value = [0 => '', 1 => '审核中', 2 => '未通过', 3 => "已通过", 4 => "已完成"];
-            return $value[$data['after_sales']];
-        }
-        return $value;
+        $value = [0 =>'无售后',1 =>'审核中',2 =>'未通过',3 =>"已通过",4 =>"已完成"];
+        return $value[$data['after_sales']];
     }
     public function getCreatetimeTextAttr($value, $data)
     {
