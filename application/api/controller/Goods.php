@@ -499,7 +499,7 @@ class Goods extends Api
             foreach ($brands as $k => $v) {
                 //查询对应商品list
                 $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
-                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null')->select();
+                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null')->orWhere('endtime=0')->select();
                 if ($goods) {
                     foreach ($goods as $key => $val) {
                         $val->sizes = unserialize($val->sizes);
