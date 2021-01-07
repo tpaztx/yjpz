@@ -146,7 +146,7 @@ class Search extends Api
         if(empty($goods)){
             $this->error('未搜索到对应内容！');
         }
-        $this->success('请求成功！', $goods);
+        $this->success('请求成功！0', $goods);
     }
 
     /**
