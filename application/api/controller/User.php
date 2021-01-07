@@ -18,6 +18,7 @@ use function Symfony\Component\String\s;
 use function Symfony\Component\String\u;
 use app\common\model\Order;
 use app\common\model\UserGroup;
+use app\common\model\Config;
 use app\admin\model\Store;
 
 /**
@@ -546,7 +547,6 @@ class User extends Api
         $team = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->sum('proportion');
         $team += Order::where(['commission1_id'=>$this->auth->id, 'status'=>3])->sum('commission1');
         $team += Order::where(['commission2_id'=>$this->auth->id, 'status'=>3])->sum('commission2');
-        // echo Order::getLastSQL();die;
         $this->success('请求成功！', [
             'today' => $today,
             'today_sale_price' => $today_sale_price,
@@ -590,7 +590,6 @@ class User extends Api
         }
         $this->success('请求成功！', $data);
     }
-
     //获取用户累计奖励
     private function getUserMoneyTotal($uid)
     {
@@ -599,6 +598,42 @@ class User extends Api
         $my += Order::where(['commission2_id'=>$uid, 'status'=>3])->sum('commission2');
         return $my;
     }
+
+    /**
+     * 提现申请
+     */
+    public function addWithdraw()
+    {
+        $price = $this->request->request('price');
+        //判断用户提现金额
+        $priceConfig = Config::where('name', 'in', 'withdraw')->value('value');
+        if (!isset($price) || $price<$priceConfig) {
+            $this->error('缺少请求参数！，或者提现价格低于最小值！');
+        }
+        //获取用户的微信opendID
+        $wechat_token = User::where('id', $this->auth->id)->value('openid');
+        if (!$wechat_token) {
+            $this->error('请先绑定微信！');
+        }
+        //扣除用户金额
+        if ($price > $this->auth->money) {
+            $this->error('提现金额大于账户余额！');
+        }
+        User::where('id', $this->auth->id)->setDec('money', $price);
+        //添加提现数据
+        $data = [
+            'user_id' => $this->auth->id,
+            'price' => $price,
+            'money' => User::where('id', $this->auth->id)->value('money'),
+            'createtime' => time(),
+            'openID' => $wechat_token,
+        ];
+        $result = User::insert($data);
+        if ($result) {
+            $this->success('提交申请成功！');
+        }
+    }
+
 
     /**
      * 获取指定层级的团队集合
