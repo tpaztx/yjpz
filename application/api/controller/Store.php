@@ -284,8 +284,6 @@ class Store extends Api
             })
             ->order($orderFiled,$orderRule)
             ->paginate($limit,false,[ 'query' => request()->param()]);
-        $PriceChange = new PriceChange();
-        $data['list']=$PriceChange->changePriceArray($store_id,$data['list']);
         if(!$data){
             $this->error('服务器繁忙！');
         }

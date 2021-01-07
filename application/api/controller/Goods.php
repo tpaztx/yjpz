@@ -127,8 +127,6 @@ class Goods extends Api
         $good = GoodsList::with(['brand'=>function($query){
             $query->field('adId,brandName,sellTimeTo,brandImage');
         }])->where('goodId',$goodId)->find();
-        $changePrice = new PriceChange();
-        $good = $changePrice->changePrice($store['id'],$good);
         $good['goodBigImage'] = unserialize($good['goodBigImage']);
         $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
         if($good['brand']['sellTimeTo'] > time()){
