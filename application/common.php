@@ -514,7 +514,6 @@ function multi_array_sort($multi_array, $sort_key, $sort = SORT_ASC) {
                 return false;
             }
         }
-        dump($key_array);die;
         array_multisort($key_array, $sort, $multi_array);
         return $multi_array;
     } else {

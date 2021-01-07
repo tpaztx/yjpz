@@ -83,6 +83,17 @@ class Goods extends Api
         if ($keyword) {
             $where .= " and goodName like '%".$keyword."%'";
         }
+        $order = '';
+        if ($total) {
+            // $goods = collection($goods)->toArray();
+            // $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
+            $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
+        }
+        if ($price) {
+            // $goods = collection($goods)->toArray();
+            // $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
+            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC')
+        }
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
                                     ->select();
@@ -102,15 +113,7 @@ class Goods extends Api
                     }
                     $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
                 }
-                if ($total) {
-                    $goods = collection($goods)->toArray();
-                    $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
-                }
-                if ($price) {
-                    $goods = collection($goods)->toArray();
-                    // $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
-                    $goods = multi_array_sort($goods, 'vipshopPrice');
-                }
+                
                 
                 $brand_result[$key]['goods'] = $goods;
             }
