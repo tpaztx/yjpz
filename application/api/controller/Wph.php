@@ -38,8 +38,8 @@ class Wph extends Api
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store_id);
-        $brandListMode = new BrandList; 
-        $result = collection($brandListMode::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
+        $brandListModel = new BrandList; 
+        $result = collection($brandListModel::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
             $result[$key]['cateName'] = explode(',', $val['cateName']);
@@ -48,9 +48,9 @@ class Wph extends Api
         foreach ($result as $k => $v) {
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
-            $result[$k]['count'] = $brandListMode::where('cateId', 'in', $v['cateId'])->where(function ($query) use ($downIdArray,$store_id){
+            $result[$k]['count'] = $brandListModel::where('cateId', 'in', $v['cateId'])->where(function ($query) use ($downIdArray,$store_id){
                 if(isset($store_id) && !empty($store_id)){
-                    $query->whereNotIn('adId',$downIdArray);
+                    $query->whereNotIn('adId', $downIdArray);
                 }
             })->count('id');
         }
