@@ -245,8 +245,8 @@ class Common extends Api
     public function inputGoodsList()
     {
         $wph = new Wph;
-        // ignore_user_abort(true);
-        // set_time_limit(90);
+        ignore_user_abort(true);
+        set_time_limit(10);
         $goodStatus = $brandNum = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
