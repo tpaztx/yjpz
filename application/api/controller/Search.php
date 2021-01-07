@@ -135,15 +135,6 @@ class Search extends Api
                         $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $commission;
                     }
                 $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
-            }
-            if ($total) {
-                $goods = collection($goods)->toArray();
-                $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
-            }
-            if ($price) {
-                $goods = collection($goods)->toArray();
-                $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
             }
         }
         if(empty($goods)){
