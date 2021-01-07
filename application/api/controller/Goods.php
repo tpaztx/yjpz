@@ -84,12 +84,12 @@ class Goods extends Api
             $where .= " and goodName like '%".$keyword."%'";
         }
         $order = '';
-        if ($total) {
+        if (isset($total)) {
             // $goods = collection($goods)->toArray();
             // $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
             $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
         }
-        if ($price) {
+        if (isset($price)) {
             // $goods = collection($goods)->toArray();
             // $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
             $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
@@ -102,7 +102,7 @@ class Goods extends Api
             {
                 $where .= " and adId=".$val['adId'];
                 $brand_result[$key]['endTime'] = time2day(strtotime($val->sellTimeTo) - time());
-                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
