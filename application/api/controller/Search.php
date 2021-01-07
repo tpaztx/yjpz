@@ -123,6 +123,7 @@ class Search extends Api
                         $query->where('catNameTwo',$catNameTwo);
                     }
                 })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+        echo GoodsList::getLastSQL();die;
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
                 $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
