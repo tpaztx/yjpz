@@ -103,7 +103,7 @@ class Goods extends Api
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                    $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
+                    $goods[$k]['commission'] = round($v->commission, 2) * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01;
                     if ($v->isMp == 1) {
                         $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                     }else{
@@ -115,7 +115,7 @@ class Goods extends Api
                 
                 $brand_result[$key]['goods'] = $goods;
             }
-            $this->success('请求成功！', $brand_result);
+            $this->success('请求成功！!', $brand_result);
         }
         $this->error('请求失败！');
     }
