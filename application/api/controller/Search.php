@@ -93,7 +93,7 @@ class Search extends Api
         if(!isset($keyword) || empty($keyword)){
             $this->error('请输入搜索内容！');
         }
-        //插入用户搜索的历史记录
+        //插入用户搜索的历史记录 
         $searchModel = new SearchKeyword;
         $save_keyWord = $searchModel->insertKeyWord($this->auth->id, $keyword);
         if (!$save_keyWord) {
