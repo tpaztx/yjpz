@@ -92,7 +92,7 @@ class Goods extends Api
         if ($price) {
             // $goods = collection($goods)->toArray();
             // $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
-            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC')
+            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
