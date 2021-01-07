@@ -73,7 +73,7 @@ class Goods extends Api
         
         $where = "1=1";
         if ($price_min && $price_max) {
-            $where .= " and vipshopPrice between ".$price_min." and ".$price_max;
+            $where .= " and suggestPrice between ".$price_min." and ".$price_max;
         }
         if ($catNameTwo) {
             $test = explode(",", $catNameTwo);
@@ -89,7 +89,7 @@ class Goods extends Api
             $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
         }
         if (isset($price)) {
-            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
+            $order = 'suggestPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
         $brand_result = BrandList::where('adId', 'in', $adId)
                                     ->field('adId,brandName,brandImage,sellTimeTo,cateId,brandDesc')
@@ -99,16 +99,16 @@ class Goods extends Api
             {
                 $where .= " and adId=".$val['adId'];
                 $brand_result[$key]['endTime'] = time2day(strtotime($val->sellTimeTo) - time());
-                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                     if ($v->isMp == 1) {
                         $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $goods[$k]['suggestAddPrice'];
+                        $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
                     }else{
                         $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $goods[$k]['commission'];
+                        $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['commission'];
                     }
                     $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
                 }

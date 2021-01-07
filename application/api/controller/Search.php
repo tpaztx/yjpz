@@ -104,17 +104,17 @@ class Search extends Api
         //     $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
         // }
         if (isset($price)) {
-            $order = 'g.vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
+            $order = 'g.suggestPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
         $goods = GoodsList::alias('g')->where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
                         $query->where('g.goodName','like','%'.$keyword.'%');
                     }
                     if($price_min){
-                        $query->where('g.vipshopPrice','>=',$price_min);
+                        $query->where('g.suggestPrice','>=',$price_min);
                     }
                     if($price_max){
-                        $query->where('g.vipshopPrice','<=',$price_max);
+                        $query->where('g.suggestPrice','<=',$price_max);
                     }
                     if($catNameOne){
                         $query->where('g.catNameOne',$catNameOne);
@@ -122,7 +122,7 @@ class Search extends Api
                     if($catNameTwo){
                         $query->where('g.catNameTwo',$catNameTwo);
                     }
-                })->join('order_good o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                })->join('order_good o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestPrice,g.sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
         // echo GoodsList::getLastSQL();die;
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
@@ -130,10 +130,10 @@ class Search extends Api
                 $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                 if ($v->isMp == 1) {
                     $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $goods[$k]['suggestAddPrice'];
+                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
                 }else{
                     $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $goods[$k]['commission'];
+                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['commission'];
                 }
                 $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
             }
