@@ -281,8 +281,7 @@ class Common extends Api
                         $goods = $this->goodsListWph('', Cache::get('goods_index')?:1, 20, $v['adId']);
                         $goods = object_to_array($goods);
                         $isHave = 0;
-                        if ($goods)
-                        {
+                        if ($goods) {
                             foreach ($goods['goods'] as $key => $val) {
                                 $goods_info['adId'] = $v['adId'];
                                 $goods_info['goodId'] = $val['goodId'];
