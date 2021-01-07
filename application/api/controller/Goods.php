@@ -95,7 +95,11 @@ class Goods extends Api
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                    if ($v->isMp == 1) {
+                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                    }else{
+                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->commission;
+                    }
                     $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
                 }
                 if ($total) {
