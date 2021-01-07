@@ -319,7 +319,7 @@ class Common extends Api
                 }
 
                 Log::write('【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index'));
-                if (Cache::get('goods_index') == $pageTotal) {
+                if (Cache::get('goods_index') >= $pageTotal) {
                     Cache::set('brandNum', Cache::get('brandNum') + 1);
                     Cache::set('goods_index', 1);
                 }
