@@ -494,6 +494,7 @@ class Common extends Api
         $result['server_phone'] = Configs::where('name', 'in', 'server_phone')->value('value');
         $result['download_Android'] = Configs::where('name', 'in', 'download_Android')->value('value');
         $result['download_iOS'] = Configs::where('name', 'in', 'download_iOS')->value('value');
+        $result['withdraw'] = Configs::where('name', 'in', 'withdraw')->value('value');
         $this->success('请求成功！', $result);
     }
 
