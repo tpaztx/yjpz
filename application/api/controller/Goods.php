@@ -115,7 +115,7 @@ class Goods extends Api
                 
                 $brand_result[$key]['goods'] = $goods;
             }
-            $this->success('请求成功！~', $brand_result);
+            $this->success('请求成功！', $brand_result);
         }
         $this->error('请求失败！');
     }
