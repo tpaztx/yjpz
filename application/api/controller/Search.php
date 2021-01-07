@@ -98,6 +98,13 @@ class Search extends Api
         if (!$save_keyWord) {
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
+        $order = '';
+        if (isset($total)) {
+            $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
+        }
+        if (isset($price)) {
+            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
+        }
         $goods = GoodsList::where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
                         $query->where('goodName','like','%'.$keyword.'%');
@@ -114,7 +121,7 @@ class Search extends Api
                     if($catNameTwo){
                         $query->where('catNameTwo',$catNameTwo);
                     }
-                })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->limit(($page - 1)*$pageSize, $pageSize)->select();
+                })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
                 $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
