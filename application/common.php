@@ -470,12 +470,14 @@ function time2day($second){
     $str = '';
     if ($day>0) {
         $str .= $day.'天';
-    }
-    if ($hour>0) {
-        $str .= $hour.'小时';
-    }
-    if ($minute>0) {
-        $str .= $minute.'分';
+    }else{
+        if ($hour>0) {
+            $str .= $hour.'小时';
+        }else{
+            if ($minute>0) {
+                $str .= $minute.'分';
+            }
+        }
     }
     return $str;
 }
