@@ -111,10 +111,10 @@ class Search extends Api
                         $query->where('goodName','like','%'.$keyword.'%');
                     }
                     if($price_min){
-                        $query->where('vipshopPrice','>',$price_min);
+                        $query->where('vipshopPrice','>=',$price_min);
                     }
                     if($price_max){
-                        $query->where('vipshopPrice','<',$price_min);
+                        $query->where('vipshopPrice','<=',$price_min);
                     }
                     if($catNameOne){
                         $query->where('catNameOne',$catNameOne);
