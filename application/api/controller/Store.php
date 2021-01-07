@@ -243,6 +243,22 @@ class Store extends Api
         $this->success('改价成功！');
     }
     /**
+     * 获取默认改价
+     */
+    public function getPriceChange()
+    {
+        $user = $this->auth->getUser();
+        $storeM = new \app\admin\model\Store();
+        $store = $storeM->getStore($user['id']);
+        $change = PriceChange::where('store_id',$store['id'])
+        ->where(['type'=>1,'object'=>0])
+        ->find();
+        if(!$change){
+            $this->error('无默认改价');
+        }
+        $this->success('请求成功！',$change);
+    }
+    /**
      * H5小店模式 (品牌商品)
      */
     public function smallStoreBrandShow()
