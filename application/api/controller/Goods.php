@@ -103,7 +103,7 @@ class Goods extends Api
                 foreach ($goods as $k => $v) {
                     $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                     $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                    $commission = $v->commission * (UserGroup::where('id', $this->auth_group_id)->value('proportion')) * 0.01;
+                    $commission = $v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01;
                     if ($v->isMp == 1) {
                         $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                     }else{
