@@ -318,9 +318,10 @@ class Common extends Api
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
+                        dump('[页数]'.Cache::get('goods_total'));
                     } while (Cache::get('goods_index') <= (Cache::get('goods_total')?:10));
                 }
-                Cache::set('goods_total', Cache::get('goods_total') + 20);
+                Cache::set('goods_total', Cache::get('goods_total') + 10);
                 Log::write('【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index'));
                 if (Cache::get('goods_index') >= $pageTotal) {
                     Cache::set('brandNum', Cache::get('brandNum') + 1);
