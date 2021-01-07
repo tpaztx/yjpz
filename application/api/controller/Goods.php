@@ -450,7 +450,7 @@ class Goods extends Api
             }
             $this->success('请求成功！', ['cd_'.$this->auth->id => time2string( 1200 - $count)]);
         }else{
-            $goods = ShoppingCarts::where('user_id', $this->auth->id)->where('endtime is null')->where(' or endtime=0')->select();
+            $goods = ShoppingCarts::where('user_id', $this->auth->id)->where('endtime is null or endtime=0')->select();
             if ($goods) {
                 foreach ($goods as $key => $val) {
                     ShoppingCarts::where('id', $val->id)->update(['endtime'=>time()]);
@@ -499,7 +499,7 @@ class Goods extends Api
             foreach ($brands as $k => $v) {
                 //查询对应商品list
                 $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
-                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null')->where(' or endtime=0')->select();
+                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null or endtime=0')->select();
                 if ($goods) {
                     foreach ($goods as $key => $val) {
                         $val->sizes = unserialize($val->sizes);
