@@ -101,29 +101,29 @@ class Search extends Api
         }
         $order = '';
         if (isset($total)) {
-            $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
+            $order = 'o.total '. ($total==1 ? 'DESC' : 'ASC');
         }
         if (isset($price)) {
-            $order = 'vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
+            $order = 'g.vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
-        $goods = GoodsList::where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
+        $goods = GoodsList::alais('g')where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
-                        $query->where('goodName','like','%'.$keyword.'%');
+                        $query->where('g.goodName','like','%'.$keyword.'%');
                     }
                     if($price_min){
-                        $query->where('vipshopPrice','>=',$price_min);
+                        $query->where('g.vipshopPrice','>=',$price_min);
                     }
                     if($price_max){
-                        $query->where('vipshopPrice','<=',$price_max);
+                        $query->where('g.vipshopPrice','<=',$price_max);
                     }
                     if($catNameOne){
-                        $query->where('catNameOne',$catNameOne);
+                        $query->where('g.catNameOne',$catNameOne);
                     }
                     if($catNameTwo){
-                        $query->where('catNameTwo',$catNameTwo);
+                        $query->where('g.catNameTwo',$catNameTwo);
                     }
-                })->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestAddPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
-        // echo GoodsList::getLastSQL();die;
+                })->join('order_goods o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json,count(g.id) as total')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+        echo GoodsList::getLastSQL();die;
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
                 $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
