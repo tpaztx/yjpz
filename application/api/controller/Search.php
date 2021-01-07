@@ -106,7 +106,7 @@ class Search extends Api
         if (isset($price)) {
             $order = 'g.vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
-        $goods = GoodsList::alais('g')where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
+        $goods = GoodsList::alais('g')->where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
                         $query->where('g.goodName','like','%'.$keyword.'%');
                     }
