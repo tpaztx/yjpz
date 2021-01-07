@@ -78,7 +78,7 @@ class Search extends Api
         }
     }
 
-    public function search()
+    public function search() 
     {
         $page = $this->request->request('page')?:1;
         $pageSize = $this->request->request('pageSize')?:10;
