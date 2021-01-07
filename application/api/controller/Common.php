@@ -281,38 +281,41 @@ class Common extends Api
                         $goods = $this->goodsListWph('', Cache::get('goods_index')?:1, 20, $v['adId']);
                         $goods = object_to_array($goods);
                         $isHave = 0;
-                        foreach ($goods['goods'] as $key => $val) {
-                            $goods_info['adId'] = $v['adId'];
-                            $goods_info['goodId'] = $val['goodId'];
-                            $goods_info['goodFullId'] = $val['goodFullId'];
-                            $goods_info['goodImage'] = $val['goodImage'];
-                            $goods_info['goodName'] = $val['goodName'];
-                            $goods_info['logo'] = $val['logo'];
-                            $goods_info['sn'] = $val['sn'];
-                            $goods_info['isMp'] = $val['isMp']?1:0;
-                            $goods_info['color'] = $val['color'];
-                            $goods_info['material'] = $val['material'];
-                            $goods_info['catNameOne'] = $val['catNameOne'];
-                            $goods_info['catNameTwo'] = $val['catNameTwo'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            //商品主图
-                            $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
-                            //尺码文字
-                            if (!empty($val['sizes'])) {
-                                $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
-                                $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
-                                $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
-                                $goods_info['commission'] = $val['sizes'][0]['commission'];
-                                $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
-                                $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
-                            }
-                            $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
-                            if ($isHave>0) {
-                                db('goods_list')->where('id', $isHave)->update($goods_info);
-                            }else{
-                                db('goods_list')->insert($goods_info);
+                        if ($goods)
+                        {
+                            foreach ($goods['goods'] as $key => $val) {
+                                $goods_info['adId'] = $v['adId'];
+                                $goods_info['goodId'] = $val['goodId'];
+                                $goods_info['goodFullId'] = $val['goodFullId'];
+                                $goods_info['goodImage'] = $val['goodImage'];
+                                $goods_info['goodName'] = $val['goodName'];
+                                $goods_info['logo'] = $val['logo'];
+                                $goods_info['sn'] = $val['sn'];
+                                $goods_info['isMp'] = $val['isMp']?1:0;
+                                $goods_info['color'] = $val['color'];
+                                $goods_info['material'] = $val['material'];
+                                $goods_info['catNameOne'] = $val['catNameOne'];
+                                $goods_info['catNameTwo'] = $val['catNameTwo'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                //商品主图
+                                $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
+                                //尺码文字
+                                if (!empty($val['sizes'])) {
+                                    $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
+                                    $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
+                                    $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                                    $goods_info['commission'] = $val['sizes'][0]['commission'];
+                                    $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
+                                    $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
+                                }
+                                $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
+                                if ($isHave>0) {
+                                    db('goods_list')->where('id', $isHave)->update($goods_info);
+                                }else{
+                                    db('goods_list')->insert($goods_info);
+                                }
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
