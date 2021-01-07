@@ -314,8 +314,6 @@ class Common extends Api
                                 db('goods_list')->insert($goods_info);
                             }
                         }
-                        Cache::set('goods_index', Cache::get('goods_index') + 1);
-                        echo '【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index');
                     } while (Cache::get('goods_index') <= 21);
                 }
 
