@@ -2,8 +2,10 @@
 
 namespace app\admin\controller;
 
+use app\api\controller\WxRefund;
 use app\common\controller\Backend;
 use app\common\model\User;
+use think\Db;
 
 /**
  * 
@@ -52,6 +54,31 @@ class Order extends Backend
         return $this->fetch();
     }
 
+    public function confirmReturn($ids = null)
+    {
+        $order = \app\admin\model\Order::where('id',$ids)->find();
+        // 启动事务
+        Db::startTrans();
+        try{
+            $order->status = 4;
+            $order->after_sales = 5;
+            $order->save();
+//            $refund = new WxRefund();
+//            $refund->refund($order['order_no']);
+            // 提交事务
+            Db::commit();
+            $res = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $res = false;
+        }
+        if($res){
+            $this->success('退款成功！');
+        }
+        $this->error($e->getMessage());
+
+    }
     /**
      * 默认生成的控制器所继承的父类中有index/add/edit/del/multi五个基础方法、destroy/restore/recyclebin三个回收站方法
      * 因此在当前控制器中可不用编写增删改查的代码,除非需要自己控制这部分逻辑
