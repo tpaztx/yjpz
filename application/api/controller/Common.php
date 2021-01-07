@@ -261,7 +261,7 @@ class Common extends Api
         }else{
             $adId = db('brand_list')->field('adId')->where('adId', $brandNum)->select();
             Cache::set('goods_index', 1);
-            Cache::set('goods_total', 20);
+            Cache::set('goods_total', 10);
         }
         
         if ($adId && !empty($adId)) {
@@ -318,14 +318,14 @@ class Common extends Api
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
-                    } while (Cache::get('goods_index') <= (Cache::get('goods_total')?:20));
+                    } while (Cache::get('goods_index') <= (Cache::get('goods_total')?:10));
                 }
                 Cache::set('goods_total', Cache::get('goods_total') + 20);
                 Log::write('【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index'));
                 if (Cache::get('goods_index') >= $pageTotal) {
                     Cache::set('brandNum', Cache::get('brandNum') + 1);
                     Cache::set('goods_index', 1);
-                    Cache::set('goods_total', 20);
+                    Cache::set('goods_total', 10);
                 }
             }
             echo '【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index');
