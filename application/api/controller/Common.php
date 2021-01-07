@@ -314,6 +314,7 @@ class Common extends Api
                                 db('goods_list')->insert($goods_info);
                             }
                         }
+                        Cache::set('goods_index', Cache::get('goods_index') + 1);
                     } while (Cache::get('goods_index') <= 21);
                 }
 
