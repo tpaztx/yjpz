@@ -122,7 +122,7 @@ class Search extends Api
                     if($catNameTwo){
                         $query->where('g.catNameTwo',$catNameTwo);
                     }
-                })->join('order_goods o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json,count(g.id) as total')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                })->join('order_good o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json,count(g.id) as total')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
         echo GoodsList::getLastSQL();die;
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
