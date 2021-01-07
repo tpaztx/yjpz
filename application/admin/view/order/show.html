@@ -1,0 +1,215 @@
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget__order-detail widget-body am-margin-bottom-lg">
+<!--                    <div class="am-u-sm-12">-->
+<!--                        <ul class="order-detail-progress progress-">-->
+<!--                            <li>-->
+<!--                                <span>下单时间</span>-->
+<!--                                <div class="tip">{$detail['createtime_text']}</div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span>付款</span>-->
+<!--                                <div class="tip">-->
+<!--                                    付款于-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span>发货</span>-->
+<!--                                <div class="tip">-->
+<!--                                    发货于-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span>收货</span>-->
+<!--                                <div class="tip">-->
+<!--                                    收货于-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span>完成</span>-->
+<!--                                <div class="tip">-->
+<!--                                    完成于-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">基本信息</div>
+                    </div>
+                    <div class="am-scrollable-horizontal">
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <tbody>
+                            <tr>
+                                <th>订单号</th>
+                                <th>唯品订单号</th>
+                                <th>买家</th>
+                                <th>订单金额</th>
+                                <th>交易状态</th>
+                                <th>售后状态</th>
+                            </tr>
+                            <tr>
+                                <td><?= $detail['order_no'] ?></td>
+                                <td><?= $detail['wph_order_no'] ?></td>
+                                <td>
+                                    <p><?= $detail['username'] ?></p>
+                                    <p class="am-link-muted">(用户id：<?= $detail['user_id'] ?>)</p>
+                                </td>
+                                <td class="">
+                                    <div class="td__order-price am-text-left">
+                                        <ul class="am-avg-sm-2">
+                                            <li class="am-text-right">订单总额：</li>
+                                            <li class="am-text-right">￥<?= $detail['real_price'] ?> </li>
+                                        </ul>
+                                        <ul class="am-avg-sm-2">
+                                            <li class="am-text-right">实付款金额：</li>
+                                            <li class="x-color-red am-text-right">
+                                                ￥<?= $detail['real_price'] ?></li>
+                                        </ul>
+                                        <ul class="am-avg-sm-2">
+                                            <li class="am-text-right">运费：</li>
+                                            <li class="am-text-right"> ￥<?= $detail['yunfei_price'] ?></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>订单状态：
+                                        <span class="am-badge
+                                        <?= $detail->status== 0 ? 'am-badge-success' : '' ?>">
+                                                <?= $detail['status_text'] ?></span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>售后状态：
+                                        <span class="am-badge
+                                        <?= $detail->after_sales== 0 ? 'am-badge-success' : '' ?>">
+                                                <?= $detail['after_sales_text'] ?></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">商品信息</div>
+                    </div>
+                    <div class="am-scrollable-horizontal">
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <tbody>
+                            <tr>
+                                <th>商品名称</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>规格</th>
+                                <th>商品总价</th>
+                            </tr>
+                            {foreach name="detail['goods']" id="goods"}
+                            <tr>
+                                <td class="goods-detail am-text-middle">
+                                    <div class="goods-image">
+                                        <img src="<?= $goods['good_image'] ?>" alt="">
+                                    </div>
+                                    <div class="goods-info">
+                                        <p class="goods-title"><?= $goods['good_title'] ?></p>
+                                    </div>
+                                </td>
+                                <td>￥<?= $goods['good_price'] ?></td>
+                                <td><?= $goods['good_num'] ?></td>
+                                <td><?= $goods['good_size'] ?></td>
+                                <td>￥<?= $goods['good_price']*$goods['good_num'] ?></td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">收货信息</div>
+                    </div>
+                    <div class="am-scrollable-horizontal">
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <tbody>
+                            <tr>
+                                <th>收货人</th>
+                                <th>收货电话</th>
+                                <th>收货地址</th>
+                            </tr>
+                            <tr>
+                                <td><?= $detail['username'] ?></td>
+                                <td><?= $detail['phone'] ?></td>
+                                <td>
+                                    <?= $detail['address'] ?>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">付款信息</div>
+                    </div>
+                    <div class="am-scrollable-horizontal">
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                                am-text-nowrap am-margin-bottom-xs">
+                            <tbody>
+                            <tr>
+                                <th>应付款金额</th>
+                                <th>买家信息</th>
+                            </tr>
+                            <tr>
+                                <td>￥<?= $detail['real_price'] ?></td>
+                                <td>
+                                    <p><?= $detail['username'] ?></p>
+                                    <p><?= $detail['phone']?></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 发货信息 -->
+<!--                    <div class="widget-head am-cf">-->
+<!--                        <div class="widget-title am-fl">发货信息</div>-->
+<!--                    </div>-->
+<!--                    <div class="am-scrollable-horizontal">-->
+<!--                        <table class="regional-table am-table am-table-bordered am-table-centered-->
+<!--                                    am-text-nowrap am-margin-bottom-xs">-->
+<!--                            <tbody>-->
+<!--                            <tr>-->
+<!--                                <th>物流公司</th>-->
+<!--                                <th>物流单号</th>-->
+<!--                                <th>发货时间</th>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td></td>-->
+<!--                                <td></td>-->
+<!--                                <td>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+        /**
+         * 表单验证提交
+         * @type {*}
+         */
+        $('.my-form').superForm();
+
+    });
+</script>
