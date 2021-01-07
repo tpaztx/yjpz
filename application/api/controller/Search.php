@@ -100,9 +100,9 @@ class Search extends Api
             $this->error('处理搜索历史记录数据出错，请联系客服！');
         }
         $order = '';
-        if (isset($total)) {
-            $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
-        }
+        // if (isset($total)) {
+        //     $order = 'total '. ($total==1 ? 'DESC' : 'ASC');
+        // }
         if (isset($price)) {
             $order = 'g.vipshopPrice '. ($price==1 ? 'DESC' : 'ASC');
         }
@@ -122,7 +122,7 @@ class Search extends Api
                     if($catNameTwo){
                         $query->where('g.catNameTwo',$catNameTwo);
                     }
-                })->join('order_good o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json,count(g.id) as total')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                })->join('order_good o', 'g.goodId=g.goodId', 'left')->field('g.goodImage,g.goodId,g.goodFullId,g.goodName,g.sn,g.isMp,g.color,g.material,g.goodBigImage,g.vipshopPrice,g.marketPrice,g.commission,g.suggestAddPrice,g.suggestAddPrice,g.sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
         // echo GoodsList::getLastSQL();die;
         if(!empty($goods)){
             foreach ($goods as $k => $v) {
@@ -135,7 +135,16 @@ class Search extends Api
                         $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $commission;
                     }
                 $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
             }
+            if ($total) {
+                $goods = collection($goods)->toArray();
+                $goods = multi_array_sort($goods, 'total', ($total==1?SORT_DESC:SORT_ASC));
+            }
+            // if ($price) {
+            //     $goods = collection($goods)->toArray();
+            //     $goods = multi_array_sort($goods, 'vipshopPrice', ($price==1?SORT_DESC:SORT_ASC));
+            // }
         }
         if(empty($goods)){
             $this->error('未搜索到对应内容！');
