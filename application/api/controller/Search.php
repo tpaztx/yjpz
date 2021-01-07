@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\common\controller\Api;
 use app\common\model\Search as SearchKeyword;
 use app\common\model\GoodsList;
+use app\common\model\UserGroup;
 
 /**
  * 示例接口
@@ -126,11 +127,12 @@ class Search extends Api
             foreach ($goods as $k => $v) {
                 $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                 $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                if ($v->isMp == 1) {
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
-                }else{
-                    $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->commission;
-                }
+                $commission = $v->commission * (UserGroup::where('id', $this->auth_group_id)->value('proportion')) * 0.01;
+                    if ($v->isMp == 1) {
+                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
+                    }else{
+                        $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $commission;
+                    }
                 $goods[$k]['vipshopPrice'] = $v->vipshopPrice + $v->suggestAddPrice;
                 $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
             }
