@@ -245,8 +245,8 @@ class Common extends Api
     public function inputGoodsList()
     {
         $wph = new Wph;
-        ignore_user_abort(true);
-        set_time_limit(10);
+        // ignore_user_abort(true);
+        // set_time_limit(10);
         $goodStatus = $brandNum = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
@@ -316,10 +316,9 @@ class Common extends Api
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
-                        Cache::set('goods_total', Cache::get('goods_total') + 20);
-                    } while (Cache::get('goods_index') <= Cache::get('goods_total'));
+                    } while (Cache::get('goods_index') <= (Cache::get('goods_total')?:20));
                 }
-
+                Cache::set('goods_total', Cache::get('goods_total') + 20);
                 Log::write('【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index'));
                 if (Cache::get('goods_index') >= $pageTotal) {
                     Cache::set('brandNum', Cache::get('brandNum') + 1);
