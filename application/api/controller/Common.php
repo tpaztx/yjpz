@@ -315,7 +315,7 @@ class Common extends Api
                             }
                         }
                         Cache::set('goods_index', Cache::get('goods_index') + 1);
-                        dump((Cache::get('goods_index'));die;
+                        dump(Cache::get('goods_index'));die;
                         echo '【执行类目ID】：'.$v['adId'].'【brandNum】：'.$brandNum.'【页数】：'.Cache::get('goods_index');
                     } while (Cache::get('goods_index') == 21);
                 }
