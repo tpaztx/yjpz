@@ -105,4 +105,17 @@ class Index extends Api
         $result = \app\common\model\OrderNotice::where('user_id', $this->auth->id)->order('id desc')->select();
         $this->success('请求成功！', $result);
     }
+
+    /**
+     * 对账单-最近6个月时间
+     */
+    public function get6Month()
+    {
+        $first  = strtotime('first day this month');
+        $months = array();
+        for ($i = 6; $i >= 1; $i--) {
+          array_push($months, date('Y-m', strtotime("-$i month", $first)));
+        }
+        $this->success('请求成功！', $months);
+    }
 }
