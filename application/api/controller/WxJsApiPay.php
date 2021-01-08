@@ -132,30 +132,28 @@ class WxJsApiPay extends Api
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
             $order = \app\admin\model\Order::where('order_no',$order_sn)->find();
-
             // 启动事务
             Db::startTrans();
             try{
-                $order->status = 1;
-                $order->transaction_no = $transaction_id;
-                $order->return_no +=1 ;
-                $order->save();
-//                $wph = new Wph();
-//                $wphres = $wph->applyPayment($order['wph_order_no']);
-                $wphres = false;
+                $wph = new Wph();
+                $wphres = $wph->applyPayment($order['wph_order_no']);
                 if($wphres['applySuccess'] == false){
                     if($order['type'] == 'APP'){
                         $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
-                        $refund->refund("{$order['order_no']}");
+                        $refund->refund("{$order['order_no']}","$transaction_id");
                     }else{
                         $refund = new WxRefund();
-                        $refund->refund("{$order['order_no']}");
+                        $refund->refund("{$order['order_no']}","$transaction_id");
                     }
                     $order->status = 4;
                     $order->return_price = $order->real_price;
                     $order->save();
+                }else{
+                    $order->status = 1;
+                    $order->transaction_no = $transaction_id;
+                    $order->return_no +=1 ;
+                    $order->save();
                 }
-
                 // 提交事务
                 Db::commit();
                 $res = true;
@@ -165,6 +163,13 @@ class WxJsApiPay extends Api
                 $res = false;
             }
             if(!$res){
+                if($order['type'] == 'APP'){
+                    $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }else{
+                    $refund = new WxRefund();
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }
                 file_put_contents('jsapi_pay_error.txt',$e->getMessage(),FILE_APPEND);
             }
         }else{
