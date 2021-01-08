@@ -108,6 +108,9 @@ Route::post([
 	'api/getMyTeamlist' => 'api/user/getMyTeamlist',
 	//系统消息
 	'api/getSysNotice' => 'api/index/getSysNotice',
+	//对账单-最近6个月时间
+	'api/get6Month' => 'api/index/get6Month',
+	
 
 	/* H5端 */
     //小店-店铺设置
