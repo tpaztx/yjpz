@@ -318,4 +318,25 @@ class Store extends Api
         }
         $this->error('服务器繁忙！',$data);
     }
+    /**
+     * app小店收益统计
+     */
+    public function getMyStroeBil()
+    {
+        $time = $this->request->request('time');
+        $store_id = StoreM::getFieldByUserId('store_id', $this->auth->id);
+        $result = [];
+        $result = Order::where(function ($query) use ($time){
+                                    if ($time == 1) {
+                                        $query->whereTime('createtime', 'd');
+                                    }elseif ($time == 7) {
+                                        $query->whereTime('createtime', 'w');
+                                    }elseif ($time == 30) {
+                                        $query->whereTime('createtime', 'm');
+                                    }
+                                    $query->where('store_id', $store_id);
+                                    $query->whereBetween('status', [0,3]);
+                                })->field('sum(real_price) as real_price, sum(get_price) as get_price, sum(id) as total')->select();
+        $this->success('请求成功！', $result);
+    }
 }
