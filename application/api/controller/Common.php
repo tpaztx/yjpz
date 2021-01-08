@@ -506,6 +506,7 @@ class Common extends Api
         $result['download_Android'] = Configs::where('name', 'in', 'download_Android')->value('value');
         $result['download_iOS'] = Configs::where('name', 'in', 'download_iOS')->value('value');
         $result['withdraw'] = Configs::where('name', 'in', 'withdraw')->value('value');
+        $result['vipCaption'] = UserGroup::where('id','>', 1)->where('status', 'normal')->field('name,month,proportion,commission1,commission2')->select();
         $this->success('请求成功！', $result);
     }
 
