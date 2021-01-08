@@ -133,7 +133,7 @@ class Index extends Api
         $star = $this->request->request('star');
         $end = $this->request->request('end');
         $time = $this->request->request('time');
-        
+
         if ($time) {
             $star = strtotime($time.' 00:00:00');
             $end = strtotime($time.' 23:59:59');
@@ -148,16 +148,16 @@ class Index extends Api
             foreach ($order as $k => $v) {
                 $order_goods = OrderGood::where('order_id',$v->id)->field('goodId,good_title,good_price,good_size,good_num,return_num')->find();
                 $sn = GoodsList::getFieldByGoodId('sn', $order_goods->goodId);
-                $order[$k]['brandName'] = brandName::getFieldBySn('brandName', $sn),
-                $order[$k]['goodId'] = $order_goods->goodId,
-                $order[$k]['sn'] = $sn,
-                $order[$k]['good_title'] = $order_goods->good_title,
-                $order[$k]['good_size'] = $order_goods->good_size,
-                $order[$k]['marketPrice'] = GoodsList::getFieldByGoodId('marketPrice', $order_goods->goodId),
-                $order[$k]['good_price'] = $order_goods->good_price,
-                $order[$k]['good_num'] = $order_goods->good_num,
-                $order[$k]['createtime'] = datetime($order_goods->createtime),
-                $order[$k]['return_num'] = $order_goods->return_num,
+                $order[$k]['brandName'] = brandName::getFieldBySn('brandName', $sn);
+                $order[$k]['goodId'] = $order_goods->goodId;
+                $order[$k]['sn'] = $sn;
+                $order[$k]['good_title'] = $order_goods->good_title;
+                $order[$k]['good_size'] = $order_goods->good_size;
+                $order[$k]['marketPrice'] = GoodsList::getFieldByGoodId('marketPrice', $order_goods->goodId);
+                $order[$k]['good_price'] = $order_goods->good_price;
+                $order[$k]['good_num'] = $order_goods->good_num;
+                $order[$k]['createtime'] = datetime($order_goods->createtime);
+                $order[$k]['return_num'] = $order_goods->return_num;
                 if ($v->status == -1) {
                     $order[$k]['status'] = '已取消';
                 }elseif ($v->status == 0) {
