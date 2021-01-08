@@ -169,9 +169,11 @@ class Order extends Api
                 if($order['type'] == 'APP'){
                     $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
                     $refund->refund("{$order['order_no']}");
+                }else{
+                    $refund = new WxRefund();
+                    $refund->refund("{$order['order_no']}");
                 }
-                $refund = new WxRefund();
-                $refund->refund("{$order['order_no']}");
+
             }
             $order['status'] = -1;
             $order->save();
