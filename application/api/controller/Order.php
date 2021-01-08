@@ -141,7 +141,7 @@ class Order extends Api
             $json=$pay->wxJsApiPay("{$order['real_price']}","购买商品","{$order['order_no']}","{$user['openid']}");
         }
         if($type == 'APP'){
-            $pay = new WxJsApiPay(['appid'=>'wxeac193915e8ff3fc','mch_id'=>1605182717,'pay_apikey'=>'nneGN80ocToUibFmzr9gubsKEQYb9C4N']);
+            $pay = new WxJsApiPay(['appid'=>'wxeac193915e8ff3fc','mch_id'=>'1605182717','pay_apikey'=>'nneGN80ocToUibFmzr9gubsKEQYb9C4N']);
             $json=$pay->wxAppPay("{$order['real_price']}","购买商品","{$order['order_no']}");
         }
         if($json){
