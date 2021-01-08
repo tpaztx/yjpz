@@ -96,4 +96,13 @@ class Index extends Api
         $result['qrCode'] = '/uploads/wxCode'.$url;
         $this->success('请求成功！', $result);
     }
+
+    /**
+     * 获取系统消息列表
+     */
+    public function getSysNotice()
+    {
+        $result = \app\common\model\OrderNotice::where('user_id', $this->auth->id)->order('id desc')->select();
+        $this->success('请求成功！', $result);
+    }
 }
