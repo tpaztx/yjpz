@@ -106,6 +106,8 @@ Route::post([
 	'api/getMyTeam' => 'api/user/getMyTeam',
 	//我的团队数据
 	'api/getMyTeamlist' => 'api/user/getMyTeamlist',
+	//系统消息
+	'api/getSysNotice' => 'api/index/getSysNotice',
 
 	/* H5端 */
     //小店-店铺设置
