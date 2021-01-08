@@ -137,7 +137,7 @@ class WxJsApiPay extends Api
             Db::startTrans();
             try{
                 $wph = new Wph();
-                $wph->applyPayment($order['wph_order_no']);
+                $wphres = $wph->applyPayment($order['wph_order_no']);
                 $order->status = 1;
                 $order->transaction_no = $transaction_id;
                 $order->return_no +=1 ;
@@ -153,6 +153,7 @@ class WxJsApiPay extends Api
             if(!$res){
                 file_put_contents('jsapi_pay_error.txt',$e->getMessage(),FILE_APPEND);
             }
+            file_put_contents('jsapi_pay_res.txt',$wphres,FILE_APPEND);
         }else{
             $result = false;
         }
