@@ -220,7 +220,7 @@ class Index extends Api
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Cache-Control: cache, must-revalidate');//HTTP/1.1
         header('Pragma: public');//HTTP/1.0
-        $writer = IOFactory::createWriter($spreadsheet, 'xls');
+        $writer = IOFactory::createWriter($spreadsheet, 'xlsx');
         $writer->save('php://output');
         exit;
     }
