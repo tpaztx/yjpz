@@ -175,8 +175,8 @@ class Order extends Api
                 $refund = new WxRefund();
                 $refund->refund("{$order['order_no']}");
             }
-            $wph=new Wph();
-            $wph->cancelOrder($order['wph_order_no']);
+//            $wph=new Wph();
+//            $wph->cancelOrder($order['wph_order_no']);
 
             // 提交事务
             Db::commit();
