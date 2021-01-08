@@ -462,11 +462,6 @@ class Common extends Api
         $this->success('无可查询订单！');
     }
 
-    public function addOrderNotice()
-    {
-
-    }
-
     /**
      * 返回品牌对应的商品的数据
      */
