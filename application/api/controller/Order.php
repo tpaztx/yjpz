@@ -163,33 +163,32 @@ class Order extends Api
             $this->error('该订单无法取消！');
         }
         // 启动事务
-//        Db::startTrans();
-//        try{
-//            $order['status'] = -1;
-//            $order->save();
+        Db::startTrans();
+        try{
+            $order['status'] = -1;
+            $order->save();
             if($order['status'] == 1){
                 if($order['type'] == 'APP'){
                     $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
                     $refund->refund("{$order['order_no']}");
                 }
                 $refund = new WxRefund();
-                $res = $refund->refund("{$order['order_no']}");
-                dump($res);exit;
+                $refund->refund("{$order['order_no']}");
             }
 //            $wph=new Wph();
 //            $wph->cancelOrder($order['wph_order_no']);
 
             // 提交事务
-//            Db::commit();
-//            $res = true;
-//        } catch (\Exception $e) {
-//            // 回滚事务
-//            Db::rollback();
-//            $res = false;
-//        }
-//        if(!$res){
-//            $this->error($e->getMessage());
-//        }
+            Db::commit();
+            $res = true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $res = false;
+        }
+        if(!$res){
+            $this->error($e->getMessage());
+        }
         $this->success('取消订单成功！');
     }
     /**

@@ -32,6 +32,7 @@ class WxRefund extends Api
         if($result['return_code'] == 'FAIL'){
             throw Exception($result['return_msg'],'500');
         }
+        return $result;
     }
 
     private function weChatrefund($refund_no,$transaction_no,$total_fee,$refund_fee)
