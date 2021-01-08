@@ -165,8 +165,6 @@ class Order extends Api
         // 启动事务
         Db::startTrans();
         try{
-            $order['status'] = -1;
-            $order->save();
             if($order['status'] == 1){
                 if($order['type'] == 'APP'){
                     $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
@@ -175,6 +173,8 @@ class Order extends Api
                 $refund = new WxRefund();
                 $refund->refund("{$order['order_no']}");
             }
+            $order['status'] = -1;
+            $order->save();
 //            $wph=new Wph();
 //            $wph->cancelOrder($order['wph_order_no']);
 
