@@ -136,10 +136,7 @@ class WxJsApiPay extends Api
             // 启动事务
             Db::startTrans();
             try{
-                $order->status = 1;
-                $order->transaction_no = $transaction_id;
-                $order->return_no +=1 ;
-                $order->save();
+
 //                $wph = new Wph();
 //                $wphres = $wph->applyPayment($order['wph_order_no']);
                 $wphres = false;
@@ -149,13 +146,17 @@ class WxJsApiPay extends Api
                         $refund->refund("{$order['order_no']}");
                     }else{
                         $refund = new WxRefund();
-                        $refund->refund("{$order['order_no']}");
+                        $refund->refund("{$order['order_no']}","$transaction_id");
                     }
                     $order->status = 4;
                     $order->return_price = $order->real_price;
                     $order->save();
+                }else{
+                    $order->status = 1;
+                    $order->transaction_no = $transaction_id;
+                    $order->return_no +=1 ;
+                    $order->save();
                 }
-
                 // 提交事务
                 Db::commit();
                 $res = true;
@@ -165,6 +166,13 @@ class WxJsApiPay extends Api
                 $res = false;
             }
             if(!$res){
+                if($order['type'] == 'APP'){
+                    $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }else{
+                    $refund = new WxRefund();
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }
                 file_put_contents('jsapi_pay_error.txt',$e->getMessage(),FILE_APPEND);
             }
         }else{

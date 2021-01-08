@@ -24,11 +24,13 @@ class WxRefund extends Api
         $this->SSLKEY_PATH = $SSLKEY_PATH ?? $this->SSLKEY_PATH;
     }
     //向外暴露的微信退款接口
-    public function refund($order_no)
+    public function refund($order_no,$transaction_no = null)
     {
+
         $order = \app\common\model\Order::where('order_no',$order_no)->find();
+        $transaction_no = $transaction_no ?? $order['transaction_no'];
         $refund_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
-        $result = $this->weChatrefund($refund_no,$order['transaction_no'],$order['real_price'],$order['real_price']);
+        $result = $this->weChatrefund($refund_no,$transaction_no,$order['real_price'],$order['real_price']);
         if($result['return_code'] == 'FAIL'){
             throw Exception($result['return_msg'],'500');
         }
