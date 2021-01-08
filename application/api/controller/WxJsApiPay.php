@@ -132,14 +132,11 @@ class WxJsApiPay extends Api
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
             $order = \app\admin\model\Order::where('order_no',$order_sn)->find();
-
             // 启动事务
             Db::startTrans();
             try{
-
-//                $wph = new Wph();
-//                $wphres = $wph->applyPayment($order['wph_order_no']);
-                $wphres['applySuccess'] = false;
+                $wph = new Wph();
+                $wphres = $wph->applyPayment($order['wph_order_no']);
                 if($wphres['applySuccess'] == false){
                     if($order['type'] == 'APP'){
                         $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
