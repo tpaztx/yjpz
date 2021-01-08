@@ -141,11 +141,7 @@ Route::post([
     //小店 分享店铺
     'api/shareStore'=>'api/store/shareStore',
 
-
-    /*
-     * 订单
-     */
-
+    /* 订单 */
     //下单
     'api/CreateOrder'=>'api/order/CreateOrder',
     //取消订单
@@ -172,8 +168,6 @@ Route::post([
     'api/orderPay'=>'api/order/orderPay',
     //确认收货
     'api/confirmOrder'=>'api/order/confirmOrder',
-
-
 ]);
 
 Route::get([
