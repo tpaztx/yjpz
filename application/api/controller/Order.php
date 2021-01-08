@@ -431,9 +431,13 @@ class Order extends Api
     public function orderShow()
     {
         $order_id = $this->request->param('order_id');
+        $isRead = $this->request->param('isRead');
         $order = OrderM::with('goods')->where('id',$order_id)->find();
         if(!$order){
             $this->error('无效的订单！');
+        }
+        if ($isRead && $isRead == 1) {
+            \app\common\model\OrderNotice::where(['order_id'=>$order->id, 'order_no'=>$order->order_no])->update(['isRead'=>1]);
         }
         $this->success('请求成功！',$order);
     }
