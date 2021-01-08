@@ -170,6 +170,10 @@ Route::post([
     'api/delOrder'=>'api/order/delOrder',
     //微信支付
     'api/orderPay'=>'api/order/orderPay',
+    //确认收货
+    'api/confirmOrder'=>'api/order/confirmOrder',
+
+
 ]);
 
 Route::get([

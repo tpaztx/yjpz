@@ -358,24 +358,32 @@ class Common extends Api
                 Db::startTrans();
                 try{
                 foreach ($list as $value){
+                     $order = \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->find();
                     //将过期订单变为已取消状态
                     if($value['childOrderSnList'][0]['statusCode'] == 5){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>-1, 'updatetime'=>time()]);
+                        $order->status = -1;
+                        $order->updatetime = time();
+                        $order->save();
                     }
                     //将已发货订单变为已发货状态
                     if($value['childOrderSnList'][0]['statusCode'] == 3){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>2, 'updatetime'=>time()]);
+                        $order->status = 2;
+                        $order->updatetime = time();
+                        $order->save();
                     }
                     //将已签收订单变为已完成状态 增加销量
                     if($value['childOrderSnList'][0]['statusCode'] == 7){
-                        \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->update(['status'=>3, 'updatetime'=>time()]);
-                        $order_id = \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->value('id');
-                        $orderGoods = OrderGood::where('order_id',$order_id)->select();
-                        if(!empty($orderGoods)){
-                            foreach ($orderGoods as $good){
-                                $goods = GoodsList::where('goodId',$good['goodId'])->find();
-                                $goods->sales += $good['good_num'];
-                                $goods->save();
+                        if($order->status != 3){
+                            $order->status = 3;
+                            $order->updatetime = time();
+                            $order->save();
+                            $orderGoods = OrderGood::where('order_id',$order['id'])->select();
+                            if(!empty($orderGoods)){
+                                foreach ($orderGoods as $good){
+                                    $goods = GoodsList::where('goodId',$good['goodId'])->find();
+                                    $goods->sales += $good['good_num'];
+                                    $goods->save();
+                                }
                             }
                         }
                     }

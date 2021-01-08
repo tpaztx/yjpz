@@ -390,13 +390,13 @@ class Wph extends Api
             $ctx->setAppSecret(Config::get('wph.AppSecret'));
             $ctx->setAppURL("https://gw.vipapis.com/");
             $ctx->setLanguage("zh");
-            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderInfoRequest();
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcVopOrderPaymentRequest();
             $request1->timestamp = time();
             $request1->vopChannelId = Config::get('wph.AppKey');
             $request1->userNumber = Config::get('wph.userNumber');
             $request1->orderSn = $orderSn;
             $request1->clientIp = getClientIp();
-            $list = $service->getOrderInfoList($request1);
+            $list = $service->applyPayment($request1);
             $list = object_to_array($list);
             return $list;
 

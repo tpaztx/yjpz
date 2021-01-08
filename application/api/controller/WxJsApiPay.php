@@ -116,6 +116,7 @@ class WxJsApiPay extends Api
 
         //将服务器返回的XML数据转化为数组
         $data = $this->xml2array($xml);
+
         // 保存微信服务器返回的签名sign
         $data_sign = $data['sign'];
         // sign不参与签名算法
@@ -124,13 +125,13 @@ class WxJsApiPay extends Api
         // 判断签名是否正确  判断支付状态
         if ( ($sign===$data_sign) && ($data['return_code']=='SUCCESS') && ($data['result_code']=='SUCCESS') ) {
             $result = $data;
-
             //获取服务器返回的数据
             $order_sn = $data['out_trade_no'];			//订单单号
             $openid = $data['openid'];					//付款人openID
             $total_fee = $data['total_fee']/100;			//付款金额
             $transaction_id = $data['transaction_id']; 	//微信支付流水号
             $order = \app\admin\model\Order::where('order_no',$order_sn)->find();
+
             // 启动事务
             Db::startTrans();
             try{
@@ -138,6 +139,7 @@ class WxJsApiPay extends Api
                 $wph->applyPayment($order['wph_order_no']);
                 $order->status = 1;
                 $order->transaction_no = $transaction_id;
+                $order->return_no +=1 ;
                 $order->save();
                 // 提交事务
                 Db::commit();
@@ -150,12 +152,10 @@ class WxJsApiPay extends Api
         }
         // 返回状态给微信服务器
         if ($result) {
-            $str='<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }else{
-            $str='<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名失败]]></return_msg></xml>';
+            return '<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名失败]]></return_msg></xml>';
         }
-        echo $str;
-        return $result;
     }
 
     public function wxAppPay($total_fee,$body,$order_sn){
