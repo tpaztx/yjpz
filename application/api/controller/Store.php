@@ -337,7 +337,7 @@ class Store extends Api
                                     }
                                     $query->where('store_id', $store_id);
                                     $query->whereBetween('status', [0,3]);
-                                })->field('sum(real_price) as real_price, sum(get_price) as get_price, sum(id) as total')->select();
+                                })->field('sum(real_price) as price, sum(get_price) as commiossion, sum(id) as total')->select();
         $this->success('请求成功！', $result);
     }
 }
