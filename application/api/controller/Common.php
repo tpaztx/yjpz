@@ -382,7 +382,7 @@ class Common extends Api
                         \app\common\model\OrderNotice::insert($data);
                     }
                     //将已签收订单变为已完成状态 增加销量
-                    if($value['childOrderSnList'][0]['statusCode'] == 7){
+                    if($value['childOrderSnList'][0]['statusCode'] == 4){
                         if($order->status != 3){
                             $order->status = 3;
                             $order->updatetime = time();

@@ -24,7 +24,7 @@ class Order extends Model
     ];
     public function getStatusTextAttr($value,$data)
     {
-        $status = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成",4=>"已退款"];
+        $status = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成",4=>"已退款",5=>'已签收'];
         return $status[$data['status']];
     }
     public function getAfterSalesTextAttr($value,$data)
