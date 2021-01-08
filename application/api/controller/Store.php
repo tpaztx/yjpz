@@ -327,7 +327,7 @@ class Store extends Api
         $time = $this->request->request('time');
         $store_id = StoreM::getFieldByUserId($this->auth->id, 'id');
         $result = [];
-        $result = Order::where(function ($query) use ($time){
+        $result = Order::where(function ($query) use ($time, $store_id){
                                     if ($time == 1) {
                                         $query->whereTime('createtime', 'd');
                                     }elseif ($time == 7) {
