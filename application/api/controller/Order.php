@@ -6,6 +6,7 @@ namespace app\api\controller;
 
 use app\common\controller\Api;
 use app\common\model\Address;
+use app\common\model\GoodsList;
 use app\common\model\OrderGood;
 use think\Db;
 use app\common\model\Order as OrderM;
@@ -467,5 +468,32 @@ class Order extends Api
             $this->error($e->getMessage());
         }
         $this->success('删除成功！');
+    }
+    /**
+     * 确认收货
+     */
+    public function confirmOrder()
+    {
+        $orderId = $this->request->param('order_id');
+        $order = \app\admin\model\Order::get($orderId);
+        // 启动事务
+        Db::startTrans();
+        try{
+            $order->status = 3;
+            $order->save();
+            $orderGoods = OrderGood::where('order_id',$order['id'])->select();
+            if(!empty($orderGoods)){
+                foreach ($orderGoods as $good){
+                    $goods = GoodsList::where('goodId',$good['goodId'])->find();
+                    $goods->sales += $good['good_num'];
+                    $goods->save();
+                }
+            }
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+        }
     }
 }
