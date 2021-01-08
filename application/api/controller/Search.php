@@ -108,7 +108,8 @@ class Search extends Api
         }
         $goods = GoodsList::alias('g')->where(function ($query) use ($price_min, $price_max, $catNameOne, $catNameTwo, $keyword){
                     if($keyword){
-                        $query->where('g.goodName','like','%'.$keyword.'%');
+                        $query->whereLike('g.goodName', '%'.$keyword.'%');
+                        $query->whereOr('g.goodId', $keyword);
                     }
                     if($price_min){
                         $query->where('g.suggestPrice','>=',$price_min);
