@@ -140,7 +140,7 @@ class WxJsApiPay extends Api
                 if($wphres['applySuccess'] == false){
                     if($order['type'] == 'APP'){
                         $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
-                        $refund->refund("{$order['order_no']}");
+                        $refund->refund("{$order['order_no']}","$transaction_id");
                     }else{
                         $refund = new WxRefund();
                         $refund->refund("{$order['order_no']}","$transaction_id");
