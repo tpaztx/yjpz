@@ -4,6 +4,7 @@ namespace app\common\model;
 namespace app\api\controller;
 use app\common\controller\Api;
 use think\Db;
+use think\Request;
 
 class WxJsApiPay extends Api
 {
@@ -143,9 +144,14 @@ class WxJsApiPay extends Api
                 $order->save();
                 // 提交事务
                 Db::commit();
+                $res = true;
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
+                $res = false;
+            }
+            if(!$res){
+                file_put_contents('jsapi_pay_error.txt',$e->getMessage(),FILE_APPEND);
             }
         }else{
             $result = false;
