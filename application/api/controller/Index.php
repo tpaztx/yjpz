@@ -147,13 +147,13 @@ class Index extends Api
         $order = Order::whereTime('createtime', 'between', [$star, $end])->where('user_id',$this->auth->id)->field('id,order_no,username,phone,address,createtime,carriersCode,status,get_price')->select();
             foreach ($order as $k => $v) {
                 $order_goods = OrderGood::where('order_id',$v->id)->field('goodId,good_title,good_price,good_size,good_num,return_num')->find();
-                $sn = GoodsList::getFieldByGoodId('sn', $order_goods->goodId);
-                $order[$k]['brandName'] = brandName::getFieldBySn('brandName', $sn);
+                $sn = GoodsList::getFieldByGoodId($order_goods->goodId, 'sn');
+                $order[$k]['brandName'] = brandName::getFieldBySn($sn, 'brandName');
                 $order[$k]['goodId'] = $order_goods->goodId;
                 $order[$k]['sn'] = $sn;
                 $order[$k]['good_title'] = $order_goods->good_title;
                 $order[$k]['good_size'] = $order_goods->good_size;
-                $order[$k]['marketPrice'] = GoodsList::getFieldByGoodId('marketPrice', $order_goods->goodId);
+                $order[$k]['marketPrice'] = GoodsList::getFieldByGoodId($order_goods->goodId, 'marketPrice');
                 $order[$k]['good_price'] = $order_goods->good_price;
                 $order[$k]['good_num'] = $order_goods->good_num;
                 $order[$k]['createtime'] = datetime($order_goods->createtime);

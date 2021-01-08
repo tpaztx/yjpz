@@ -324,7 +324,7 @@ class Store extends Api
     public function getMyStroeBil()
     {
         $time = $this->request->request('time');
-        $store_id = StoreM::getFieldByUserId('store_id', $this->auth->id);
+        $store_id = StoreM::getFieldByUserId($this->auth->id, 'store_id');
         $result = [];
         $result = Order::where(function ($query) use ($time){
                                     if ($time == 1) {
