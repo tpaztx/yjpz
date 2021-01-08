@@ -110,7 +110,9 @@ Route::post([
 	'api/getSysNotice' => 'api/index/getSysNotice',
 	//对账单-最近6个月时间
 	'api/get6Month' => 'api/index/get6Month',
-	
+	//下载账单
+	'api/downLoadBil' => 'api/index/downLoadBil',
+
 
 	/* H5端 */
     //小店-店铺设置
