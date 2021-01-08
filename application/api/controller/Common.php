@@ -358,7 +358,7 @@ class Common extends Api
                 Db::startTrans();
                 try{
                 foreach ($list as $value){
-                     $order = \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->find();
+                    $order = \app\common\model\Order::where('wph_order_no',$value['parentOrderSn'])->find();
                     //将过期订单变为已取消状态
                     if($value['childOrderSnList'][0]['statusCode'] == 5){
                         $order->status = -1;
@@ -370,6 +370,15 @@ class Common extends Api
                         $order->status = 2;
                         $order->updatetime = time();
                         $order->save();
+                        //add订单通知系统消息
+                        $data = [
+                            'user_id' => $order->user_id,
+                            'store_id' => $order->store_id,
+                            'order_no' => $order->order_no,
+                            'createtime' => time(),
+                            'content' => '您的商品已经发货，请注意及时查收。',
+                        ];
+                        \app\common\model\OrderNotice::insert($data);
                     }
                     //将已签收订单变为已完成状态 增加销量
                     if($value['childOrderSnList'][0]['statusCode'] == 7){
@@ -450,6 +459,11 @@ class Common extends Api
             $this->error('服务器繁忙！');
         }
         $this->success('无可查询订单！');
+    }
+
+    public function addOrderNotice()
+    {
+
     }
 
     /**
