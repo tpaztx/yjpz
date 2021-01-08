@@ -374,6 +374,7 @@ class Common extends Api
                         $data = [
                             'user_id' => $order->user_id,
                             'store_id' => $order->store_id,
+                            'order_id' => $order->id,
                             'order_no' => $order->order_no,
                             'createtime' => time(),
                             'content' => '您的商品已经发货，请注意及时查收。',
