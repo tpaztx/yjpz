@@ -112,6 +112,9 @@ Route::post([
 	'api/get6Month' => 'api/index/get6Month',
 	//下载账单
 	'api/downLoadBil' => 'api/index/downLoadBil',
+	//小店收益统计
+	'api/getMyStroeBil' => 'api/store/getMyStroeBil',
+
 
 
 	/* H5端 */

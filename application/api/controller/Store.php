@@ -10,6 +10,7 @@ use app\admin\model\Store as StoreM;
 use app\common\model\BrandList;
 use app\common\model\GoodsList;
 use app\common\model\PriceChange;
+use app\common\model\Order;
 use think\Db;
 
 class Store extends Api
@@ -317,5 +318,26 @@ class Store extends Api
             $this->success('请求成功！',$data);
         }
         $this->error('服务器繁忙！',$data);
+    }
+    /**
+     * app小店收益统计
+     */
+    public function getMyStroeBil()
+    {
+        $time = $this->request->request('time');
+        $store_id = StoreM::getFieldByUserId($this->auth->id, 'id');
+        $result = [];
+        $result = Order::where(function ($query) use ($time, $store_id){
+                                    if ($time == 1) {
+                                        $query->whereTime('createtime', 'd');
+                                    }elseif ($time == 7) {
+                                        $query->whereTime('createtime', 'w');
+                                    }elseif ($time == 30) {
+                                        $query->whereTime('createtime', 'm');
+                                    }
+                                    $query->where('store_id', $store_id);
+                                    $query->whereBetween('status', [0,3]);
+                                })->field('sum(real_price) as price, sum(get_price) as commiossion, sum(id) as total')->select();
+        $this->success('请求成功！', $result);
     }
 }
