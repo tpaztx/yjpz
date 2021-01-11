@@ -621,7 +621,7 @@ class User extends Api
             $this->error('缺少请求参数！，或者提现价格低于最小值！');
         }
         //获取用户的微信opendID
-        $wechat_token = User::where('id', $this->auth->id)->value('openid');
+        $wechat_token = UserM::where('id', $this->auth->id)->value('openid');
         if (!$wechat_token) {
             $this->error('请先绑定微信！');
         }
@@ -629,16 +629,16 @@ class User extends Api
         if ($price > $this->auth->money) {
             $this->error('提现金额大于账户余额！');
         }
-        User::where('id', $this->auth->id)->setDec('money', $price);
+        UserM::where('id', $this->auth->id)->setDec('money', $price);
         //添加提现数据
         $data = [
             'user_id' => $this->auth->id,
             'price' => $price,
-            'money' => User::where('id', $this->auth->id)->value('money'),
+            'money' => UserM::where('id', $this->auth->id)->value('money'),
             'createtime' => time(),
             'openID' => $wechat_token,
         ];
-        $result = User::insert($data);
+        $result = \app\common\model\withdraw::insert($data);
         if ($result) {
             $this->success('提交申请成功！');
         }
