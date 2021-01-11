@@ -277,11 +277,10 @@ class Goods extends Api
     {
         $goods =[];
         $goods = \app\common\model\Favorites::alias('f')->join('goods_list g', 'f.goodId=g.goodId')->where('f.user_id', $this->auth->id)
-                                                        ->field('g.goodId,g.goodBigImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice,g.suggestPrice')
+                                                        ->field('g.goodId,g.goodImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice,g.suggestPrice')
                                                         ->select();
         if ($goods) {
             foreach ($goods as $k => $v) {
-                $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
                 if ($v->isMp == '1') {
                     $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
                     $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
