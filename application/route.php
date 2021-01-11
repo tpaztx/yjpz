@@ -53,6 +53,8 @@ Route::post([
 	'api/getConfig' => 'api/common/getConfig',
 	//用户基本信息
 	'api/getUser' => 'api/user/index',
+	//修改手机号
+	'api/changemobile' => 'api/user/changemobile',
 
 
 	/* 客户端 */

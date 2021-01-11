@@ -275,6 +275,15 @@ class User extends Api
         $user = $this->auth->getUser();
         $mobile = $this->request->request('mobile');
         $captcha = $this->request->request('captcha');
+        $trade_code = $this->request->request('trade_code');
+        //验证邀请码
+        if (!$trade_code || empty($trade_code)) {
+            $this->error('请填写邀请码！');
+        }
+        $user = UserM::getByTradeCode($trade_code);
+        if (!$user) {
+            $this->error('未查询到上级邀请信息，请重新确认！');
+        }
         if (!$mobile || !$captcha) {
             $this->error(__('Invalid parameters'));
         }
@@ -292,6 +301,7 @@ class User extends Api
         $verification->mobile = 1;
         $user->verification = $verification;
         $user->mobile = $mobile;
+        $user->trade_code = $trade_code;
         $user->save();
 
         Sms::flush($mobile, 'changemobile');
