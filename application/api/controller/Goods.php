@@ -68,12 +68,19 @@ class Goods extends Api
         if ($adId == 0) $this->error('缺少请求参数商品ID！');
         $price_min = $this->request->request('price_min');
         $price_max = $this->request->request('price_max');
+        $catNameOne = $this->request->request('catNameOne');
         $catNameTwo = $this->request->request('catNameTwo');
         $keyword = $this->request->request('keyword');
         
         $where = "1=1";
         if ($price_min && $price_max) {
             $where .= " and suggestPrice between ".$price_min." and ".$price_max;
+        }
+        if ($catNameOne) {
+            $test = explode(",", $catNameOne);
+            foreach ($test as $value) {
+                $where .= " or catNameOne='".$value."'";
+            }
         }
         if ($catNameTwo) {
             $test = explode(",", $catNameTwo);
