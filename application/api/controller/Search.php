@@ -129,7 +129,7 @@ class Search extends Api
             foreach ($goods as $k => $v) {
                 $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
                 $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                if ($v->isMp == 1) {
+                if ($v->isMp == '1') {
                     $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
                     $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
                 }else{
