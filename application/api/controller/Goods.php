@@ -249,7 +249,7 @@ class Goods extends Api
         $data['user_id'] = $this->auth->id;
         $data['goodId'] = $goodId;
         $data['time_log'] = time();
-        $result = \app\common\model\Favorites::create()->insert($data);
+        $result = \app\common\model\Favorites::insert($data);
         if ($result) {
             $this->success('请求成功！');
         }
@@ -268,6 +268,29 @@ class Goods extends Api
         if ($result) {
             $this->success('请求成功！');
         }
+    }
+
+    /**
+     * 收藏列表
+     */
+    public function getFavorites()
+    {
+        $goods =[];
+        $goods = \app\common\model\Favorites::alias('f')->join('goods_list g', 'f.goodId=g.goodId')->where('f.user_id', $this->auth->id)
+                                                        ->field('g.goodBigImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice')
+                                                        ->select();
+        if ($goods) {
+            foreach ($goods as $k => $v) {
+                if ($v->isMp == 1) {
+                    $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
+                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
+                }else{
+                    $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
+                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['commission'];
+                }
+            }
+        }
+        $this->success('请求成功！', $goods);
     }
 
     /**

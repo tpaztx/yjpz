@@ -86,6 +86,8 @@ Route::post([
 	'api/insertFavorites' => 'api/goods/insertFavorites',
 	//删除收藏商品
 	'api/delFavorites' => 'api/goods/delFavorites',
+	//收藏列表
+	'api/getFavorites' => 'api/goods/getFavorites',
 	//APP邀请海报
 	'api/poster' => 'api/index/poster',
 	//更新用户地址
