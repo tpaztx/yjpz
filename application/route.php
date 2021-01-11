@@ -116,6 +116,8 @@ Route::post([
 	'api/get6Month' => 'api/index/get6Month',
 	//小店收益统计
 	'api/getMyStroeBil' => 'api/store/getMyStroeBil',
+	//用户提现
+	'api/addWithdraw' => 'api/user/addWithdraw',
 
 
 
