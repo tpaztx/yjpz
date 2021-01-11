@@ -277,7 +277,7 @@ class Goods extends Api
     {
         $goods =[];
         $goods = \app\common\model\Favorites::alias('f')->join('goods_list g', 'f.goodId=g.goodId')->where('f.user_id', $this->auth->id)
-                                                        ->field('g.goodBigImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice')
+                                                        ->field('g.goodBigImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice,g.suggestPrice')
                                                         ->select();
         if ($goods) {
             foreach ($goods as $k => $v) {
