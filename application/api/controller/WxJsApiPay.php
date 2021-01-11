@@ -228,8 +228,6 @@ class WxJsApiPay extends Api
             'nonceStr'      => strval($content['nonce_str']),
             'timeStamp'		=> $time,
             'package'       =>"Sign=WXPay"
-//                'prepay_id='.strval($content['prepay_id']),
-//            'signType'		=> 'MD5',
         );
         $resdata['paySign'] = self::makeSign($resdata);
 
