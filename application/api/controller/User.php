@@ -459,13 +459,13 @@ class User extends Api
                         $this->error('授权失败！');
                     }
                     Token::set($token, $user['id']);
-                    $this->success('授权APP成功！', $user);
+                    $this->success('授权成功！', $user);
                 }
             }
             $this->auth->register('', '', '', '', $data);
             $userInfo = $this->auth->getUserinfo();
             if ($userInfo) {
-                $this->success('授权H5成功！', $userInfo);
+                $this->success('授权成功！', $userInfo);
             }
             $this->error('服务器繁忙！');
         }
