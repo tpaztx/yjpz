@@ -32,7 +32,7 @@
         <label for="c-pid" class="control-label col-xs-12 col-sm-2">品牌ID:</label>
         <div class="col-xs-12 col-sm-8">
 
-            <select id="c-pid" data-rule="required" class="form-control selectpicker" name="row[adId]">
+            <select id="c-pid" data-rule="required" class="form-control selectpicker" data-live-search="true" name="row[adId]">
                 {foreach name="brandList" item="vo"}
                 <option value="{$adId}" {in name="adId" value=""}selected{/in}>{$vo.brandName}</option>
                 {/foreach}
