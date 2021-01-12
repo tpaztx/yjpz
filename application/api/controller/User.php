@@ -402,7 +402,7 @@ class User extends Api
         $code = $this->request->param('code') ?? '';
         $type = $this->request->param('type') ?? '';
         $mobile = $this->request->param('mobile') ?? '';
-        if($type = 'APP'){
+        if($type == 'APP'){
             $appid = 'wxeac193915e8ff3fc';
             $secret = '7e0cfc7d0767b97257803ba3476bae1e';
         }else{
