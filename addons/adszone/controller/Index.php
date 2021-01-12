@@ -54,6 +54,7 @@ class Index extends \think\addons\Controller
         $this->view->assign('ads_image_01', $ads_image_01);
         $this->view->assign('ads_adsCode_01', $ads_adsCode_01);
         //$this->view->assign('ads_zone_01', $ads_zone_01);
+        dump('this here');die;
         return $this->view->fetch();
     }
 }
