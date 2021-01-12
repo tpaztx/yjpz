@@ -37,7 +37,6 @@ class Category extends Backend
         }
         $typeList = CategoryModel::getTypeList();
         $brandList = Db::name('brand_list')->field('adId, brandName')->select();
-        dump($brandList);die;
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", $typeList);
         $this->view->assign("parentList", $categorydata);
