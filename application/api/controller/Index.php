@@ -14,6 +14,7 @@ use app\common\model\brandName;
 use Endroid\QrCode\QrCode;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use think\Db;
 
 /**
  * 首页接口
@@ -24,11 +25,14 @@ class Index extends Api
     protected $noNeedRight = ['*'];
 
     /**
-     * 首页 - 海报轮播
+     * 首页 - 海报轮播 
      */
     public function getBannnerList()
     {
-        $result = AdszoneAds::create()->where('zone_id', 1)->field('id,imageurl,linkurl')->order('weigh')->select();
+        $result = db('category')->where('type', 'banner')->field('image,adId')->order('weigh')->select();
+        foreach ($result as $key => $val) {
+            $result[$key]['imageurl'] = $val['image'];
+        }
         $this->success('请求成功', $result);
     }
 

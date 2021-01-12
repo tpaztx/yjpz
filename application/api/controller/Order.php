@@ -35,7 +35,7 @@ class Order extends Api
             'type'=>'require',
             'good'=>'require',
         ],[
-            'store_id.require'=>'无效的小店！',
+            'store_id.require'=>'无效的小店或者您还未激活小店！',
             'address_id.require'=>'请选择收获地址！',
             'good.require'=>'请选择商品！',
         ]);

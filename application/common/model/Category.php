@@ -17,8 +17,8 @@ class Category extends Model
     protected $updateTime = 'updatetime';
     // 追加属性
     protected $append = [
-        'type_text',
-        'flag_text',
+        // 'type_text',
+        // 'flag_text',
     ];
 
     protected static function init()
@@ -48,7 +48,11 @@ class Category extends Model
 
     public function getTypeTextAttr($value, $data)
     {
-        $value = $value ? $value : $data['type'];
+        if ($value) {
+            $value = $value;
+        }else{
+            $value = $data['type'];
+        }
         $list = $this->getTypeList();
         return isset($list[$value]) ? $list[$value] : '';
     }
