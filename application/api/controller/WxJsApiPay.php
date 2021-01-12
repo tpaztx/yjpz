@@ -208,7 +208,6 @@ class WxJsApiPay extends Api
         if(!$res){
             return array('status'=>0, 'msg'=>"Can't connect the server" );
         }
-        // 这句file_put_contents是用来查看服务器返回的结果 测试完可以删除了
         //file_put_contents('./log.txt',$res,FILE_APPEND);
 
         $content = self::xml2array($res);
@@ -218,15 +217,12 @@ class WxJsApiPay extends Api
         if(strval($content['return_code']) == 'FAIL'){
             return array('status'=>0, 'msg'=>strval($content['return_msg']));
         }
-
-        $time = time();
-        settype($time, "string");  		//jsapi支付界面,时间戳必须为字符串格式
         $resdata = array(
-            'appId'      	=> strval($content['appid']),
-            'partnerid'      	=> strval($content['mch_id']),
-            'prepayid'      	=> strval($content['prepay_id']),
-            'nonceStr'      => strval($content['nonce_str']),
-            'timeStamp'		=> $time,
+            'appid'      	=> $content['appid'],
+            'partnerid'      	=> $content['mch_id'],
+            'prepayid'      	=> $content['prepay_id'],
+            'noncestr'      => $content['nonce_str'],
+            'timestamp'		=> time(),
             'package'       =>"Sign=WXPay"
         );
         $resdata['paySign'] = self::makeSign($resdata);
@@ -263,15 +259,41 @@ class WxJsApiPay extends Api
             Db::startTrans();
             try{
                 $wph = new Wph();
-                $wph->applyPayment($order['wph_order_no']);
-                $order->status = 1;
-                $order->transaction_no = $transaction_id;
-                $order->save();
+                $wphres = $wph->applyPayment($order['wph_order_no']);
+                if($wphres['applySuccess'] == false){
+                    if($order['type'] == 'APP'){
+                        $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
+                        $refund->refund("{$order['order_no']}","$transaction_id");
+                    }else{
+                        $refund = new WxRefund();
+                        $refund->refund("{$order['order_no']}","$transaction_id");
+                    }
+                    $order->status = 4;
+                    $order->return_price = $order->real_price;
+                    $order->save();
+                }else{
+                    $order->status = 1;
+                    $order->transaction_no = $transaction_id;
+                    $order->return_no +=1 ;
+                    $order->save();
+                }
                 // 提交事务
                 Db::commit();
+                $res = true;
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
+                $res = false;
+            }
+            if(!$res){
+                if($order['type'] == 'APP'){
+                    $refund = new WxRefund('wxeac193915e8ff3fc','1605182717','nneGN80ocToUibFmzr9gubsKEQYb9C4N','APPcert/apiclient_cert.pem','APPcert/apiclient_key.pem');
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }else{
+                    $refund = new WxRefund();
+                    $refund->refund("{$order['order_no']}","$transaction_id");
+                }
+                file_put_contents('jsapi_pay_error.txt',$e->getMessage(),FILE_APPEND);
             }
         }else{
             $result = false;

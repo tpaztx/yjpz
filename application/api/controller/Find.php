@@ -50,8 +50,21 @@ class Find extends Api
             $this->error('服务器繁忙！');
         }
         $this->success('请求成功！',$list);
-
-
+        
+    }
+    /**
+     * 品牌（全部）
+     */
+    public function brandAll()
+    {
+        $all = BrandMaterial::with('brand')->group('brand_id')->select();
+        if(empty($all)){
+            $this->error('无品牌数据!');
+        }
+        if(!$all){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$all);
     }
     /**
      * 公告通知
@@ -84,6 +97,20 @@ class Find extends Api
             $this->error('服务器繁忙！');
         }
         $this->success('请求成功！',$row);
+    }
+    /**
+     * 公告(全部)
+     */
+    public function noticeAll()
+    {
+        if(!$this->request->isGet()){
+            $this->error('非法请求！');
+        }
+        $rows =  Notice::all();
+        if(!$rows){
+            $this->error('服务器繁忙！');
+        }
+        $this->success('请求成功！',$rows);
     }
     /**
      * 课堂
