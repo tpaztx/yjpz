@@ -208,7 +208,6 @@ class WxJsApiPay extends Api
         if(!$res){
             return array('status'=>0, 'msg'=>"Can't connect the server" );
         }
-        // 这句file_put_contents是用来查看服务器返回的结果 测试完可以删除了
         //file_put_contents('./log.txt',$res,FILE_APPEND);
 
         $content = self::xml2array($res);
@@ -218,15 +217,12 @@ class WxJsApiPay extends Api
         if(strval($content['return_code']) == 'FAIL'){
             return array('status'=>0, 'msg'=>strval($content['return_msg']));
         }
-
-        $time = time();
-        settype($time, "string");  		//jsapi支付界面,时间戳必须为字符串格式
         $resdata = array(
-            'appId'      	=> strval($content['appid']),
-            'partnerid'      	=> strval($content['mch_id']),
-            'prepayid'      	=> strval($content['prepay_id']),
-            'nonceStr'      => strval($content['nonce_str']),
-            'timeStamp'		=> $time,
+            'appId'      	=> $content['appid'],
+            'partnerid'      	=> $content['mch_id'],
+            'prepayid'      	=> $content['prepay_id'],
+            'nonceStr'      => $content['nonce_str'],
+            'timestamp'		=> time(),
             'package'       =>"Sign=WXPay"
         );
         $resdata['paySign'] = self::makeSign($resdata);
