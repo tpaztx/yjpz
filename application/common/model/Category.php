@@ -17,7 +17,7 @@ class Category extends Model
     protected $updateTime = 'updatetime';
     // 追加属性
     protected $append = [
-        'type_text',
+        // 'type_text',
         'flag_text',
     ];
 
@@ -46,14 +46,16 @@ class Category extends Model
         return $typeList;
     }
 
-    // public function getTypeTextAttr($value, $data)
-    // {
-    //     if ($data || $data['type']) {
-    //         $value = $value ? $value : $data['type'];
-    //     }
-    //     $list = $this->getTypeList();
-    //     return isset($list[$value]) ? $list[$value] : '';
-    // }
+    public function getTypeTextAttr($value, $data)
+    {
+        if ($value) {
+            $value = $value;
+        }else{
+            $value = $data['type'];
+        }
+        $list = $this->getTypeList();
+        return isset($list[$value]) ? $list[$value] : '';
+    }
 
     public function getFlagList()
     {
