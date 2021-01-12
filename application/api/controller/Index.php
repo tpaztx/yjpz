@@ -30,6 +30,7 @@ class Index extends Api
      */
     public function getBannnerList()
     {
+        dump('this herer');die;
         $result = db('category')->where('type', 'banner')->field('image,adId')->order('weigh')->select();
         $this->success('请求成功', $result);
     }
