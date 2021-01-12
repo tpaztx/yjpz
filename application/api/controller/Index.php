@@ -11,6 +11,7 @@ use app\common\model\Order;
 use app\common\model\OrderGood;
 use app\common\model\GoodsList;
 use app\common\model\brandName;
+use app\common\model\Category;
 use Endroid\QrCode\QrCode;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -28,7 +29,7 @@ class Index extends Api
      */
     public function getBannnerList()
     {
-        $result = AdszoneAds::create()->where('zone_id', 1)->field('id,imageurl,linkurl')->order('weigh')->select();
+        $result = Category::where('type', 'banner')->field('image,adId')->order('weigh')->select();
         $this->success('请求成功', $result);
     }
 
