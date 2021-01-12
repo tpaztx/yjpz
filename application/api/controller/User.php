@@ -402,8 +402,13 @@ class User extends Api
         $code = $this->request->param('code') ?? '';
         $type = $this->request->param('type') ?? '';
         $mobile = $this->request->param('mobile') ?? '';
-        $appid = $this->AppId;
-        $secret = $this->AppSecret;
+        if($type = 'APP'){
+            $appid = 'wxeac193915e8ff3fc';
+            $secret = '7e0cfc7d0767b97257803ba3476bae1e';
+        }else{
+            $appid = $this->AppId;
+            $secret = $this->AppSecret;
+        }
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appid . "&secret=" . $secret . "&code=" . $code . "&grant_type=authorization_code";
         $list = $this->http($url, 'GET');
         $list = $list [1];
