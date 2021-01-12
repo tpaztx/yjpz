@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\common\controller\Backend;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
+use think\Db;
 
 /**
  * 分类管理
@@ -35,9 +36,11 @@ class Category extends Backend
             $categorydata[$v['id']] = $v;
         }
         $typeList = CategoryModel::getTypeList();
+        $brandList = Db::name('brand_list')->filed('adId, brandName')->select();
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", $typeList);
         $this->view->assign("parentList", $categorydata);
+        $this->view->assign("brandList", $brandList);
         $this->assignconfig('typeList', $typeList);
     }
 
