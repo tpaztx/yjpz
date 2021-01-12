@@ -39,7 +39,7 @@ class Brand extends Model
         $value = $value ? $value : $data['updatetime'];
         return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
     }
-    public function getimagetAttr($value, $data)
+    public function getBrandImageAttr($value, $data)
     {
         $value = cdnurl($value, true);
         return $value;
