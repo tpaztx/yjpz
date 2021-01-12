@@ -18,7 +18,7 @@ class Category extends Model
     // 追加属性
     protected $append = [
         // 'type_text',
-        'flag_text',
+        // 'flag_text',
     ];
 
     protected static function init()
