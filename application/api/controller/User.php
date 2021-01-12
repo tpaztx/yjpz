@@ -402,6 +402,8 @@ class User extends Api
         $code = $this->request->param('code') ?? '';
         $type = $this->request->param('type') ?? '';
         $mobile = $this->request->param('mobile') ?? '';
+        $openid = $this->request->param('openid') ?? '';
+        $access_token = $this->request->param('access_token') ?? '';
         if($type == 'APP'){
             $appid = 'wxeac193915e8ff3fc';
             $secret = '7e0cfc7d0767b97257803ba3476bae1e';
@@ -413,6 +415,8 @@ class User extends Api
         $list = $this->http($url, 'GET');
         $list = $list [1];
         $list = \GuzzleHttp\json_decode($list, true);
+        $list['openid'] = $openid ?? $list['openid'];
+        $list['access_token'] = $access_token ?? $list['access_token'];
         if (!empty($list['openid']) && isset($list['openid'])) {
 
             //获取用户信息
