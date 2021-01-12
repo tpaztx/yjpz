@@ -15,6 +15,7 @@ use app\common\model\Category;
 use Endroid\QrCode\QrCode;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use think\Db;
 
 /**
  * 首页接口
@@ -29,7 +30,7 @@ class Index extends Api
      */
     public function getBannnerList()
     {
-        $result = Category::where('type', 'banner')->field('image,adId')->order('weigh')->select();
+        $result = db('category')->where('type', 'banner')->field('image,adId')->order('weigh')->select();
         $this->success('请求成功', $result);
     }
 
