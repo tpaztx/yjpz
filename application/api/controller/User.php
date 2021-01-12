@@ -647,7 +647,7 @@ class User extends Api
             'createtime' => time(),
             'openID' => $wechat_token,
         ];
-        $result = \app\common\model\withdraw::insert($data); 
+        $result = \app\common\model\Withdraw::insert($data); 
         if ($result) {
             $this->success('提交申请成功！');
         }
