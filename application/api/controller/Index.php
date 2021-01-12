@@ -11,7 +11,6 @@ use app\common\model\Order;
 use app\common\model\OrderGood;
 use app\common\model\GoodsList;
 use app\common\model\brandName;
-use app\common\model\Category;
 use Endroid\QrCode\QrCode;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
