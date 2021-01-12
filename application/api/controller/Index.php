@@ -30,6 +30,9 @@ class Index extends Api
     public function getBannnerList()
     {
         $result = db('category')->where('type', 'banner')->field('image,adId')->order('weigh')->select();
+        foreach ($result as $key => $val) {
+            $result[$key]['imageurl'] = $val['image'];
+        }
         $this->success('请求成功', $result);
     }
 
