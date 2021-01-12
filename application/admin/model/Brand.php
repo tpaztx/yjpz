@@ -41,7 +41,7 @@ class Brand extends Model
     }
     public function getBrandImageAttr($value, $data)
     {
-        //添加图片路由
+        //添加图片路由路径
         $value = cdnurl($value, true);
         return $value;
     }
