@@ -46,14 +46,14 @@ class Category extends Model
         return $typeList;
     }
 
-    public function getTypeTextAttr($value, $data)
-    {
-        if ($data || $data['type']) {
-            $value = $value ? $value : $data['type'];
-        }
-        $list = $this->getTypeList();
-        return isset($list[$value]) ? $list[$value] : '';
-    }
+    // public function getTypeTextAttr($value, $data)
+    // {
+    //     if ($data || $data['type']) {
+    //         $value = $value ? $value : $data['type'];
+    //     }
+    //     $list = $this->getTypeList();
+    //     return isset($list[$value]) ? $list[$value] : '';
+    // }
 
     public function getFlagList()
     {
