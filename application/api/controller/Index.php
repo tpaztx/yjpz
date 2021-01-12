@@ -25,7 +25,7 @@ class Index extends Api
     protected $noNeedRight = ['*'];
 
     /**
-     * 首页 - 海报轮播
+     * 首页 - 海报轮播 
      */
     public function getBannnerList()
     {
