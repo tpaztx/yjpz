@@ -73,19 +73,34 @@ class Goods extends Api
         $keyword = $this->request->request('keyword');
         
         $where = "1=1";
+        $whereCatOne = $whereCatTwo = '';
         if ($price_min && $price_max) {
             $where .= " and suggestPrice between ".$price_min." and ".$price_max;
         }
         if ($catNameOne) {
-            $test = explode(",", $catNameOne);
-            foreach ($test as $value) {
-                $where .= " or catNameOne='".$value."'";
+            if (strstr($catNameOne, ",")) {
+                $where .= ' and (';
+                $test = explode(",", $catNameOne);
+                foreach ($test as $value) {
+                    $whereCatOne .= " or catNameOne='".$value."'";
+                }
+                $whereCatOne = substr_replace($whereCatOne,"",strpos($whereCatOne,"or"),strlen("or"));
+                $where .= $whereCatOne . ' )';
+            }else{
+                $where .= " and catNameOne='".$catNameOne."'";
             }
         }
         if ($catNameTwo) {
-            $test = explode(",", $catNameTwo);
-            foreach ($test as $value) {
-                $where .= " or catNameTwo='".$value."'";
+            if (strstr($catNameTwo, ",")) {
+                $where .= ' and (';
+                $test = explode(",", $catNameTwo);
+                foreach ($test as $value) {
+                    $whereCatTwo .= " or catNameTwo='".$value."'";
+                }
+                $whereCatTwo = substr_replace($whereCatTwo,"",strpos($whereCatTwo,"or"),strlen("or"));
+                $where .= $whereCatTwo . ' )';
+            }else{
+                $where .= " and catNameTwo='".$catNameTwo."'";
             }
         }
         if ($keyword) {
@@ -106,18 +121,25 @@ class Goods extends Api
             {
                 $where .= " and adId=".$val['adId'];
                 $brand_result[$key]['endTime'] = time2day(strtotime($val->sellTimeTo) - time());
-                $goods = GoodsList::where($where)->field('goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
-                foreach ($goods as $k => $v) {
-                    $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;
-                    $goods[$k]['goodBigImage'] = unserialize($v->goodBigImage);
-                    if ($v->isMp == '1') {
-                        $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                        $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
+                
+                $goods = GoodsList::where($where)->field('adId,goodImage,goodId,goodFullId,goodName,sn,isMp,color,material,goodBigImage,vipshopPrice,marketPrice,commission,suggestAddPrice,suggestPrice,sizes_json')->order($order)->limit(($page - 1)*$pageSize, $pageSize)->select();
+                // echo GoodsList::getLastSQL();die;
+                foreach ($goods as $k => $v)
+                {
+                    $goods[$k]['isFavorites'] = \app\common\model\Favorites::where(['user_id'=>$this->auth->id, 'goodId'=>$v->goodId])->find()?true:false;//是否收藏
+                    //图片裁剪
+                    $BigImage = unserialize($v->goodBigImage);
+                    foreach ($BigImage as $keys => $value) {
+                        $BigImage[$keys] = str_replace(".jpg", "_460x460.jpg", $value);
+                    }
+                    $goods[$k]['goodBigImage'] = $BigImage;
+                    if ((int)$v->suggestAddPrice > 0) {
+                        $goods[$k]['suggestAddPrice'] = round((float)$v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
                     }else{
                         $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                        $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['commission'];
                     }
-                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');
+                    $goods[$k]['total'] = \app\common\model\OrderGood::where('goodId', $v->goodId)->count('id');//统计销量
+                    $goods[$k]['isDown'] = \app\admin\model\StoreDown::where('user_id', $this->auth->id)->where('ad_id', $val['adId'])->find()?false:true;
                 }
                 
                 
@@ -142,11 +164,13 @@ class Goods extends Api
             $query->field('adId,brandName,sellTimeTo,brandImage');
         }])->where('goodId',$goodId)->find();
         $good['goodBigImage'] = unserialize($good['goodBigImage']);
-        $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
-        if($good['brand']['sellTimeTo'] > time()){
-            $good['brand']['sellTimeTo'] = ceil(($good['brand']['sellTimeTo']-time())/86400);
-        }else{
-            $good['brand']['sellTimeTo'] = '已超过选购时间！';
+        if(!empty($good['brand'])){
+            $good['brand']['sellTimeTo'] = strtotime($good['brand']['sellTimeTo']);
+            if($good['brand']['sellTimeTo'] > time()){
+                $good['brand']['sellTimeTo'] = ceil(($good['brand']['sellTimeTo']-time())/86400);
+            }else{
+                $good['brand']['sellTimeTo'] = '已超过选购时间！';
+            }
         }
         if(!$good){
             $this->error('服务器繁忙！');
@@ -232,15 +256,32 @@ class Goods extends Api
                 $result['material'] = $val->material?:'';
                 $result['goodImage'] = $val->goodImage?:'';
                 $result['goodId'] = $val->goodId?:'';
-                foreach ($val->sizes as $k => $v) {
-                    $result['sizes'][$k] = [
-                        'sizeName' => $v->sizeName,
-                        'sizeId' => (string)$v->sizeId,
-                        'vipshopPrice' => (float)$v->vipshopPrice + (float)$v->suggestAddPrice
-                    ];
+                if ($val->sizes) {
+                    foreach ($val->sizes as $k => $v) {
+                        if ((int)$v->suggestAddPrice > 0) {
+                            $v->suggestAddPrice = round((float)$v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
+                        }else{
+                            $v->commission = round((float)$v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
+                        }
+                        $result['sizes'][$k] = [
+                            'stock' => $v->stock,
+                            'buyMinNum' => $v->buyMinNum,
+                            'buyMaxNum' => $v->buyMaxNum,
+                            'sizeName' => $v->sizeName,
+                            'sizeId' => (string)$v->sizeId,
+                            'suggestPrice' => (float)$v->suggestPrice
+                        ];
+                    }
+                }else{
+                    $goods = new GoodsList;
+                    $goods->delOffGoods($goodFullId);
                 }
             }
             $this->success('请求成功！', $result);     
+        }else{
+            $goods = new GoodsList;
+            $goods->delOffGoods($goodFullId);
+            $this->success('请求成功！', $list);
         }
     }
 
@@ -285,16 +326,15 @@ class Goods extends Api
         $goods =[];
         $goods = \app\common\model\Favorites::alias('f')->join('goods_list g', 'f.goodId=g.goodId')->where('f.user_id', $this->auth->id)
                                                         ->field('g.goodId,g.goodImage,g.goodName,g.color,g.material,g.isMp,g.commission,g.suggestAddPrice,g.suggestPrice')
+                                                        ->group('f.goodId')
                                                         ->select();
         if ($goods) {
             foreach ($goods as $k => $v) {
                 $goods[$k]['goodImage'] = str_replace(".jpg", "_180x180.jpg", $v->goodImage);
-                if ($v->isMp == '1') {
-                    $goods[$k]['suggestAddPrice'] = round($v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['suggestAddPrice'];
+                if ((int)$v->suggestAddPrice > 0) {
+                    $goods[$k]['suggestAddPrice'] = round((float)$v->suggestAddPrice * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
                 }else{
                     $goods[$k]['commission'] = round($v->commission * (UserGroup::where('id', $this->auth->group_id)->value('proportion')) * 0.01, 2);
-                    $goods[$k]['suggestPrice'] = $v->suggestPrice + $goods[$k]['commission'];
                 }
             }
         }
@@ -324,10 +364,16 @@ class Goods extends Api
         if($validate !== true){
             $this->error($validate);
         }
+        if (!$param['sizes']) {
+            $this->error('缺少尺寸参数！');
+        }else{
+            $param['sizes'] = serialize($param['sizes']);
+        }
+
         $row = ShoppingCart::where([
             'user_id'=>$user['id'],
             'goodId'=>$param['goodId'],
-            'sizeId'=>$param['sizeId'],
+            // 'sizeId'=>$param['sizeId'],
             'store_id'=>$param['store_id'],
         ])->find();
         if($row){
@@ -345,7 +391,7 @@ class Goods extends Api
         }
         $param['user_id'] = $user['id'];
         unset($param['type']);
-        $res=ShoppingCart::create($param);
+        $res = ShoppingCart::create($param);
         if(!$res){
             $this->error('操作失败');
         }
@@ -358,21 +404,15 @@ class Goods extends Api
     public function shoppingCart()
     {
         $store_id = $this->request->param('store_id');
-        $user = $this->auth->getUser();
-        $rows = ShoppingCart::with('goods')->where([
-            'user_id'=>$user['id'],
-            'store_id'=>$store_id,
-        ])->select();
-        if(!empty($rows)){
-            foreach ($rows as &$row){
-                if(!empty($row['goods']['sizes_json'])){
-                    foreach ($row['goods']['sizes_json'] as $item ){
-                        if($row['sizeId'] == $item['sizeId']){
-                            $row['goods']['size'] = $item;
-                        }
-                        unset($row['goods']['sizes_json']);
-                    }
-                }
+        $rows = [];
+        $rows = ShoppingCart::where(['user_id'=>$this->auth->id,'store_id'=>$store_id])
+        ->order('id','desc')
+        ->select();
+        if($rows){
+            foreach ($rows as &$row) {
+                $row['size'] = unserialize($row->sizes);
+                $row['goodImage'] = str_replace(".jpg", "_150x150.jpg", $row->goodImage);
+                unset($row['sizes']);
             }
         }
         if(empty($rows)){
@@ -480,7 +520,7 @@ class Goods extends Api
                 //失效购物车数据
                 ShoppingCarts::where('user_id', $this->auth->id)->update(['endtime' => time()]);
             }
-            $this->success('请求成功！', ['cd_'.$this->auth->id => time2string( 1200 - $count)]);
+            $this->success('请求成功！', ['js' => time2string( 1200 - $count)]);
         }else{
             $goods = ShoppingCarts::where('user_id', $this->auth->id)->where('endtime is null or endtime=0')->select();
             if ($goods) {
@@ -489,7 +529,7 @@ class Goods extends Api
                 }
             }
         }
-        $this->success('请求成功！', ['cd_'.$this->auth->id =>'']);
+        $this->success('请求成功！', ['js' =>'']);
     }
 
     /**
@@ -505,6 +545,7 @@ class Goods extends Api
         Db::startTrans();
         try{
             ShoppingCarts::where('goodFullId', 'in', $ids)->delete();
+            Cache::set('cd_'.$this->auth->id, '');
             // 提交事务
             Db::commit();
             $res = true;
@@ -526,12 +567,13 @@ class Goods extends Api
     {
         //获取进货单的品牌
         $brands = ShoppingCarts::where('user_id', $this->auth->id)->field('adId')->group('adId')->select();
+        // echo ShoppingCarts::getLastSQL();die;
         $result = [];
         if ($brands) {
             foreach ($brands as $k => $v) {
                 //查询对应商品list
                 $result[$k]['brandName'] = BrandList::where('adId', $v->adId)->value('brandName');
-                $goods = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime is null or endtime=0')->select();
+                $goods = ShoppingCarts::where(['adId'=>$v->adId, 'user_id'=>$this->auth->id])->where('endtime is null or endtime=0')->select();
                 if ($goods) {
                     foreach ($goods as $key => $val) {
                         $val->sizes = unserialize($val->sizes);
@@ -539,7 +581,7 @@ class Goods extends Api
                 }
                 $result[$k]['goods'] = $goods;
                 //过期商品
-                $over = ShoppingCarts::where(['adId'=>$v->adId])->where('endtime>0')->order('endtime desc')->select();
+                $over = ShoppingCarts::where(['adId'=>$v->adId, 'user_id'=>$this->auth->id])->where('endtime>0')->order('endtime desc')->select();
                 if ($over) {
                     foreach ($over as $key => $val) {
                         $val->sizes = unserialize($val->sizes);

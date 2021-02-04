@@ -57,6 +57,7 @@ Route::post([
 	'api/changemobile' => 'api/user/changemobile',
 
 
+
 	/* 客户端 */
 	//首页-banner轮播
 	'api/getBannnerList' => 'api/index/getBannnerList',
@@ -70,6 +71,8 @@ Route::post([
 	'api/searchLogDel' => 'api/search/searchLogDel',
 	//搜索
 	'api/search' => 'api/search/search',
+	//热门关键词
+	'api/getHotKeyWorld' => 'api/search/getHotKeyWorld',
 	//尺码助手
 	'api/getGoodsSize' => 'api/goods/getGoodsSize', 
 	//品牌商品详情
@@ -118,6 +121,8 @@ Route::post([
 	'api/getMyStroeBil' => 'api/store/getMyStroeBil',
 	//用户提现
 	'api/addWithdraw' => 'api/user/addWithdraw',
+	//获取购物车倒计时时差
+	'api/orderCountDown' => 'api/order/orderCountDown',
 
 
 
@@ -169,7 +174,7 @@ Route::post([
     //取消退货
     'api/cancelReturnOrder'=>'api/order/cancelReturnOrder',
     //退货承运商
-    'api/carrierList'=>'api/order/cancelReturnOrder',
+    'api/carrierList'=>'api/order/carrierList',
     //退货物流
     'api/returnLogistics'=>'api/order/returnLogistics',
     //订单列表

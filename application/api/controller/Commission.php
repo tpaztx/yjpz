@@ -31,22 +31,23 @@ class Commission extends Api
         //获取自购佣金
         $proportion = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->count('real_price');
 
-        $pro_list = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->field('order_no,proportion')->order('id desc')->paginate(10,false,['page'=>$page]);
+        $pro_list = Order::where(['user_id'=>$this->auth->id, 'status'=>3])->field('order_no,proportion,real_price')->order('id desc')->paginate(10,false,['page'=>$page]);
         //获取代购的佣金
         $commission = 0;
         $com_list = [];
         $store = Store::where('user_id',$this->auth->id)->find();
         if ($store) {
             $commission = Order::where(['store_id'=>$store['id'], 'status'=>3])->count('real_price');
-            $com_list = Order::where(['store_id'=>$store['id'], 'status'=>3])->field('order_no,proportion')->order('id', 'desc')->paginate(10,false,['page'=>$page]);
+            $com_list = Order::where(['store_id'=>$store['id'], 'status'=>3])->field('order_no,proportion,real_price')->order('id', 'desc')->paginate(10,false,['page'=>$page]);
         }
         
         $data = [
-            'user_money' => $this->auth->money,
-            'my'         => $proportion + $commission,
-            'commission' => $commission,
-            'pro_list'   => $pro_list,
-            'com_list'   => $com_list,
+            'user_id' => $this->auth->id,
+            'user_money' => $this->auth->money,//用户余额
+            'my'         => $proportion + $commission,//我的收益
+            'commission' => $commission,//代购费收益
+            'pro_list'   => $pro_list,//佣金收益列表
+            'com_list'   => $com_list,//代购收益列表
         ];
         $this->success('请求成功！', $data);
     }

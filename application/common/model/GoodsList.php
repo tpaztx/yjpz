@@ -3,6 +3,9 @@
 namespace app\common\model;
 
 use think\Model;
+use app\common\model\ShoppingCart;
+use app\common\model\ShoppingCarts;
+use app\admin\model\StoreDown;
 
 /**
  * 邮箱验证码
@@ -35,6 +38,21 @@ class GoodsList Extends Model
             $value = $array;
         }
         return $value;
+    }
+
+    /**
+     * 因为下架，删除指定商品的数据
+     */
+    public function delOffGoods($id)
+    {
+        if ($id) {
+            $adId = self::where('goodFullId', $id)->value('adId');
+            $goodId = self::where('goodFullId', $id)->value('goodId');
+            self::where('goodFullId', $id)->delete();
+            ShoppingCart::where('goodId', $goodId)->delete();
+            ShoppingCarts::where('goodFullId', $id)->delete();
+            StoreDown::where('ad_id', $adId)->delete();
+        }
     }
 
 }

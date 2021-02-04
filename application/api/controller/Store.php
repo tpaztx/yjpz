@@ -126,20 +126,20 @@ class Store extends Api
     public function storeDown()
     {
         $adIds = $this->request->param('adIds');
-        $adIds=explode(',',$adIds);
+        $adIds = explode(',',$adIds);
         $status = $this->request->param('status');
         $user = $this->auth->getUser();
         $storeM = new StoreM;
-        $store= $storeM->getStore($user['id']);
-
+        $store = $storeM->getStore($user['id']);
+        if ($store) {
             // 启动事务
             Db::startTrans();
             try{
                 foreach ($adIds as $adId){
                     if($status == 1){
-                        StoreDown::where(['store_id'=>$store['id'],'ad_id'=>$adId])->delete();
+                        StoreDown::where(['store_id'=>$store['id'],'ad_id'=>$adId, 'user_id'=>$this->auth->id])->delete();
                     }else if($status == 2){
-                        StoreDown::create(['store_id'=>$store['id'],'ad_id'=>$adId]);
+                        StoreDown::create(['store_id'=>$store['id'],'ad_id'=>$adId, 'user_id'=>$this->auth->id]);
                     }
                 }
                 // 提交事务
@@ -154,6 +154,10 @@ class Store extends Api
                 $this->error('操作失败！');
             }
             $this->success('操作成功！');
+        }else{
+            $this->error('暂未开通小店！');
+        }
+            
     }
     /**
      * 转发（整场）
@@ -336,8 +340,13 @@ class Store extends Api
                                         $query->whereTime('createtime', 'm');
                                     }
                                     $query->where('store_id', $store_id);
-                                    $query->whereBetween('status', [0,3]);
-                                })->field('sum(real_price) as price, sum(get_price) as commiossion, sum(id) as total')->select();
+                                    $query->whereBetween('status', [0,5]);
+                                    $query->whereNotIn('status',4);
+                                })->field('sum(real_price) price, sum(get_price) commiossion, count(id) total,status,after_sales')->select();
+        foreach ($result as $key => $value) {
+            $result[$key]['price'] = $result[$key]['price']>0?:0;
+            $result[$key]['commiossion'] = $result[$key]['commiossion']>0?:0;
+        }
         $this->success('请求成功！', $result);
     }
 }

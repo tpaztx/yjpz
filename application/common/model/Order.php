@@ -24,16 +24,15 @@ class Order extends Model
     ];
     public function getStatusTextAttr($value,$data)
     {
-        if(!empty($value)){
-            $value = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成",4 =>"已退款",5=>'已签收'];
+        $value = [-1=>'已取消',0=>'待付款',1=>'待发货',2=>'已发货',3=>"已完成",4 =>"已退款",5=>'已签收'];
+        if ($data['status']) {
             return $value[$data['status']];
         }
-        return $value;
     }
     public function getAfterSalesTextAttr($value,$data)
     {
-        if(!empty($data['after_sales'])){
-            $value = [0 =>'无售后',1 =>'审核中',2 =>'未通过',3 =>"已通过",4 =>"已退款",5 =>"已完成"];
+        $value = [0 =>'无售后',1 =>'审核中',2 =>'未通过',3 =>"已通过",4 =>"已退款",5 =>"已完成"];
+        if ($data['after_sales']) {
             return $value[$data['after_sales']];
         }
     }

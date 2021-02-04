@@ -164,7 +164,7 @@
         {:build_heading(null, false)}
         <ul class="nav nav-tabs">
             <li class="active"><a href="#one" data-toggle="tab">{:__('Dashboard')}</a></li>
-            <li><a href="#two" data-toggle="tab">{:__('Custom')}</a></li>
+            <!-- <li><a href="#two" data-toggle="tab">{:__('Custom')}</a></li> -->
         </ul>
     </div>
     <div class="panel-body">
@@ -186,7 +186,7 @@
                             <span class="sm-st-icon st-violet"><i class="fa fa-book"></i></span>
                             <div class="sm-st-info">
                                 <span>{$totalviews}</span>
-                                {:__('Total view')}
+                                商品总数量
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
                             <span class="sm-st-icon st-green"><i class="fa fa-cny"></i></span>
                             <div class="sm-st-info">
                                 <span>{$totalorderamount}</span>
-                                {:__('Total order amount')}
+                                累计成交金额
                             </div>
                         </div>
                     </div>
@@ -252,7 +252,7 @@
                                         <div class="stat-icon"><i class="fa fa-users"></i></div>
                                         <div class="stat">
                                             <div class="value"> {$unsettleorder}</div>
-                                            <div class="name"> {:__('Unsettle order')}</div>
+                                            <div class="name"> 带发货订单</div>
                                         </div>
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-success" style="width: 25%"></div>
@@ -262,7 +262,7 @@
                                         <div class="stat-icon"><i class="fa fa-list-alt"></i></div>
                                         <div class="stat">
                                             <div class="value"> {$sevendnu}</div>
-                                            <div class="name"> {:__('Seven dnu')}</div>
+                                            <div class="name"> 总品牌数量</div>
                                         </div>
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-success" style="width: 25%"></div>
@@ -272,7 +272,7 @@
                                         <div class="stat-icon"><i class="fa fa-dollar"></i></div>
                                         <div class="stat">
                                             <div class="value"> {$sevendau}</div>
-                                            <div class="name"> {:__('Seven dau')}</div>
+                                            <div class="name"> 今日已完成订单</div>
                                         </div>
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-success" style="width: 25%"></div>
@@ -284,7 +284,7 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-top:15px;" id="statistics">
+               <!--  <div class="row" style="margin-top:15px;" id="statistics">
 
                     <div class="col-lg-12">
                     </div>
@@ -373,7 +373,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="tab-pane fade" id="two">
                 <div class="row">

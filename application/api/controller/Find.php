@@ -57,7 +57,14 @@ class Find extends Api
      */
     public function brandAll()
     {
-        $all = BrandMaterial::with('brand')->group('brand_id')->select();
+        $brandName =  $this->request->param('brandName');
+        $all = BrandMaterial::with(['brand'=>function($query) use($brandName){
+            if($brandName){
+                $query->where('brand_name','like','%'.$brandName.'%');
+            }
+        }])
+            ->group('brand_id')
+            ->select();
         if(empty($all)){
             $this->error('无品牌数据!');
         }

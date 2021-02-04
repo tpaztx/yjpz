@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
+use app\common\library\Auth;
 use app\common\library\Ems;
 use app\common\library\Sms;
 use app\common\library\Token;
@@ -19,7 +20,9 @@ use function Symfony\Component\String\u;
 use app\common\model\Order;
 use app\common\model\UserGroup;
 use app\common\model\Config;
+use think\Exception;
 use app\admin\model\Store;
+
 
 /**
  * 会员接口
@@ -28,7 +31,7 @@ class User extends Api
 {
     protected $AppId = 'wxcebf3e4c3aebac0f';
     protected $AppSecret = '4408178209ce1eb88e7464f7b996262c';
-    protected $noNeedLogin = ['login', 'mobilelogin', 'register', 'resetpwd', 'changeemail', 'changemobile', 'third','wxLogin'];
+    protected $noNeedLogin = ['login', 'mobilelogin', 'register', 'resetpwd', 'changeemail', 'third','wxLogin'];
     protected $noNeedRight = '*';
 
     public function _initialize()
@@ -160,20 +163,21 @@ class User extends Api
         if ($mobile && !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error(__('Mobile is incorrect'));
         }
-        // $ret = Sms::check($mobile, $code, 'register');
-        // if (!$ret) {
-        //     $this->error(__('Captcha is incorrect'));
-        // }
+        $ret = Sms::check($mobile, $code, 'register');
+        if (!$ret) {
+            $this->error(__('Captcha is incorrect'));
+        }
 
         // 启动事务
         Db::startTrans();
         try {
-            $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid' => $trade_code]);
-            $data = ['userinfo' => $this->auth->getUserinfo()];
-            Store::create(['user_id' => $data['userinfo']['id']]);
-            // 提交事务
-            Db::commit();
-            $ret = true;
+            $ret = $this->auth->register($mobile, $password, '', $mobile, ['pid' => $trade_code,'type'=>'APP']);
+            if ($ret) {
+                $data = ['userinfo' => $this->auth->getUserinfo()];
+                Store::create(['user_id' => $data['userinfo']['id']]);
+                // 提交事务
+                Db::commit();
+            }
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
@@ -273,15 +277,19 @@ class User extends Api
     public function changemobile()
     {
         $user = $this->auth->getUser();
-        $mobile = $this->request->request('mobile');
-        $captcha = $this->request->request('captcha');
-        $trade_code = $this->request->request('trade_code');
+        $mobile = $this->request->param('mobile');
+        $captcha = $this->request->param('captcha');
+        $trade_code = $this->request->param('trade_code');
+        $password = $this->request->param('password');
         //验证邀请码
         if (!$trade_code || empty($trade_code)) {
             $this->error('请填写邀请码！');
         }
-        $user = UserM::getByTradeCode($trade_code);
-        if (!$user) {
+        if (!$password || empty($password)) {
+            $this->error('请填写密码！');
+        }
+        $puser = UserM::getByTradeCode($trade_code);
+        if (!$puser) {
             $this->error('未查询到上级邀请信息，请重新确认！');
         }
         if (!$mobile || !$captcha) {
@@ -293,19 +301,24 @@ class User extends Api
         if (\app\common\model\User::where('mobile', $mobile)->where('id', '<>', $user->id)->find()) {
             $this->error(__('Mobile already exists'));
         }
-        $result = Sms::check($mobile, $captcha, 'changemobile');
+        $result = Sms::check($mobile, $captcha, 'mobilelogin');
         if (!$result) {
             $this->error(__('Captcha is incorrect'));
         }
         $verification = $user->verification;
         $verification->mobile = 1;
-        $user->verification = $verification;
-        $user->mobile = $mobile;
-        $user->trade_code = $trade_code;
-        $user->save();
-
-        Sms::flush($mobile, 'changemobile');
-        $this->success();
+        $salt = Random::alnum();
+        $res=\app\common\model\User::where('id',$this->auth->id)->update([
+        'mobile'=>$mobile,
+        'pid'=>$trade_code,
+        'password' =>$this->auth->getEncryptPassword($password, $salt),
+        'salt'=>$salt,
+        ]);
+        if($res){
+            // Sms::flush($mobile, 'mobilelogin');
+            $this->success();
+        }
+        $this->error('失败！');
     }
 
     /**
@@ -402,8 +415,8 @@ class User extends Api
         $code = $this->request->param('code') ?? '';
         $type = $this->request->param('type') ?? '';
         $mobile = $this->request->param('mobile') ?? '';
-        $openid = $this->request->param('openid') ?? '';
-        $access_token = $this->request->param('access_token') ?? '';
+        $openid = $this->request->param('openid');
+        $access_token = $this->request->param('access_token');
         if($type == 'APP'){
             $appid = 'wxeac193915e8ff3fc';
             $secret = '7e0cfc7d0767b97257803ba3476bae1e';
@@ -415,8 +428,11 @@ class User extends Api
         $list = $this->http($url, 'GET');
         $list = $list [1];
         $list = \GuzzleHttp\json_decode($list, true);
-        $list['openid'] = $openid ?? $list['openid'];
-        $list['access_token'] = $access_token ?? $list['access_token'];
+        if(isset($openid) && !empty($openid) && isset($access_token) && !empty($access_token)){
+            $list['openid'] = $openid;
+            $list['access_token'] = $access_token;
+        }
+
         if (!empty($list['openid']) && isset($list['openid'])) {
 
             //获取用户信息
@@ -437,7 +453,14 @@ class User extends Api
             $data ['type'] = $type;
             $row = \app\admin\model\User::where(['openid' => $result['openid'], 'type' => $type])->find();
             if ($row) {
-                $this->success('登录成功！', $row);
+                //直接登录会员
+                $ret = $this->auth->direct($row['id']);
+                if($ret){
+                    $userInfo = $this->auth->getUserinfo();
+                    if ($userInfo) {
+                        $this->success('登录成功！', $userInfo);
+                    }
+                }
             }
             if ($type == 'APP' && !empty($mobile)) {
                 $user = \app\admin\model\User::where('mobile', $mobile)->find();
@@ -646,6 +669,7 @@ class User extends Api
             'money' => UserM::where('id', $this->auth->id)->value('money'),
             'createtime' => time(),
             'openID' => $wechat_token,
+            'order_no' => date('YmdHis').rand(1000, 9999),
         ];
         $result = \app\common\model\Withdraw::insert($data); 
         if ($result) {

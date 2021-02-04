@@ -126,22 +126,25 @@ class Auth
     public function register($username, $password, $email = '', $mobile = '', $extend = [])
     {
         // 检测用户名、昵称、邮箱、手机号是否存在
-//        if (User::getByUsername($username)) {
-//            $this->setError('Username already exist');
-//            return false;
-//        }
-//        if (User::getByNickname($username)) {
-//            $this->setError('Nickname already exist');
-//            return false;
-//        }
-//        if ($email && User::getByEmail($email)) {
-//            $this->setError('Email already exist');
-//            return false;
-//        }
-//        if ($mobile && User::getByMobile($mobile)) {
-//            $this->setError('Mobile already exist');
-//            return false;
-//        }
+        if ($username || $mobile) {
+            
+            if (User::getByUsername($username)) {
+               $this->setError('Username already exist');
+               return false;
+            }
+            if (User::getByNickname($username)) {
+               $this->setError('Nickname already exist');
+               return false;
+            }
+            // if ($email && User::getByEmail($email)) {
+            //    $this->setError('Email already exist');
+            //    return false;
+            // }
+            if ($mobile && User::getByMobile($mobile)) {
+               $this->setError('Mobile already exist');
+               return false;
+            }
+        }
 
         $ip = request()->ip();
         $time = time();
@@ -155,7 +158,6 @@ class Auth
             'score'    => 0,
             'avatar'   => '',
             'group_id' => 2,
-            'token' => $this->_token,
         ];
         $params = array_merge($data, [
             'nickname'  => preg_match("/^1[3-9]{1}\d{9}$/",$username) ? substr_replace($username,'****',3,4) : $username,

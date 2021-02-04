@@ -1,5 +1,4 @@
 <?php
-
 namespace app\api\controller;
 
 use app\common\controller\Api;
@@ -245,8 +244,8 @@ class Common extends Api
     public function inputGoodsList()
     {
         $wph = new Wph;
-        ignore_user_abort(true);
-        set_time_limit(10);
+        // ignore_user_abort(true);
+        // set_time_limit(10);
         $goodStatus = $brandNum = true;
         //设置循环节点
         $brandNum = $this->request->param('brandNum');
@@ -262,7 +261,6 @@ class Common extends Api
             $adId = db('brand_list')->field('adId')->where('adId', $brandNum)->select();
             Cache::set('goods_index', 1);
         }
-        
         if ($adId && !empty($adId)) {
             foreach ($adId as $k => $v)
             {
@@ -281,36 +279,49 @@ class Common extends Api
                         $goods = object_to_array($goods);
                         $isHave = 0;
                         foreach ($goods['goods'] as $key => $val) {
-                            $goods_info['adId'] = $v['adId'];
-                            $goods_info['goodId'] = $val['goodId'];
-                            $goods_info['goodFullId'] = $val['goodFullId'];
-                            $goods_info['goodImage'] = $val['goodImage'];
-                            $goods_info['goodName'] = $val['goodName'];
-                            $goods_info['logo'] = $val['logo'];
-                            $goods_info['sn'] = $val['sn'];
-                            $goods_info['isMp'] = $val['isMp']?1:0;
-                            $goods_info['color'] = $val['color'];
-                            $goods_info['material'] = $val['material'];
-                            $goods_info['catNameOne'] = $val['catNameOne'];
-                            $goods_info['catNameTwo'] = $val['catNameTwo'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            $goods_info['catNameThree'] = $val['catNameThree'];
-                            //商品主图
-                            $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
-                            //尺码文字
-                            if (!empty($val['sizes'])) {
-                                $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
-                                $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
-                                $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
-                                $goods_info['commission'] = $val['sizes'][0]['commission'];
-                                $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
-                                $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
-                            }
-                            $isHave = db('goods_list')->where('goodId', $val['goodId'])->value('id');
-                            if ($isHave>0) {
-                                db('goods_list')->where('id', $isHave)->update($goods_info);
+                            $isHave = GoodsList::where(['goodFullId'=>$val['goodFullId'], 'adId'=>$v['adId']])->count('id');
+                            // dump($adId);
+                            // dump($val['goodId']);   
+                            // dump($brandNum);
+                            // dump($isHave);die;
+                            if ($isHave > 0) {
+                                //尺码文字
+                                if (!empty($val['sizes'])) {
+                                    $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
+                                    $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
+                                    $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                                    $goods_info['commission'] = $val['sizes'][0]['commission'];
+                                    $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
+                                    $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
+                                }
+                                db('goods_list')->where(['goodFullId'=>$val['goodFullId'], 'adId'=>$v['adId']])->update($goods_info);
                             }else{
+                                $goods_info['adId'] = $v['adId'];
+                                $goods_info['goodId'] = $val['goodId'];
+                                $goods_info['goodFullId'] = $val['goodFullId'];
+                                $goods_info['goodImage'] = $val['goodImage'];
+                                $goods_info['goodName'] = $val['goodName'];
+                                $goods_info['logo'] = $val['logo'];
+                                $goods_info['sn'] = $val['sn'];
+                                $goods_info['isMp'] = $val['isMp']?1:0;
+                                $goods_info['color'] = $val['color'];
+                                $goods_info['material'] = $val['material'];
+                                $goods_info['catNameOne'] = $val['catNameOne'];
+                                $goods_info['catNameTwo'] = $val['catNameTwo'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                $goods_info['catNameThree'] = $val['catNameThree'];
+                                //商品主图 
+                                $goods_info['goodBigImage'] = serialize($val['goodBigImage']);
+                                //尺码文字
+                                if (!empty($val['sizes'])) {
+                                    $goods_info['sizes_json'] = \GuzzleHttp\json_encode($val['sizes']);
+                                    $goods_info['vipshopPrice'] = $val['sizes'][0]['vipshopPrice'];
+                                    $goods_info['marketPrice'] = $val['sizes'][0]['marketPrice'];
+                                    $goods_info['commission'] = $val['sizes'][0]['commission'];
+                                    $goods_info['suggestAddPrice'] = $val['sizes'][0]['suggestAddPrice'];
+                                    $goods_info['suggestPrice'] = $val['sizes'][0]['suggestPrice'];
+                                }
                                 db('goods_list')->insert($goods_info);
                             }
                         }
@@ -381,7 +392,14 @@ class Common extends Api
                         ];
                         \app\common\model\OrderNotice::insert($data);
                     }
-                    //将已签收订单变为已完成状态 增加销量
+                     //将已发货订单变为已发货状态
+                    if($value['childOrderSnList'][0]['statusCode'] == 7){
+                        $order->status = 5;
+                        $order->updatetime = time();
+                        $order->save();
+            
+                    }
+                    //将已完成收订单变为已完成状态 增加销量
                     if($value['childOrderSnList'][0]['statusCode'] == 4){
                         if($order->status != 3){
                             $order->status = 3;
@@ -408,7 +426,7 @@ class Common extends Api
                 }
             }
             if($res){
-                $this->success('共查询退货订单:'.count($orders).'当前页数:'.$page);
+                $this->success('共查询订单:'.count($orders).'当前页数:'.$page);
             }
             $this->error('服务器繁忙！');
         }else{
@@ -643,6 +661,7 @@ class Common extends Api
     {
         $brandAdId = $this->request->param('brandAdId');
         $brand_lists = $goods_list = $limitNum = 0;
+        db('goods_list')->where("`sizes_json` is null")->delete();
         if(!$brandAdId){
             if (Cache::get('limitNum')) {
                 $limitNum = Cache::get('limitNum');
@@ -650,16 +669,21 @@ class Common extends Api
                 Cache::set('limitNum', 1);
                 $limitNum = Cache::get('limitNum');
             }
-            $ids = BrandList::field('adId')->paginate(10, false, ['page'=>$limitNum]);
-            foreach ($ids as $key => $val) {
-                $result = $this->goodsListWph('', 1, 20, $val->adId);
-                if (!$result) {
-                    $brand_lists += db('brand_list')->where('adId', $val->adId)->delete();
-                    $goods_list += db('goods_list')->where('adId', $val->adId)->delete();
+            $ids = BrandList::field('adId')->limit(($limitNum - 1)*10, 10)->select();
+            if (!empty($ids)) {
+                foreach ($ids as $key => $val) {
+                    $result = $this->goodsListWph('', 1, 20, $val->adId);
+                    if (!$result) {
+                        $brand_lists += db('brand_list')->where('adId', $val->adId)->delete();
+                        $goods_list += db('goods_list')->where('adId', $val->adId)->delete();
+                    }
                 }
+                Cache::set('limitNum', Cache::get('limitNum')+1);
+                $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$limitNum.'】');
+            }else{
+                Cache::set('limitNum', 1);
+                $this->delBrandStatus();
             }
-            Cache::set('limitNum', Cache::get('limitNum')+1);
-            $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$limitNum.'】');
         }else{
             $result = $this->goodsListWph('', 1, 20, $brandAdId);
             if (!$result) {
@@ -667,6 +691,7 @@ class Common extends Api
                 $goods_list = db('goods_list')->where('adId', $brandAdId)->delete();
             }
         }
+
         $this->success('请求成功！【删除失效商品：'.$goods_list.'】【删除失效品牌：'.$brand_lists.'】【执行序列：'.$brandAdId.'】');
     }
 }

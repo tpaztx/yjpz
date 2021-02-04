@@ -3,6 +3,10 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use app\common\model\User;
+use app\common\model\GoodsList;
+use app\common\model\Order;
+use app\common\model\BrandList;
 use think\Config;
 
 /**
@@ -34,16 +38,16 @@ class Dashboard extends Backend
         $config = Config::get("composer");
         $addonVersion = isset($config['version']) ? $config['version'] : __('Unknown');
         $this->view->assign([
-            'totaluser'        => 35200,
-            'totalviews'       => 219390,
-            'totalorder'       => 32143,
-            'totalorderamount' => 174800,
-            'todayuserlogin'   => 321,
-            'todayusersignup'  => 430,
-            'todayorder'       => 2324,
-            'unsettleorder'    => 132,
-            'sevendnu'         => '80%',
-            'sevendau'         => '32%',
+            'totaluser'        => User::count('id'),
+            'totalviews'       => GoodsList::group('goodFullId')->count('id'),
+            'totalorder'       => Order::count('id'),
+            'totalorderamount' => Order::sum('real_price'),
+            'todayuserlogin'   => User::whereTime('logintime', 'd')->count('id'),
+            'todayusersignup'  => User::whereTime('createtime', 'd')->count('id'),
+            'todayorder'       => Order::where('createtime', 'd')->count('id'),
+            'unsettleorder'    => Order::where('status',1)->count('id'),
+            'sevendnu'         => BrandList::group('adId')->count('id'),
+            'sevendau'         => Order::where('status',3)->whereTime('updatetime', 'd')->sum('real_price'),
             'paylist'          => $paylist,
             'createlist'       => $createlist,
             'addonversion'       => $addonVersion,

@@ -1,18 +1,16 @@
 <?php
-
-
 namespace app\api\controller;
-
 
 use app\common\controller\Api;
 use app\common\model\Address;
 use app\common\model\GoodsList;
 use app\common\model\OrderGood;
-use think\Db;
 use app\common\model\Order as OrderM;
 use think\Exception;
 use app\common\model\UserGroup;
 use app\common\model\User;
+use think\Db;
+use think\Cache;
 
 
 class Order extends Api
@@ -26,7 +24,6 @@ class Order extends Api
      */
     public function CreateOrder()
     {
-        $order_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
         $user = $this->auth->getUser();
         $param = $this->request->param();
         $validate = $this->validate($param,[
@@ -47,17 +44,6 @@ class Order extends Api
             $this->error('无效的地址！');
         }
 
-        
-        $OrderData = [
-            'user_id'=>$user['id'],
-            'order_no'=>$order_no,
-            'store_id'=>$param['store_id'],
-            'username'=>$address['name'],
-            'phone'=>$address['mobile'],
-            'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
-            'time'=>$address['is_time'],
-            'type'=>$param['type'],
-        ];
         if ($param['type'] == 'APP') {
             $pro_fee = UserGroup::where('id', $this->auth->group_id)->value('proportion');
             if (!$pro_fee) {
@@ -68,25 +54,50 @@ class Order extends Api
         // 启动事务
         Db::startTrans();
         try{
-            $order=OrderM::create($OrderData);
             foreach ($param['good'] as $item){
-                $OrderGood = [
-                    'order_id'=>$order['id'],
-                    'good_title'=>$item['good_title'],
-                    'good_price'=>$item['good_price'],
-                    'good_num'=>$item['good_num'],
-                    'good_size'=>$item['good_size'],
-                    'good_image'=>$item['good_image'],
-                    'goodId'=>$item['goodId'],
-                    'sizeId'=>$item['sizeId'],
-                ];
-                OrderGood::create($OrderGood);
                 $sizeInfo[$item['sizeId']] = $item['good_num'];
             }
             $sizeInfo=\GuzzleHttp\json_encode($sizeInfo);
             $wph=new Wph();
-            $wphOrderNo = $wph->orderWphCreate("$order_no","{$order['id']}","{$param['address_id']}","$sizeInfo");
-            $wphOrder = $wph->orderStatus($wphOrderNo);
+            $wphOrderNoList = $wph->orderWphCreate("{$param['address_id']}","$sizeInfo");
+            $merge_order_no='';
+            if( count($wphOrderNoList['orders']) > 1){
+                $merge_order_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            }
+            foreach ($wphOrderNoList['orders'] as $wphOrderNo){
+                $wphOrder = $wph->orderStatus($wphOrderNo['orderSn']);
+                if($wphOrder){
+                    $order_no = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+                    $OrderData = [
+                        'user_id'=>$user['id'],
+                        'order_no'=>$order_no,
+                        'store_id'=>$param['store_id'],
+                        'username'=>$address['name'],
+                        'phone'=>$address['mobile'],
+                        'address'=>$address['province'].$address['city'].$address['area'].$address['address'],
+                        'time'=>$address['is_time'],
+                        'wph_order_no'=>$wphOrder[0]['parentOrderSn'],
+                        'vip_price'=>$wphOrder[0]['childOrderSnList'][0]['RealPayTotal'],
+                        'real_price'=>$wphOrder[0]['childOrderSnList'][0]['RealPayTotal'],
+                        'yunfei_price'=>$wphOrder[0]['childOrderSnList'][0]['ShippingFee'],
+                        'merge_order_no'=>$merge_order_no,
+                    ];
+                    $order=OrderM::create($OrderData);
+                    foreach ($wphOrder[0]['childOrderSnList'][0]['goods'] as $goods){
+                        $good=GoodsList::where('goodFullId',$goods['goodFullId'])->find();
+                        $OrderGood = [
+                            'order_id'=>$order['id'],
+                            'good_title'=>$good['goodName'],
+                            'good_price'=>$goods['price'],
+                            'good_num'=>$goods['sizeNum'],
+                            'good_image'=>$good['goodImage'],
+                            'goodId'=>$good['goodId'],
+                            'sizeId'=>$goods['sizeId'],
+                        ];
+                        OrderGood::create($OrderGood);
+                    }
+                }
+            }
             //自购佣金
             $proportion = 0;
             if ($param['type'] == 'APP') {
@@ -103,10 +114,6 @@ class Order extends Api
             $commission1_id = User::where('trade_code', $pid)->value('id');
             $order = \app\admin\model\Order::where('id',$order['id'])->find();
             //保存订单数据
-            $order->wph_order_no = $wphOrderNo;
-            $order->vip_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
-            $order->real_price = $wphOrder[0]['childOrderSnList'][0]['RealPayTotal'];
-            $order->yunfei_price = $wphOrder[0]['childOrderSnList'][0]['ShippingFee'];
             $order->proportion = round($proportion, 2);
             $order->commission1 =round($commission1, 2);
             $order->commission2 = round($commission2, 2);
@@ -124,7 +131,55 @@ class Order extends Api
         if(!$res){
             $this->error($e->getMessage());
         }
-        $this->success('创建订单成功！',$order);
+        if( count($wphOrderNoList['orders']) > 1){
+            $this->countDown($merge_order_no);
+            $this->success('创建订单成功！',\app\admin\model\Order::where('merge_order_no',$merge_order_no)->select());
+        }
+        $this->countDown($order_no);
+        $this->success('创建订单成功！',$order);  
+    }
+
+    /**
+     * 购物车倒计时
+     */
+    public function countDown($order_no)
+    {
+        if (!Cache::get('cdOrder_'.$order_no)) {
+            $result = Cache::set('cdOrder_'.$order_no, time(), 1800);
+        }
+    }
+
+    /**
+     * 获取购物车倒计时时差
+     */
+    public function orderCountDown()
+    {
+        $order_no = $this->request->request('order_no');
+        $rew = Cache::get('cdOrder_'.$order_no)?:'';
+        if ($rew) {
+            $count = time() - $rew;
+            if ($count >= 1800) {
+                //失效购物车数据
+                \app\admin\model\Order::where('order_no', $order_no)->update(['status' => -1]);
+            }
+            $this->success('请求成功！', ['js' => time2string( 1800 - $count)]);
+        }
+        $this->success('请求成功！', ['js' =>'']);
+    }
+
+    /**
+     * 合单支付
+     */
+    public function orderHeDanPay()
+    {
+        $merge_order_no = $this->request->param('merge_order_no');
+        $user = $this->auth->getUser();
+        $pay = new WxJsApiPay();
+        $json=$pay->wxJsApiHeDanPay($merge_order_no,$user['openid']);
+        if($json){
+            $this->success('调用成功！',$json);
+        }
+        $this->error('支付失败！',$json);
     }
     /**
      * 支付订单
@@ -135,7 +190,6 @@ class Order extends Api
         $type = $this->request->param('type') ?? $type;
         $user = $this->auth->getUser();
         $order = OrderM::get($orderId);
-
         if($type == 'H5'){
             $pay = new WxJsApiPay();
             $json=$pay->wxJsApiPay($order['real_price'],"购买商品","{$order['order_no']}","{$user['openid']}");
@@ -162,6 +216,13 @@ class Order extends Api
         if($order['status'] != 0 && $order['status'] != 1){
             $this->error('该订单无法取消！');
         }
+        $wph = new Wph();
+        $list = $wph->orderStatus("{$order['wph_order_no']}");
+        foreach ($list as $value){
+            if($value['childOrderSnList'][0]['statusCode'] == 3){
+                $this->error('该订单已发货无法取消！');
+            }
+        }
         // 启动事务
         Db::startTrans();
         try{
@@ -177,9 +238,8 @@ class Order extends Api
             }
             $order['status'] = -1;
             $order->save();
-//            $wph=new Wph();
-//            $wph->cancelOrder($order['wph_order_no']);
-
+            $wph=new Wph();
+            $wph->cancelOrder($order['wph_order_no']);
             // 提交事务
             Db::commit();
             $res = true;
@@ -200,25 +260,25 @@ class Order extends Api
     {
         $order_id = $this->request->param('order_id');
         $order = OrderM::get($order_id);
-        if(!$order || $order['status'] != 2){
+        if(!$order || ($order['status'] != 2 && $order['status'] != 5)){
             $this->error('无效的订单！');
         }
-        $orderGoods = OrderGood::where('order_id',$order_id)->group('goodId')->select();
-        foreach ($orderGoods as &$item){
-            $goods = OrderGood::where(['goodId'=>$item['goodId'],'order_id'=>$order_id])->select();
-            $size = array();
-            foreach ($goods as $k=>$good){
-                $size[$k]['size'] = $good['good_size'];
-                $size[$k]['num'] = $good['good_num'];
-                $size[$k]['sizeId'] = $good['sizeId'];
-                $size[$k]['is_select'] = 0;
+        $wph = new Wph();
+        $list = $wph->getReturnOrderCreate($order['wph_order_no']);
+          if($list && !empty($list)){
+            foreach ($list["goodsList"] as &$goods){
+                $goods['reason'] = $goods['reasonList'][0]['reasonInfo'];
+                $goods['is_select'] = 0;
+                foreach ($goods['reasonList'] as &$rea){
+                    $rea['is_select'] = 0;
+                }
+                foreach ($goods['sizes'] as &$size){
+                    $size['is_select'] = 0;
+                }
             }
-            $item['good_size'] = $size;
+            $this->success('请求成功！',$list);
         }
-        if(!$orderGoods){
-            $this->error('服务器繁忙！');
-        }
-        $this->success('请求成功！',$orderGoods);
+        $this->error('请求失败！',$list);
     }
     /**
      * 退货预览
@@ -227,12 +287,12 @@ class Order extends Api
     {
         $param = $this->request->param();
         $order = OrderM::get($param['order_id']);
-        if(!$order || $order['status'] != 2){
+         if(!$order || ($order['status'] != 2 && $order['status'] != 5)){
             $this->error('无效的订单！');
         }
         if(!empty($param['goods'])){
             foreach ($param['goods'] as $k=>$item){
-                $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
+                $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId'],'order_id'=>$param['order_id']])->find();
                 if(!$good){
                     throw new Exception('存在无效的商品！');
                 }
@@ -258,14 +318,14 @@ class Order extends Api
     {
         $param = $this->request->param();
         $order = OrderM::get($param['order_id']);
-        if(!$order || $order['status'] != 2){
+         if(!$order || ($order['status'] != 2 && $order['status'] != 5)){
             $this->error('无效的订单！');
         }
 // 启动事务
         Db::startTrans();
         try{
             if(!empty($param['goods'])){
-                foreach ($param['goods'] as $item){
+                foreach ($param['goods'] as $k=>$item){
                     $good = OrderGood::where(['goodId'=>$item['goodId'],'sizeId'=>$item['sizeId']])->find();
                     if(!$good){
                         throw new Exception('存在无效的商品！');
@@ -275,9 +335,10 @@ class Order extends Api
                     }
                     $good->return_num = $item['return_num'];
                     $good->good_num -= $item['return_num'];
-                    $good->reason = $item['reason'];
                     $good->save();
-                    $sizeInfo[$item['sizeId']] = $item['return_num'];
+                    $sizeInfo[$k]['sizeId'] = $item['sizeId'];
+                    $sizeInfo[$k]['num'] = $item['return_num'];
+                    $sizeInfo[$k]['reasonId'] = $item['reasonId'];
                 }
             }
             $sizeInfo = \GuzzleHttp\json_encode($sizeInfo);
@@ -407,9 +468,12 @@ class Order extends Api
 //                 H5用户查看
                     $query->where('user_id',$user['id']);
                 }
-                //订单状态 不传为全部订单
-                if(isset($status)){
+                 //订单状态 不传为全部订单
+                if(isset($status) && $status != 2){
                     $query->where('status',$status);
+                }
+                if($status == 2){
+                    $query->whereIn('status',[2,5]);
                 }
                 //是否有申请售后
                 if(isset($after_sales)){
@@ -434,7 +498,8 @@ class Order extends Api
     {
         $order_id = $this->request->param('order_id');
         $isRead = $this->request->param('isRead');
-        $order = OrderM::with('goods')->where('id',$order_id)->find();
+        $order = OrderM::with(['goods','user','store'])->where('id',$order_id)->find();
+        $order['createtime_text'] = datetime($order['createtime']);
         if(!$order){
             $this->error('无效的订单！');
         }
@@ -501,5 +566,20 @@ class Order extends Api
             // 回滚事务
             Db::rollback();
         }
+    }
+     /**
+     * 退货订单详情
+     */
+    public function returnOrderDetail()
+    {
+        $order_id = $this->request->param('order_id');
+        $wph_order_no=\app\admin\model\Order::where('id',$order_id)->value('wph_order_no');
+        try {
+            $wph=new Wph();
+            $row = $wph->returnOrderDetail($wph_order_no);
+        }catch (Exception $exception){
+            $this->error($exception->getMessage());
+        }
+        $this->success('请求成功！',$row);
     }
 }

@@ -24,6 +24,20 @@
 
         </div>
     </div>
+    {if $row.adId}
+    <div class="form-group">
+        <label for="c-pid" class="control-label col-xs-12 col-sm-2">品牌ID:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <select id="c-pid" data-rule="required" class="form-control selectpicker" name="row[adId]">
+                {foreach name="brandList" item="vo"}
+                <option value="{$vo['adId']}" {in name="$vo['adId']" value="$row.adId"}selected{/in}>{$vo.brandName}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    {/if}
     <div class="form-group">
         <label for="c-name" class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
         <div class="col-xs-12 col-sm-8">

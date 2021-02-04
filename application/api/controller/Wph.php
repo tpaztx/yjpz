@@ -39,19 +39,25 @@ class Wph extends Api
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store_id);
         $brandListModel = new BrandList; 
-        $result = collection($brandListModel::where("cateId!=''")->field('id,cateId,cateName')->select())->toArray();
+        $result = collection($brandListModel::where("cateId!=''")->whereTime('sellTimeTo','>',strtotime(date('Y-m-d H:i:s',time())))->field('id,cateId,cateName')->select())->toArray();
         foreach ($result as $key => $val) {
             $result[$key]['cateId'] = explode(',', $val['cateId']);
             $result[$key]['cateName'] = explode(',', $val['cateName']);
         }
         $result = $this->second_array_unique_bykey($result, 'cateName');
+
         foreach ($result as $k => $v) {
+            $cid = $v['cateId'];
             $result[$key]['cateId'] = $v['cateId'];
             $result[$key]['cateName'] = $v['cateName'];
-            $result[$k]['count'] = $brandListModel::where('cateId', 'in', $v['cateId'])->where(function ($query) use ($downIdArray,$store_id){
+            $result[$k]['count'] = $brandListModel::where(function ($query) use ($downIdArray,$store_id){
                 if(isset($store_id) && !empty($store_id)){
                     $query->whereNotIn('adId', $downIdArray);
                 }
+            })->where(function($query)use($cid){
+                foreach ($cid as $key => $val) {
+                        $query->whereOr("find_in_set(".$val.", cateId)");
+                    }
             })->count('id');
         }
         $this->success('请求成功！', $result);
@@ -78,7 +84,7 @@ class Wph extends Api
             $request1->pageSize = $pageSize;
             $list = collection($service->getBrandList($request1))->toArray();
             if ($list) {
-                $this->success('请求成功！', $list);
+                // $this->success('请求成功！', $list);
                 return $list;
             }
         } catch(\Osp\Exception\OspException $e){
@@ -102,7 +108,13 @@ class Wph extends Api
                 })->limit(($page - 1)*$pageSize, $pageSize)->select();
                 // echo BrandList::getLastSQL();die; 
             }else{
-                $result = BrandList::where('cateId', 'in', $cid)->whereTime('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->select();
+                $cid = explode(",", $cid);
+                $result = BrandList::where(function($query) use($cid){
+                    foreach ($cid as $key => $val) {
+                        $query->whereOr("find_in_set(".$val.", cateId)");
+                    }
+                })->whereTime('sellTimeTo','>',$time )->limit(($page - 1)*$pageSize, $pageSize)->order('sellTimeFrom')->select();
+                // echo BrandList::getLastSQL();die;
             }
             return $result;
         } catch(Exception $e){
@@ -132,7 +144,7 @@ class Wph extends Api
             $request1->adId = $adId;
             $list = collection($service->getGoodsList($request1))->toArray();
             if ($list) {
-                $this->success('请求成功！', $list);
+                // $this->success('请求成功！', $list);
                 return $list;
             }
             // var_dump($service->getGoodsList($request1));
@@ -143,7 +155,7 @@ class Wph extends Api
     /**
      * 创建唯品会订单
      */
-    public function orderWphCreate($orderNo,$orderId,$addressId,$sizeInfo)
+    public function orderWphCreate($addressId,$sizeInfo)
     {
         $address = Address::get($addressId);
         try {
@@ -164,13 +176,13 @@ class Wph extends Api
             $request1->address = $address['address'];
             $request1->consignee = $address['name'];
             $request1->mobile = $address['mobile'];
-            $request1->traceId =$orderId;
+            $request1->traceId =$address['user_id'];
             $request1->clientIp = getClientIp();
-            $request1->channelOrderSn = $orderNo;
             $list = $service->orderCreate($request1);
             $list=object_to_array($list);
             if ($list) {
-              return $list['orders'][0]['orderSn'];
+              return $list;
+            //   $list['orders'][0]['orderSn']
             }
         } catch(\Osp\Exception\OspException $ospException){
             throw new Exception($ospException->getReturnMessage());
@@ -202,6 +214,31 @@ class Wph extends Api
                     throw new Exception($list['message']);
                 }
             }
+            // var_dump($service->getGoodsList($request1));
+        } catch(\Osp\Exception\OspException $ospException){
+            throw new Exception($ospException->getReturnMessage());
+        }
+    }
+       /**
+     * 获取退货订订单
+     */
+    public function getReturnOrderCreate($wphOrderNo)
+    {
+        try {
+            $service = WpcVopOspServiceClient::getService();
+            $ctx = InvocationContextFactory::getInstance();
+            $ctx->setAppKey(Config::get('wph.AppKey'));
+            $ctx->setAppSecret(Config::get('wph.AppSecret'));
+            $ctx->setAppURL("https://gw.vipapis.com/");
+            $ctx->setLanguage("zh");
+            $request1 = new \com\vip\wpc\ospservice\vop\request\WpcOrderReturnRequest();
+            $request1->timestamp = time();
+            $request1->vopChannelId = Config::get('wph.AppKey');
+            $request1->userNumber = Config::get('wph.userNumber');
+            $request1->orderSn = $wphOrderNo;
+            $list = $service->getReturnOrderCreate($request1);
+            $list = object_to_array($list);
+            return $list;
             // var_dump($service->getGoodsList($request1));
         } catch(\Osp\Exception\OspException $ospException){
             throw new Exception($ospException->getReturnMessage());
@@ -466,15 +503,18 @@ class Wph extends Api
         $pageSize = $this->request->request('pageSize')?:10;
         $id = $this->request->request('cateid')?:0;
         $store_id = $this->request->request('store_id');
+
         //获取小店已下架品牌id
         $storeDown = new StoreDown;
         $downIdArray = $storeDown->getDownId($store_id);
         $result = $this->brandList($pageIndex, $pageSize, $id, $downIdArray);
+        // dump($result);die;
         if ($result) {
             foreach ($result as $k => $v) {
-                $v['goods'] = GoodsList::where('adId', 'in',$v['adId'])->limit(0,5)->select();
+                $v['goods'] = GoodsList::where('adId', 'in',$v['adId'])->field('goodImage,suggestPrice')->limit(0,5)->select();
+                // echo GoodsList::getLastSQL();die;
                 $result[$k]['endTime'] = time2day(strtotime($v['sellTimeTo']) - time());
-                $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])->count('id');
+                $result[$k]['goodsTotal'] = GoodsList::where('adId',$v['adId'])->field('id')->count('id');
             }
         }
         $this->success('请求成功！', $result); 
@@ -536,10 +576,7 @@ class Wph extends Api
             $request1->goodFullIds = $goodFullIds;
             // var_dump($service->getGoodsDetail($request1));
             $list = collection($service->getGoodsDetail($request1))->toArray();
-            if ($list) {
-                // $this->success('请求成功！', $list);
-                return $list;
-            }
+            return $list;
         } catch(\Osp\Exception\OspException $e){
             $this->error('请求失败，请联系管理员！');
         }

@@ -520,3 +520,34 @@ function multi_array_sort($multi_array, $sort_key, $sort = SORT_ASC) {
         return false;
     }
 }
+
+function arraytoxml($data){
+    $str='<xml>';
+    foreach($data as $k=>$v) {
+        $str.='<'.$k.'>'.$v.'</'.$k.'>';
+    }
+    $str.='</xml>';
+    return $str;
+}
+
+function xmltoarray($xml) { 
+    //禁止引用外部xml实体 
+    libxml_disable_entity_loader(true); 
+    $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA); 
+    $val = json_decode(json_encode($xmlstring),true); 
+    return $val;
+}
+
+function httpPost($url,$data){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 500);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
+}
